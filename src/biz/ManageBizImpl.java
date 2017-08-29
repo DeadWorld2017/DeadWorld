@@ -12,7 +12,7 @@ import po.Position;
 //管理接口实现
 public class ManageBizImpl implements ManageBiz{
 
-	@Override
+	
 	
 	//100个正常人，20个丧尸
 	public void setPeopleRandom(List<People> plist) {

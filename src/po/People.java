@@ -11,7 +11,8 @@ public class People {
 	public int pid;//人的编号
 	public Position ppos;//位置
 	public int ptype;//人的类型
-
+	public int trapYear;//物种逗留时间，初始为0
+	
 	public People() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -23,6 +24,7 @@ public class People {
 		this.pid = pid;
 		this.ppos = ppos;
 		this.ptype = ptype;
+		this.trapYear = 0;
 	}
 
 
@@ -57,5 +59,12 @@ public class People {
 	}
 	
 	
+	public void setTrapYear(int trapYear){
+		this.trapYear = trapYear;
+	}
 	
+	
+	public int getTrapYear(){
+		return trapYear;
+	}
 }
