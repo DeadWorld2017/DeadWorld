@@ -2,8 +2,12 @@ package po;
 
 import java.util.List;
 
+/*正常人类
+ * 继承People类
+ * 类型编号为1
+ */
 public class NormalPeople extends People{
-	//int ptype=1;
+
 	private boolean gender;//性别
 	private int age;//年龄
 	private int Survivability;//存活能力值
@@ -23,7 +27,7 @@ public class NormalPeople extends People{
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
-		super.ptype = 1;//正常人类型为1
+		this.ptype = 1;//正常人类型为1
 		this.gender = gender;
 		this.age = age;
 		Survivability = survivability;

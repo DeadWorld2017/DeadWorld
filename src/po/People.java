@@ -1,9 +1,16 @@
 package po;
 
+
+/*人类
+ * 
+ * 类型0：丧尸
+ * 类型1：正常人
+ * 
+ */
 public class People {
-	public int pid;//物种编号
+	public int pid;//人的编号
 	public Position ppos;//位置
-	public int ptype;//人的种类，0为丧尸，1为正常人
+	public int ptype;//人的类型
 
 	public People() {
 		super();

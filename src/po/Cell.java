@@ -1,13 +1,16 @@
 package po;
 
 
-//格子类
+/*格子类
+ * 
+ */
 public class Cell {
 	private Position cpos;//格子的位置
-	private int tid;//道具编号
-	private int ltype;//地形编号
 	private int pid;//人类编号
-	private int ptype;//人种类
+	private int ptype;//人的类型
+	private int ttype;//道具类型
+	private int ltype;//地形类型
+	
 	
 	
 
@@ -18,10 +21,10 @@ public class Cell {
 
 	
 	
-	public Cell(Position cpos, int tid, int ltype, int pid, int ptype) {
+	public Cell(Position cpos, int ttype, int ltype, int pid, int ptype) {
 		super();
 		this.cpos = cpos;
-		this.tid = tid;
+		this.ttype = ttype;
 		this.ltype = ltype;
 		this.pid = pid;
 		this.ptype = ptype;
@@ -35,11 +38,11 @@ public class Cell {
 	public void setCpos(Position cpos) {
 		this.cpos = cpos;
 	}
-	public int getTid() {
-		return tid;
+	public int getttype() {
+		return ttype;
 	}
-	public void setTid(int tid) {
-		this.tid = tid;
+	public void setttype(int ttype) {
+		this.ttype = ttype;
 	}
 	public int getltype() {
 		return ltype;

@@ -1,6 +1,8 @@
 package po;
 
-//位置类
+/*位置类
+ * 
+ */
 public class Position {
 	private int x;//横坐标
 	private int y;//纵坐标

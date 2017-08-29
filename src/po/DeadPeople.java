@@ -1,5 +1,9 @@
 package po;
 
+/*丧尸类
+ * 继承People类
+ * 类型编号为0
+ */
 public class DeadPeople extends People{
 	private int level;//等级1、2、3
 	private int baseDamage;//基本攻击力，狂暴值

@@ -1,35 +1,36 @@
 package po;
 
-//道具类
+/*道具类
+ * 
+ * 类型1：刀
+ * 类型2：枪械
+ * 类型3：火箭筒
+ * 类型4：自杀弹
+ * 类型5：逃跑鞋
+ * 类型6：加速鞋
+ * 类型7：兴奋剂
+ * 
+ */
+
 public class Tool {
-	private int tid;//道具编号
-	private String tname;//道具名称
-	private Position tpos;//武器坐标
+
+	private	int ttype;//道具类型
+	private Position tpos;//道具坐标
 	private boolean usage;//使用情况，0表示在地图上，1表示在人物身上
 	
 	public Tool() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Tool(int tid, String tname, Position tpos, boolean usage) {
+
+	
+	public Tool(int ttype, Position tpos, boolean usage) {
 		super();
-		this.tid = tid;
-		this.tname = tname;
+		this.ttype = ttype;
 		this.tpos = tpos;
 		this.usage = usage;
 	}
-	public int getTid() {
-		return tid;
-	}
-	public void setTid(int tid) {
-		this.tid = tid;
-	}
-	public String getTname() {
-		return tname;
-	}
-	public void setTname(String tname) {
-		this.tname = tname;
-	}
+
 	public Position getTpos() {
 		return tpos;
 	}
@@ -41,6 +42,12 @@ public class Tool {
 	}
 	public void setUsage(boolean usage) {
 		this.usage = usage;
+	}
+	public int getTtype() {
+		return ttype;
+	}
+	public void setTtype(int ttype) {
+		this.ttype = ttype;
 	}
 	
 	

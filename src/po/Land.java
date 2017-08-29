@@ -1,9 +1,17 @@
 package po;
 
-//地形类,存放对应得地图坐标和地形类型
+/*地形类,存放对应得地图坐标和地形类型
+ * 
+ * 类型1：庇护所
+ * 类型2：辐射地
+ * 类型3：沼泽地
+ * 类型4：子母河
+ * 类型5：死亡陷阱
+ * 类型6：困阵	
+ * 
+ */
 public class Land {
-	private int ltype;//地形种类
-	private String lname;//地形名称
+	private int ltype;//地形类型
 	private Position lpos;//地形坐标
 	
 	public Land() {
@@ -11,12 +19,9 @@ public class Land {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
-	public Land(int ltype, String lname, Position lpos) {
+	public Land(int ltype, Position lpos) {
 		super();
 		this.ltype = ltype;
-		this.lname = lname;
 		this.lpos = lpos;
 	}
 
@@ -41,13 +46,6 @@ public class Land {
 		this.lpos = lpos;
 	}
 
-
-	public String getLname() {
-		return lname;
-	}
-	public void setLname(String lname) {
-		this.lname = lname;
-	}
 	
 	
 }
