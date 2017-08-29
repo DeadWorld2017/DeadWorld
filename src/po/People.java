@@ -1,16 +1,20 @@
 package po;
 
 public class People {
-	int pid;
+	private int pid;//ŒÔ÷÷±‡∫≈
+	private Position ppos;//Œª÷√
 
 	public People() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public People(int pid) {
+
+
+	public People(int pid, Position ppos) {
 		super();
 		this.pid = pid;
+		this.ppos = ppos;
 	}
 
 	public int getPid() {
@@ -19,6 +23,16 @@ public class People {
 
 	public void setPid(int pid) {
 		this.pid = pid;
+	}
+
+
+	public Position getPpos() {
+		return ppos;
+	}
+
+
+	public void setPpos(Position ppos) {
+		this.ppos = ppos;
 	}
 	
 	
