@@ -1,7 +1,6 @@
 package po;
 
 public class DeadPeople extends People{
-	int ptype=0;
 	private int level;//等级1、2、3
 	private int baseDamage;//基本攻击力，狂暴值
 	private int killNumber;//杀人数量，用于升级
@@ -11,12 +10,12 @@ public class DeadPeople extends People{
 		// TODO Auto-generated constructor stub
 	}
 
-	public DeadPeople(int pid,Position ppos, int ptype,
+	public DeadPeople(int pid,Position ppos, 
 			int level, int baseDamage, int killNumber) {
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
-		this.ptype = ptype;
+		super.ptype = 0;//丧尸类型为0
 		this.level = level;
 		this.baseDamage = baseDamage;
 		this.killNumber = killNumber;
