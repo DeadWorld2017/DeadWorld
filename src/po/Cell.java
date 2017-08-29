@@ -7,6 +7,7 @@ package po;
 public class Cell {
 	private Position cpos;//格子的位置
 	private int pid;//人类编号
+	private int tid;//道具编号
 	private int ptype;//人的类型
 	private int ttype;//道具类型
 	private int ltype;//地形类型
@@ -21,12 +22,13 @@ public class Cell {
 
 	
 	
-	public Cell(Position cpos, int ttype, int ltype, int pid, int ptype) {
+	public Cell(Position cpos, int ttype, int ltype, int pid, int tid, int ptype) {
 		super();
 		this.cpos = cpos;
 		this.ttype = ttype;
 		this.ltype = ltype;
 		this.pid = pid;
+		this.tid = tid;
 		this.ptype = ptype;
 	}
 
@@ -65,6 +67,18 @@ public class Cell {
 
 	public void setPtype(int ptype) {
 		this.ptype = ptype;
+	}
+
+
+
+	public int getTid() {
+		return tid;
+	}
+
+
+
+	public void setTid(int tid) {
+		this.tid = tid;
 	}
 	
 	

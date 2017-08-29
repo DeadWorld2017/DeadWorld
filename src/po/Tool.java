@@ -13,7 +13,7 @@ package po;
  */
 
 public class Tool {
-
+	private int tid;//道具编号
 	private	int ttype;//道具类型
 	private Position tpos;//道具坐标
 	private boolean usage;//使用情况，0表示在地图上，1表示在人物身上
@@ -24,8 +24,9 @@ public class Tool {
 	}
 
 	
-	public Tool(int ttype, Position tpos, boolean usage) {
+	public Tool(int tid, int ttype, Position tpos, boolean usage) {
 		super();
+		this.tid = tid;
 		this.ttype = ttype;
 		this.tpos = tpos;
 		this.usage = usage;
@@ -48,6 +49,16 @@ public class Tool {
 	}
 	public void setTtype(int ttype) {
 		this.ttype = ttype;
+	}
+
+
+	public int getTid() {
+		return tid;
+	}
+
+
+	public void setTid(int tid) {
+		this.tid = tid;
 	}
 	
 	
