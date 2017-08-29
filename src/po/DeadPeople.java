@@ -15,7 +15,7 @@ public class DeadPeople extends People{
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
-		super.ptype = 0;//丧尸类型为0
+		this.ptype = 0;//丧尸类型为0
 		this.level = level;
 		this.baseDamage = baseDamage;
 		this.killNumber = killNumber;
