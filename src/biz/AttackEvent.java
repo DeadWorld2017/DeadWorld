@@ -1,6 +1,6 @@
 package biz;
 
 //计算攻击力接口
-public interface EventofAttack {
+public interface AttackEvent {
 
 }
