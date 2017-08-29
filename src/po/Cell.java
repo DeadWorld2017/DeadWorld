@@ -4,7 +4,7 @@ package po;
 //格子类
 public class Cell {
 	private Position cpos;//格子的位置
-	private int tid;//武器编号
+	private int tid;//道具编号
 	private int lid;//地形编号
 	
 	
