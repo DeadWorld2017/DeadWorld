@@ -16,7 +16,6 @@ public interface ToolManage {
 	public int addWeoponDamage(int attackValue);
 	//计算武器的伤害,返回值为int型
 	
-	
 	public boolean isBomb(int ttype);
 	//判断是否有炸弹，若有炸弹则返回true,若没有炸弹则返回false
 	
@@ -31,7 +30,8 @@ public interface ToolManage {
 	public boolean isShoes(int ttype);
 	//判断是否有鞋子,有则不变返回true，没有则返回false
 	
-	public boolean escapeShoes();//逃跑鞋方法
+	public boolean escapeShoes();
+	//逃跑鞋方法
 	
 	public boolean speedShoes();//加速鞋方法
 	
