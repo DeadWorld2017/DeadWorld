@@ -1,7 +1,7 @@
 package po;
 
 public class DeadPeople extends People{
-	private int level;//等级
+	private int level;//等级1、2、3
 	private int baseDamage;//基本攻击力，狂暴值
 	private int killNumber;//杀人数量，用于升级
 	
