@@ -1,8 +1,9 @@
 package po;
 
 public class People {
-	private int pid;//物种编号
-	private Position ppos;//位置
+	public int pid;//物种编号
+	public Position ppos;//位置
+	public int ptype;//人的种类，0为丧尸，1为正常人
 
 	public People() {
 		super();
@@ -10,12 +11,13 @@ public class People {
 	}
 
 
-
-	public People(int pid, Position ppos) {
+	public People(int pid, Position ppos, int ptype) {
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
+		this.ptype = ptype;
 	}
+
 
 	public int getPid() {
 		return pid;
@@ -33,6 +35,18 @@ public class People {
 
 	public void setPpos(Position ppos) {
 		this.ppos = ppos;
+	}
+
+
+
+	public int getPtype() {
+		return ptype;
+	}
+
+
+
+	public void setPtype(int ptype) {
+		this.ptype = ptype;
 	}
 	
 	

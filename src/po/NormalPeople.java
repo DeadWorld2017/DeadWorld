@@ -3,6 +3,7 @@ package po;
 import java.util.List;
 
 public class NormalPeople extends People{
+	int ptype=1;
 	private boolean gender;//性别
 	private int age;//年龄
 	private int Survivability;//存活能力值
@@ -10,14 +11,19 @@ public class NormalPeople extends People{
 	private List<Integer> tlist;//存放武器编号list
 	private int pregnancyFlag;//怀孕标记
 	
+		 
 	public NormalPeople() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public NormalPeople(boolean gender, int age, int survivability, boolean antibody, List<Integer> tlist,
-			int pregnancyFlag) {
+	public NormalPeople(int pid,Position ppos, int ptype,
+			boolean gender, int age, int survivability, 
+			boolean antibody, List<Integer> tlist,int pregnancyFlag) {
 		super();
+		this.pid = pid;
+		this.ppos = ppos;
+		this.ptype = ptype;
 		this.gender = gender;
 		this.age = age;
 		Survivability = survivability;
