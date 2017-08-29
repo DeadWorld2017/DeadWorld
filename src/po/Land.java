@@ -2,24 +2,46 @@ package po;
 
 //地形类,存放对应得地图坐标和地形类型
 public class Land {
-	private int lid;//地形编号
-	private String lname;//道具名称
+	private int ltype;//地形种类
+	private String lname;//地形名称
+	private Position lpos;//地形坐标
 	
 	public Land() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Land(int lid, String lname) {
+	
+	
+	
+	public Land(int ltype, String lname, Position lpos) {
 		super();
-		this.lid = lid;
+		this.ltype = ltype;
 		this.lname = lname;
+		this.lpos = lpos;
 	}
-	public int getLid() {
-		return lid;
+
+
+
+	public int getLtype() {
+		return ltype;
 	}
-	public void setLid(int lid) {
-		this.lid = lid;
+
+
+	public void setLtype(int ltype) {
+		this.ltype = ltype;
 	}
+
+
+	public Position getLpos() {
+		return lpos;
+	}
+
+
+	public void setLpos(Position lpos) {
+		this.lpos = lpos;
+	}
+
+
 	public String getLname() {
 		return lname;
 	}

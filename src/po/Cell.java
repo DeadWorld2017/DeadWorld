@@ -5,12 +5,12 @@ package po;
 public class Cell {
 	private Position cpos;//格子的位置
 	private int tid;//道具编号
-	private int lid;//地形编号
+	private int ltype;//地形编号
 	private int pid;//人类编号
 	private int ptype;//人种类
 	
 	
-	
+
 	public Cell() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -18,11 +18,11 @@ public class Cell {
 
 	
 	
-	public Cell(Position cpos, int tid, int lid, int pid, int ptype) {
+	public Cell(Position cpos, int tid, int ltype, int pid, int ptype) {
 		super();
 		this.cpos = cpos;
 		this.tid = tid;
-		this.lid = lid;
+		this.ltype = ltype;
 		this.pid = pid;
 		this.ptype = ptype;
 	}
@@ -41,11 +41,11 @@ public class Cell {
 	public void setTid(int tid) {
 		this.tid = tid;
 	}
-	public int getLid() {
-		return lid;
+	public int getltype() {
+		return ltype;
 	}
-	public void setLid(int lid) {
-		this.lid = lid;
+	public void setltype(int ltype) {
+		this.ltype = ltype;
 	}
 
 	public int getPid() {
