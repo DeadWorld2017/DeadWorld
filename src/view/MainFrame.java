@@ -29,7 +29,7 @@ public class MainFrame extends JFrame implements MouseMotionListener{
 	public final static int MapRow=70;//地图的高
 	public final static int MapCol=100;//地图的长
 	public final static int FrameRow = 800;//主窗体的高
-	public final static int FrameCol = 1200;//主窗体的长
+	public final static int FrameCol = 1300;//主窗体的长
 	
 	
 	public MainFrame(int row,int col)

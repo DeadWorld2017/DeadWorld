@@ -44,7 +44,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 				 Random rd = new Random();
 				 int pid = rd.nextInt(countNormalPeople);
 				 np = (NormalPeople) plist.get(pid);
-			 }while(np.getPtype()==0);//若已经是丧尸了就重新随机一个数
+			 }while(np.isPtype()==false);//若已经是丧尸了就重新随机一个数
 			 turnToDead(np.pid,plist);//转化为丧尸
 		 }
 		
@@ -132,7 +132,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 		int numberNormalPeople = plist.size();
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
-			if(it.next().getPtype()==0)//丧尸：ptype为0
+			if(it.next().isPtype()==false)//丧尸：ptype为false
 				numberNormalPeople-=2;
 		}
 		return numberNormalPeople;
@@ -143,7 +143,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 		int numberDeadPeople=0;
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
-			if(it.next().getPtype()==0)//丧尸：ptype为0
+			if(it.next().isPtype()==false)//丧尸：ptype为false
 				numberDeadPeople++;
 		}
 		return numberDeadPeople;

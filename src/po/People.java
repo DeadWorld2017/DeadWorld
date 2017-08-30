@@ -3,23 +3,25 @@ package po;
 
 /*人类
  * 
- * 类型0：丧尸
- * 类型1：正常人
+ * 类型false：丧尸
+ * 类型true：正常人
  * 
  */
 public class People {
 	public int pid;//人的编号
 	public Position ppos;//位置
-	public int ptype;//人的类型
+	public boolean ptype;//人的类型,false是丧尸
 	public int trapYear;//物种逗留时间，初始为0
 	
+
+
 	public People() {
 		super();
 		 
 	}
 
 
-	public People(int pid, Position ppos, int ptype) {
+	public People(int pid, Position ppos, boolean ptype) {
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
@@ -27,6 +29,15 @@ public class People {
 		this.trapYear = 0;
 	}
 
+	
+	public boolean isPtype() {
+		return ptype;
+	}
+
+
+	public void setPtype(boolean ptype) {
+		this.ptype = ptype;
+	}
 
 	public int getPid() {
 		return pid;
@@ -46,19 +57,7 @@ public class People {
 		this.ppos = ppos;
 	}
 
-
-
-	public int getPtype() {
-		return ptype;
-	}
-
-
-
-	public void setPtype(int ptype) {
-		this.ptype = ptype;
-	}
-	
-	
+ 
 	public void setTrapYear(int trapYear){
 		this.trapYear = trapYear;
 	}

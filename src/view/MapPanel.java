@@ -43,28 +43,37 @@ public class MapPanel extends JPanel{
 			System.out.println(np.toString());
 		}*/
 		mb.initDeadPeopleRandom(plist);//部分人类转化为丧尸
-		showNumber();
-		
+		showNumber();//调用显示数量的Label
+		/*Iterator<People> it = plist.iterator();
+		int 
+		while (it.hasNext()) {
+			People p = it.next();
+			if(p.isPtype())
+				
+			NormalPeople np = (NormalPeople)plist.get(it.next().pid);
+			System.out.println(np.toString());*/
 	}
 	
 
 
-
+	//调用显示数量的Label
 	private void showNumber() {
 		int numberPeople = mb.countPeople(plist);//所有人数量
 		int numberNormalPeople = mb.countNormalPeople(plist);//正常人数量
 		int numberDeadPeople = mb.countDeadPeople(plist);//丧尸数量
 		
-		JLabel numberPeoplelbl=new JLabel("numberPeople："+numberPeople);
-		JLabel numberNormalPeoplelbl=new JLabel("numberNormalPeople："+numberNormalPeople);
-		JLabel numberDeadPeoplelbl=new JLabel("numberDeadPeople："+numberDeadPeople);
+		JLabel numberPeoplelbl=new JLabel("物种数量："+numberPeople);
+		JLabel numberNormalPeoplelbl=new JLabel("正常人数量："+numberNormalPeople);
+		JLabel numberDeadPeoplelbl=new JLabel("丧尸数量："+numberDeadPeople);
 		
 		add(numberPeoplelbl);
 		add(numberNormalPeoplelbl);
 		add(numberDeadPeoplelbl);
 		
-		//numberPeoplelbl.setBounds(720,20,80,20);
-		
+		setLayout(null);
+		numberPeoplelbl.setBounds(1020,20,300,20);
+		numberNormalPeoplelbl.setBounds(1020,40,300,20);
+		numberDeadPeoplelbl.setBounds(1020,60,300,20);
 		
 	}
 
@@ -98,14 +107,14 @@ public class MapPanel extends JPanel{
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();//存储it.next()的值，防止跳跃
-			if(p.ptype==0)//若是丧尸，显示红色
-			{
-				g.setColor(Color.red);
-				g.fillRect(p.getPpos().getX()*10, p.getPpos().getY()*10, 10, 10);
-			}
-			else//若是正常人，显示绿色
+			if(p.isPtype())//若是正常人，显示绿色
 			{
 				g.setColor(Color.green);
+				g.fillRect(p.getPpos().getX()*10, p.getPpos().getY()*10, 10, 10);
+			}
+			else//若是丧尸，显示红色
+			{
+				g.setColor(Color.red);
 				g.fillRect(p.getPpos().getX()*10, p.getPpos().getY()*10, 10, 10);
 			}
 		}

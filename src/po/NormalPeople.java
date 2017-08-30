@@ -29,7 +29,7 @@ public class NormalPeople extends People{
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
-		this.ptype = 1;//正常人类型为1
+		this.ptype = true;//正常人类型为1
 		this.gender = gender;
 		this.age = age;
 		this.survivability = survivability;
