@@ -16,7 +16,7 @@ public class Land {
 	
 	public Land() {
 		super();
-		// TODO Auto-generated constructor stub
+		 
 	}
 	
 	public Land(int ltype, Position lpos) {

@@ -1,64 +1,114 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.LayoutManager;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import biz.ManageBiz;
-import biz.ManageBizImpl;
+import biz.PeopleManageBiz;
+import biz.PeopleManageBizImpl;
+import po.Cell;
 import po.People;
+import po.Tool;
 
 
 public class MapPanel extends JPanel{
-	int row;
-	int col;
-	ManageBiz mb = new ManageBizImpl();
-	List<People> plist;
+	int row;//地图的高
+	int col;//地图的长
 	
-	public MapPanel(int row, int col,List<People> tempplist) {
+	List<People> plist;//人类集合
+	List<Tool> tlist;//武器集合
+	List<Cell> clist;//地图格子集合
+	
+	PeopleManageBiz mb = new PeopleManageBizImpl();
+	
+	
+	public MapPanel(int row, int col,List<People> tempplist,
+			List<Tool> temptlist,List<Cell> tempclist) {
 		super();
 		this.row = row;
 		this.col = col;
-		mb.setPeopleRandom(tempplist);
-		plist = tempplist;
-		Iterator<People> it = plist.iterator();
+		this.plist = tempplist;
+		this.tlist = temptlist;
+		this.clist = tempclist;
+		
+		mb.initNormalPeopleRandom(row,col,plist);//初始化生成正常人类
+		/*验证成功数据
+		 * Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
-			System.out.println(it.next().ppos.getX());
-		}
+			NormalPeople np = (NormalPeople)plist.get(it.next().pid);
+			System.out.println(np.toString());
+		}*/
+		mb.initDeadPeopleRandom(plist);//部分人类转化为丧尸
+		showNumber();
+		
 	}
+	
+
+
+
+	private void showNumber() {
+		int numberPeople = mb.countPeople(plist);//所有人数量
+		int numberNormalPeople = mb.countNormalPeople(plist);//正常人数量
+		int numberDeadPeople = mb.countDeadPeople(plist);//丧尸数量
+		
+		JLabel numberPeoplelbl=new JLabel("numberPeople："+numberPeople);
+		JLabel numberNormalPeoplelbl=new JLabel("numberNormalPeople："+numberNormalPeople);
+		JLabel numberDeadPeoplelbl=new JLabel("numberDeadPeople："+numberDeadPeople);
+		
+		add(numberPeoplelbl);
+		add(numberNormalPeoplelbl);
+		add(numberDeadPeoplelbl);
+		
+		//numberPeoplelbl.setBounds(720,20,80,20);
+		
+		
+	}
+
+
+
 
 	public void paintComponent(Graphics g)
 	{
-		super.paintComponent(g);	
-		for(int i=0;i<row;i++)
-		{
-			for(int j=0;j<col;j++)
-			{
-					g.setColor(Color.GRAY);
-					g.fillRect(j*10, i*10, 10, 10);
-					g.setColor(Color.black);
-					g.drawRect(j*10, i*10, 10, 10);
+		super.paintComponent(g);
+		
+		//paintMap(g);//画地图格子的线条和填充，暂时不需要
+		paintPeople(g);//画人类分布
+		
+	}
+	
+	/*画地图格子的线条
+	private void paintMap(Graphics g) {
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				// g.setColor(Color.GRAY);
+				// g.fillRect(j*10, i*10, 10, 10);
+				g.setColor(Color.black);
+				g.drawRect(j * 10, i * 10, 10, 10);
 			}
 		}
+	}*/
+
+	//画人类分布方法
+	public void paintPeople(Graphics g)
+	{
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
-			if(it.next().ptype==1)
+			People p = it.next();//存储it.next()的值，防止跳跃
+			if(p.ptype==0)//若是丧尸，显示红色
 			{
 				g.setColor(Color.red);
-				g.fillRect(it.next().getPpos().getX()*10, it.next().getPpos().getY()*10, 10, 10);
+				g.fillRect(p.getPpos().getX()*10, p.getPpos().getY()*10, 10, 10);
 			}
-			else
+			else//若是正常人，显示绿色
 			{
-				g.setColor(Color.yellow);
-				g.fillRect(it.next().getPpos().getX()*10, it.next().getPpos().getY()*10, 10, 10);
+				g.setColor(Color.green);
+				g.fillRect(p.getPpos().getX()*10, p.getPpos().getY()*10, 10, 10);
 			}
 		}
-		
 	}
 	
 

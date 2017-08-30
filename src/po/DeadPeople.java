@@ -11,18 +11,19 @@ public class DeadPeople extends People{
 	
 	public DeadPeople() {
 		super();
-		// TODO Auto-generated constructor stub
+	 
 	}
 
-	public DeadPeople(int pid,Position ppos, 
-			int level, int baseDamage, int killNumber) {
+	
+	
+	public DeadPeople(int pid,Position ppos) {
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
 		this.ptype = 0;//丧尸类型为0
-		this.level = level;
-		this.baseDamage = baseDamage;
-		this.killNumber = killNumber;
+		this.level = 1;
+		this.baseDamage = 10;//暂时默认为10
+		this.killNumber = 0;
 	}
 
 	public int getLevel() {

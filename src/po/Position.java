@@ -9,7 +9,7 @@ public class Position {
 	
 	public Position() {
 		super();
-		// TODO Auto-generated constructor stub
+		 
 	}
 	public Position(int x, int y) {
 		super();

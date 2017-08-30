@@ -15,7 +15,7 @@ public class People {
 	
 	public People() {
 		super();
-		// TODO Auto-generated constructor stub
+		 
 	}
 
 
@@ -67,4 +67,14 @@ public class People {
 	public int getTrapYear(){
 		return trapYear;
 	}
+
+
+	@Override
+	public String toString() {
+		return "People [pid=" + pid + ", ppos=" + ppos + 
+				", ptype=" + ptype + ", trapYear=" + trapYear + "]";
+	}
+	
+	
+	
 }

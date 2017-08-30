@@ -20,7 +20,7 @@ public class Tool {
 	
 	public Tool() {
 		super();
-		// TODO Auto-generated constructor stub
+		 
 	}
 
 	

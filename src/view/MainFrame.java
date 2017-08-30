@@ -1,49 +1,49 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 
-import javafx.scene.control.Cell;
+import po.Cell;
 import po.People;
 import po.Tool;
 
  
 
 public class MainFrame extends JFrame implements MouseMotionListener{
-	private final MapPanel mp;
-	public static List<People> plist=new ArrayList<People>();
-	public static List<Tool> tlist=new ArrayList<Tool>();
-	public static List<Cell> clist=new ArrayList<Cell>();
+
+
+	private final MapPanel mp;//地图面板
+	
+	public static List<People> plist=new ArrayList<People>();//存放人物的list集合
+	public static List<Tool> tlist=new ArrayList<Tool>();//存放道具的list集合
+	public static List<Cell> clist=new ArrayList<Cell>();//存放地图格子的list集合
+	
+	public final static int MapRow=70;//地图的高
+	public final static int MapCol=100;//地图的长
+	public final static int FrameRow = 800;//主窗体的高
+	public final static int FrameCol = 1200;//主窗体的长
 	
 	
-	// static MapPanel mp=new MapPanel();  //实例化一个面板
-	public MainFrame(int row,int col,List<People> plist)
+	public MainFrame(int row,int col)
 	{
-		mp=new MapPanel(row,col,plist);
-		mp.setBackground(Color.BLUE);//设置面板背景颜色
+		mp=new MapPanel(row,col,plist,tlist,clist);
+		mp.setBackground(Color.white);//设置面板背景颜色
 		add(mp);//将面板添加到窗体中 
-		//mp.setRandom();
-		
 		
 	}
-	
-	 
+
 	public static void main(String[]args)
 	{
-		MainFrame mf=new MainFrame(50,50,plist);//实例化窗体对象
-		
-		mf.setSize(1200,800);//设置窗体大小
+		MainFrame mf=new MainFrame(MapRow,MapCol);//实例化窗体对象
+		mf.setSize(FrameCol,FrameRow);//设置窗体大小
 		mf.setBackground(Color.WHITE);//设置窗体的背景颜色
 		mf.setLocationRelativeTo(null);//显示在正中央
 		mf.setTitle("Dead World");//设置标题
@@ -52,14 +52,15 @@ public class MainFrame extends JFrame implements MouseMotionListener{
 		mf.setResizable(false); //不可改变窗体大小
 		//mf.setLayout(null);  //设置窗体布局为空布局
 		
-		mf.addMouseMotionListener(mf);
-		JMenuBar menu=new JMenuBar();
+		mf.addMouseMotionListener(mf);//添加鼠标监听事件
+		JMenuBar menu=new JMenuBar();//添加菜单栏
 		mf.setJMenuBar(menu);
 		
-		JMenu options =new JMenu("Options");
+		JMenu options =new JMenu("Options");//添加菜单
 		menu.add(options);
 		
-		JMenuItem start=options.add("Start");
+		JMenuItem start=options.add("Start");//添加“开始”菜单项
+		
 		
 
 	}
@@ -67,14 +68,14 @@ public class MainFrame extends JFrame implements MouseMotionListener{
 
 	
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+		 
 		
 	}
 
 
 	
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
+		 
 		
 	}
  
