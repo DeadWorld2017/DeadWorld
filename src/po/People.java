@@ -12,7 +12,7 @@ public class People {
 	public Position ppos;//位置
 	public boolean ptype;//人的类型,false是丧尸
 	public int trapYear;//物种逗留时间，初始为0
-	
+	private boolean state;//状态，false为不可操作
 
 
 	public People() {
@@ -72,6 +72,16 @@ public class People {
 	public String toString() {
 		return "People [pid=" + pid + ", ppos=" + ppos + 
 				", ptype=" + ptype + ", trapYear=" + trapYear + "]";
+	}
+
+
+	public boolean isState() {
+		return state;
+	}
+
+
+	public void setState(boolean state) {
+		this.state = state;
 	}
 	
 	

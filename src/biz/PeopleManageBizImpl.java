@@ -35,7 +35,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 		}
 	}
 	
-	@Override
+
 	//随机初始化丧尸
 	public void initDeadPeopleRandom(List<People> plist) {
 		 for(int i=0;i<countDeadPeople;i++){
@@ -49,7 +49,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 		 }
 		
 	}
-	@Override
+
 	//随机生成位置，需要传入row,col作为最大随机数的范围
 	public Position initPositionRandom(int row, int col) {
 		Random rd =new Random();//随机数
@@ -59,7 +59,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 		return pos;
 	}
 
-	@Override
+	
 	//随机生成性别，true为男生，false为女生
 	public boolean initGenderRandom() {
 		Random rd =new Random();//随机数	
@@ -67,7 +67,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 		return gender;
 	}
 
-	@Override
+
 	//随机生成年龄，年龄在0~100之间，符合正态分布
 	public int initAgeRandom() {
 		Random rd =new Random();//随机数
@@ -77,7 +77,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 		return age;
 	}
 
-	@Override
+
 	//随机生成存活能力值，范围在5~10之间，double型
 	public double initSurvivabilityRandom() {
 		Random rd =new Random();//随机数
@@ -86,7 +86,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 		return survivability;
 	}
 
-	@Override
+
 	//随机生成抗体，初始抗体生成几率为10%
 	public boolean initAntibodyRandom() {
 		Random rd =new Random();//随机数	
@@ -97,21 +97,21 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 			return false;
 	}
 
-	@Override
+
 	//初始生成丧尸基本攻击力，狂暴值，暂时不设随机数，默认为10
 	public int initBaseDamageRandom() {
 		return 10;
 	}
   
 
-	@Override
+	
 	public void turnToDead(int id, List<People> plist) {
 		NormalPeople np = (NormalPeople) plist.get(id);
 		if(np.isAntibody())//如果存在抗体，则跳过
 			return;
 		else//如果没有抗体则转化
 		{
-			np.setState(false);//变成丧尸
+			np.setState(false);//保持人的属性，将状态设为不可操作
 			int pid = np.pid;
 			Position ppos = np.ppos;
 			DeadPeople dp = new DeadPeople(pid,ppos);
@@ -120,36 +120,35 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 		
 	}
 
-	@Override
+	
 	public void turnToNormal(List<People> plist) {
 		 
 		
 	}
 
-	@Override
 	//存疑
 	public int countNormalPeople(List<People> plist) {
 		int numberNormalPeople = plist.size();
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
-			if(it.next().isPtype()==false)//丧尸：ptype为false
-				numberNormalPeople-=2;
+			if(it.next().isPtype()==false || it.next().isState()==false)//丧尸：ptype为false
+				numberNormalPeople--;
 		}
 		return numberNormalPeople;
 	}
 
-	@Override
+	
 	public int countDeadPeople(List<People> plist) {
 		int numberDeadPeople=0;
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
-			if(it.next().isPtype()==false)//丧尸：ptype为false
+			if(it.next().isPtype()==false)//丧尸：ptype为false 
 				numberDeadPeople++;
 		}
 		return numberDeadPeople;
 	}
 
-	@Override
+	
 	public int countPeople(List<People> plist) {
 		int numberPeople = countDeadPeople(plist)+countNormalPeople(plist);
 		return numberPeople;

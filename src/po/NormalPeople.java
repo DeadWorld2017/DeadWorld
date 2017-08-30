@@ -16,7 +16,7 @@ public class NormalPeople extends People{
 	private boolean antibody;//抗体,true为有抗体，false为无抗体
 	private List<Integer> tlist;//存放武器编号list
 	private int pregnancyFlag;//怀孕标记
-	private boolean state;//状态，false为已经被转化为丧尸
+	
 	
 		 
 	public NormalPeople() {
@@ -36,7 +36,7 @@ public class NormalPeople extends People{
 		this.antibody = antibody;
 		this.tlist = null;
 		this.pregnancyFlag = pregnancyFlag;
-		this.state = true;
+		this.setState(true);
 	}
 
 	public boolean isGender() {
@@ -95,13 +95,7 @@ public class NormalPeople extends People{
 				", antibody="+ antibody + "]";
 	}
 
-	public boolean isState() {
-		return state;
-	}
-
-	public void setState(boolean state) {
-		this.state = state;
-	}
+	
 
 
 	
