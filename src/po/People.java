@@ -8,11 +8,11 @@ package po;
  * 
  */
 public class People {
-	public int pid;//人的编号
-	public Position ppos;//位置
-	public boolean ptype;//人的类型,false是丧尸
-	public int trapYear;//物种逗留时间，初始为0
-	private boolean state;//状态，false为不可操作
+	protected int pid;//人的编号
+	protected Position ppos;//位置
+	protected boolean ptype;//人的类型,false是丧尸
+	protected int trapYear;//物种逗留时间，初始为0
+	protected boolean state;//状态，false为不可操作
 
 
 	public People() {
@@ -68,10 +68,12 @@ public class People {
 	}
 
 
+	
+
 	@Override
 	public String toString() {
-		return "People [pid=" + pid + ", ppos=" + ppos + 
-				", ptype=" + ptype + ", trapYear=" + trapYear + "]";
+		return "People [pid=" + pid + ", ppos=" + 
+			ppos + ", ptype=" + ptype + ", state=" + state + "]";
 	}
 
 

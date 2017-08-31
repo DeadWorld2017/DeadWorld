@@ -25,7 +25,7 @@ public class DeadPeople extends People{
 		this.level = 1;
 		this.baseDamage = 10;//ÔÝÊ±Ä¬ÈÏÎª10
 		this.killNumber = 0;
-		this.setState(true);
+		this.state=true;
 	}
 
 	public int getLevel() {
@@ -50,6 +50,15 @@ public class DeadPeople extends People{
 
 	public void setKillNumber(int killNumber) {
 		this.killNumber = killNumber;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "DeadPeople [level=" + level + ", killNumber=" + 
+				killNumber + ", pid=" + pid + ", ppos=" + ppos
+				+ ", ptype=" + ptype + ", state=" + state + "]";
 	}
 
 

@@ -36,7 +36,7 @@ public class NormalPeople extends People{
 		this.antibody = antibody;
 		this.tlist = null;
 		this.pregnancyFlag = pregnancyFlag;
-		this.setState(true);
+		this.state=true;
 	}
 
 	public boolean isGender() {
@@ -89,11 +89,13 @@ public class NormalPeople extends People{
 
 	@Override
 	public String toString() {
-		return "NormalPeople [pid=" + pid + ", ptype=" + ptype + 
-				"gender=" + gender + ", age=" + age + 
-				", survivability=" + survivability + 
-				", antibody="+ antibody + "]";
+		return "NormalPeople [gender=" + gender + ", age=" + age +
+				", antibody=" + antibody + ", pid=" + pid + 
+				", ppos="+ ppos + ", ptype=" + ptype + ", state=" + 
+				state + "]";
 	}
+
+
 
 	
 

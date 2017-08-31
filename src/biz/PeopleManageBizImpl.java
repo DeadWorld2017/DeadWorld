@@ -44,8 +44,8 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 				 Random rd = new Random();
 				 int pid = rd.nextInt(countNormalPeople);
 				 np = (NormalPeople) plist.get(pid);
-			 }while(np.isPtype()==false);//若已经是丧尸了就重新随机一个数
-			 turnToDead(np.pid,plist);//转化为丧尸
+			 }while(np.isPtype()==false||np.isState()==false);//若已经是丧尸或者状态不对，就重新随机一个数
+			 turnToDead(np.getPid(),plist);//转化为丧尸
 		 }
 		
 	}
@@ -112,8 +112,8 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 		else//如果没有抗体则转化
 		{
 			np.setState(false);//保持人的属性，将状态设为不可操作
-			int pid = np.pid;
-			Position ppos = np.ppos;
+			int pid = np.getPid();
+			Position ppos = np.getPpos();
 			DeadPeople dp = new DeadPeople(pid,ppos);
 			plist.add(dp);	//加入list集合
 		}
@@ -128,29 +128,33 @@ public class PeopleManageBizImpl implements PeopleManageBiz{
 
 	//存疑
 	public int countNormalPeople(List<People> plist) {
-		int numberNormalPeople = plist.size();
+		int numberNormalPeople = 0;
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
-			if(it.next().isPtype()==false || it.next().isState()==false)//丧尸：ptype为false
-				numberNormalPeople--;
+			People p = it.next();
+			if(p.isPtype()==true && p.isState()==true)//丧尸：ptype为false
+				numberNormalPeople++;
+			System.out.println(p.toString());
 		}
 		return numberNormalPeople;
 	}
 
 	
 	public int countDeadPeople(List<People> plist) {
-		int numberDeadPeople=0;
+		int numberDeadPeople = 0;
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
-			if(it.next().isPtype()==false)//丧尸：ptype为false 
+			People p = it.next();
+			if(p.isPtype()==false)//丧尸：ptype为false 
 				numberDeadPeople++;
+			System.out.println(p.toString());
 		}
 		return numberDeadPeople;
 	}
 
 	
 	public int countPeople(List<People> plist) {
-		int numberPeople = countDeadPeople(plist)+countNormalPeople(plist);
+		int numberPeople = countDeadPeople(plist) + countNormalPeople(plist);
 		return numberPeople;
 	}
 
