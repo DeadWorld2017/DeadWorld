@@ -26,7 +26,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 			int age = initAgeRandom();
 			double survivability = initSurvivabilityRandom();
 			boolean antibody = initAntibodyRandom();
-			int pregnancyFlag = 0;
+			boolean pregnancyFlag = true;
 
 			NormalPeople np = new NormalPeople(pid, ppos, gender, age, survivability, antibody, pregnancyFlag);
 			plist.add(np); // 加入list集合

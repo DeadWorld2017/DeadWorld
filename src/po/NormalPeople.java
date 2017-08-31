@@ -15,7 +15,7 @@ public class NormalPeople extends People {
 	private double survivability;// 存活能力值
 	private boolean antibody;// 抗体,true为有抗体，false为无抗体
 	private List<Integer> tlist;// 存放武器编号list
-	private int pregnancyFlag;// 怀孕标记
+	private boolean pregnancyFlag;// 怀孕标记
 
 	public NormalPeople() {
 		super();
@@ -23,7 +23,7 @@ public class NormalPeople extends People {
 	}
 
 	public NormalPeople(int pid, Position ppos, boolean gender, int age, double survivability, boolean antibody,
-			int pregnancyFlag) {
+			boolean pregnancyFlag) {
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
@@ -77,11 +77,11 @@ public class NormalPeople extends People {
 		this.tlist = tlist;
 	}
 
-	public int getPregnancyFlag() {
+	public boolean getPregnancyFlag() {
 		return pregnancyFlag;
 	}
 
-	public void setPregnancyFlag(int pregnancyFlag) {
+	public void setPregnancyFlag(boolean pregnancyFlag) {
 		this.pregnancyFlag = pregnancyFlag;
 	}
 
