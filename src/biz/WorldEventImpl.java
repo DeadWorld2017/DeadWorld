@@ -11,7 +11,8 @@ public class WorldEventImpl implements WorldEvent {
 	private int victoryOfNormalPeopleNumber = 0;// 正常人胜利的数量
 
 	private int paramRainProbability = 10;// 下雨概率的参数，暂定10%概率下雨，后期可更改
-
+	private double paramAttackByRain=0.8;//下雨影响攻击力的参数，暂定0.8
+	
 	@Override
 	public boolean isRain() {
 		Random rd = new Random();
@@ -24,7 +25,7 @@ public class WorldEventImpl implements WorldEvent {
 
 	@Override
 	public void isUpMorale() {
-
+			
 	}
 
 	@Override
@@ -64,6 +65,13 @@ public class WorldEventImpl implements WorldEvent {
 
 	public void setKillNormalPeopleNumber(int victoryOfNormalPeopleNumber) {
 		this.victoryOfNormalPeopleNumber = victoryOfNormalPeopleNumber;
+	}
+
+	@Override
+	
+	public int attackByRain(int attackValue) {
+		attackValue *= paramAttackByRain;//传入攻击力，乘以百分比
+		return 0;
 	}
 
 }
