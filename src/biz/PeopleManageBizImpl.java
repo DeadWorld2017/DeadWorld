@@ -95,6 +95,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		return 10;
 	}
 
+	// 将正常人转化为丧尸
 	public void turnToDead(int id, List<People> plist) {
 		NormalPeople np = (NormalPeople) plist.get(id);
 		if (np.isAntibody()) // 如果存在抗体，则跳过
@@ -114,7 +115,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 
 	}
 
-	// 存疑
+	// 计算正常人数量
 	public int countNormalPeople(List<People> plist) {
 		int numberNormalPeople = 0;
 		Iterator<People> it = plist.iterator();
@@ -122,23 +123,22 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 			People p = it.next();
 			if (p.isPtype() == true && p.isState() == true) // 丧尸：ptype为false
 				numberNormalPeople++;
-			System.out.println(p.toString());
 		}
 		return numberNormalPeople;
 	}
-
+	
+	// 计算丧尸数量
 	public int countDeadPeople(List<People> plist) {
 		int numberDeadPeople = 0;
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
-			People p = it.next();
-			if (p.isPtype() == false) // 丧尸：ptype为false
+			if (it.next().isPtype() == false) // 丧尸：ptype为false
 				numberDeadPeople++;
-			System.out.println(p.toString());
 		}
 		return numberDeadPeople;
 	}
-
+	
+	// 计算人类总数
 	public int countPeople(List<People> plist) {
 		int numberPeople = countDeadPeople(plist) + countNormalPeople(plist);
 		return numberPeople;
