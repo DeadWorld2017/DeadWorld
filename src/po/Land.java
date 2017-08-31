@@ -11,41 +11,34 @@ package po;
  * 
  */
 public class Land {
-	private int ltype;//地形类型
-	private Position lpos;//地形坐标
-	
+	private int ltype;// 地形类型
+	private Position lpos;// 地形坐标
+
 	public Land() {
 		super();
-		 
+
 	}
-	
+
 	public Land(int ltype, Position lpos) {
 		super();
 		this.ltype = ltype;
 		this.lpos = lpos;
 	}
 
-
-
 	public int getLtype() {
 		return ltype;
 	}
-
 
 	public void setLtype(int ltype) {
 		this.ltype = ltype;
 	}
 
-
 	public Position getLpos() {
 		return lpos;
 	}
-
 
 	public void setLpos(Position lpos) {
 		this.lpos = lpos;
 	}
 
-	
-	
 }

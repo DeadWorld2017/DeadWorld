@@ -8,35 +8,33 @@ import java.util.List;
  * state 为true为还能行动的人
  * 		 为false为已经被转化为丧尸的人
  */
-public class NormalPeople extends People{
+public class NormalPeople extends People {
 
-	private boolean gender;//性别,true为男性，false为女性
-	private int age;//年龄
-	private double survivability;//存活能力值
-	private boolean antibody;//抗体,true为有抗体，false为无抗体
-	private List<Integer> tlist;//存放武器编号list
-	private int pregnancyFlag;//怀孕标记
-	
-	
-		 
+	private boolean gender;// 性别,true为男性，false为女性
+	private int age;// 年龄
+	private double survivability;// 存活能力值
+	private boolean antibody;// 抗体,true为有抗体，false为无抗体
+	private List<Integer> tlist;// 存放武器编号list
+	private int pregnancyFlag;// 怀孕标记
+
 	public NormalPeople() {
 		super();
-		 
+
 	}
 
-	public NormalPeople(int pid,Position ppos, boolean gender, int age, 
-			double survivability, boolean antibody, int pregnancyFlag) {
+	public NormalPeople(int pid, Position ppos, boolean gender, int age, double survivability, boolean antibody,
+			int pregnancyFlag) {
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
-		this.ptype = true;//正常人类型为1
+		this.ptype = true;// 正常人类型为1
 		this.gender = gender;
 		this.age = age;
 		this.survivability = survivability;
 		this.antibody = antibody;
 		this.tlist = null;
 		this.pregnancyFlag = pregnancyFlag;
-		this.state=true;
+		this.state = true;
 	}
 
 	public boolean isGender() {
@@ -89,19 +87,8 @@ public class NormalPeople extends People{
 
 	@Override
 	public String toString() {
-		return "NormalPeople [gender=" + gender + ", age=" + age +
-				", antibody=" + antibody + ", pid=" + pid + 
-				", ppos="+ ppos + ", ptype=" + ptype + ", state=" + 
-				state + "]";
+		return "NormalPeople [gender=" + gender + ", age=" + age + ", antibody=" + antibody + ", pid=" + pid + ", ppos="
+				+ ppos + ", ptype=" + ptype + ", state=" + state + "]";
 	}
 
-
-
-	
-
-
-	
-	
-	
-	
 }

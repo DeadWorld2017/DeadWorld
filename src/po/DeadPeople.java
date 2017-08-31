@@ -4,28 +4,25 @@ package po;
  * 继承People类
  * 类型编号为0
  */
-public class DeadPeople extends People{
-	private int level;//等级1、2、3
-	private int baseDamage;//基本攻击力，狂暴值
-	private int killNumber;//杀人数量，用于升级
-	
-	
+public class DeadPeople extends People {
+	private int level;// 等级1、2、3
+	private int baseDamage;// 基本攻击力，狂暴值
+	private int killNumber;// 杀人数量，用于升级
+
 	public DeadPeople() {
 		super();
-	 
+
 	}
 
-	
-	
-	public DeadPeople(int pid,Position ppos) {
+	public DeadPeople(int pid, Position ppos) {
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
-		this.ptype = false;//丧尸类型为0
+		this.ptype = false;// 丧尸类型为0
 		this.level = 1;
-		this.baseDamage = 10;//暂时默认为10
+		this.baseDamage = 10;// 暂时默认为10
 		this.killNumber = 0;
-		this.state=true;
+		this.state = true;
 	}
 
 	public int getLevel() {
@@ -52,23 +49,10 @@ public class DeadPeople extends People{
 		this.killNumber = killNumber;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "DeadPeople [level=" + level + ", killNumber=" + 
-				killNumber + ", pid=" + pid + ", ppos=" + ppos
+		return "DeadPeople [level=" + level + ", killNumber=" + killNumber + ", pid=" + pid + ", ppos=" + ppos
 				+ ", ptype=" + ptype + ", state=" + state + "]";
 	}
 
-
-
-
-
-
-
-	
-	
-	
-	
 }

@@ -5,7 +5,7 @@ import po.Cell;
 import po.People;
 
 //土地事件接口实现
-public class LandEventImpl implements LandEvent{
+public class LandEventImpl implements LandEvent {
 
 	public int findLandByPeople(People np, List<Cell> listC) {
 		// TODO Auto-generated method stub
@@ -14,12 +14,12 @@ public class LandEventImpl implements LandEvent{
 
 	public void isShelter(People np) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void isDeathtrap(People p) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public int isRadient() {
@@ -39,9 +39,7 @@ public class LandEventImpl implements LandEvent{
 
 	public void isTrappedLand(People p) {
 		// TODO Auto-generated method stub
-		
-	}
 
-	
+	}
 
 }
