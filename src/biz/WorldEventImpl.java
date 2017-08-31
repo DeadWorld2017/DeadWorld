@@ -22,16 +22,7 @@ public class WorldEventImpl implements WorldEvent {
 		else
 			return false;
 	}
-
-	@Override
-	public void isUpMorale() {
-			
-	}
-
-	@Override
-	public void isDownMorale() {
-
-	}
+ 
 
 	@Override
 	// 每次战斗结束后调用进行判断，传入胜利方的类实例
@@ -72,6 +63,20 @@ public class WorldEventImpl implements WorldEvent {
 	public int attackByRain(int attackValue) {
 		attackValue *= paramAttackByRain;//传入攻击力，乘以百分比
 		return 0;
+	}
+
+
+	@Override
+	public boolean isUpMorale() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean isDownMorale() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
