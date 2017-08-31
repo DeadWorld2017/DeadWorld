@@ -16,7 +16,7 @@ import po.Cell;
  * 
  */
 //地形事件接口
-public interface LandEvent {
+public interface LandEventBiz {
 
 	// 通过传进物种实例，通过坐标寻找对应的地形，返回对应的land的类型编号（1-6），即ltype
 	public int findLandByPeople(People p, List<Cell> clist);

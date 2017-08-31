@@ -8,7 +8,7 @@ import po.NormalPeople;
 import po.People;
 
 //土地事件接口实现
-public class LandEventImpl implements LandEvent {
+public class LandEventBizImpl implements LandEventBiz {
 
 	public int findLandByPeople(People p, List<Cell> clist) {
 		//通过传入的People类型，找到这个人所在的位置，地形类型

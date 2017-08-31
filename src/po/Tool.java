@@ -17,18 +17,20 @@ public class Tool {
 	private int ttype;// 道具类型
 	private Position tpos;// 道具坐标
 	private boolean usage;// 使用情况，0表示在地图上，1表示在人物身上
+	private int duration;//持续时间
 
 	public Tool() {
 		super();
 
 	}
 
-	public Tool(int tid, int ttype, Position tpos, boolean usage) {
+	public Tool(int tid, int ttype, Position tpos, boolean usage,int duration) {
 		super();
 		this.tid = tid;
 		this.ttype = ttype;
 		this.tpos = tpos;
 		this.usage = usage;
+		this.duration = duration;
 	}
 
 	public Position getTpos() {
@@ -61,6 +63,14 @@ public class Tool {
 
 	public void setTid(int tid) {
 		this.tid = tid;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
 }

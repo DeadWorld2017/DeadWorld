@@ -14,7 +14,7 @@ public class NormalPeople extends People {
 	private int age;// 年龄
 	private double survivability;// 存活能力值
 	private boolean antibody;// 抗体,true为有抗体，false为无抗体
-	private List<Integer> tlist;// 存放武器编号list
+	private List<Tool> tlist;// 存放武器编号list
 	private boolean pregnancyFlag;// 怀孕标记
 
 	public NormalPeople() {
@@ -69,11 +69,11 @@ public class NormalPeople extends People {
 		this.antibody = antibody;
 	}
 
-	public List<Integer> getTlist() {
+	public List<Tool> getTlist() {
 		return tlist;
 	}
 
-	public void setTlist(List<Integer> tlist) {
+	public void setTlist(List<Tool> tlist) {
 		this.tlist = tlist;
 	}
 
