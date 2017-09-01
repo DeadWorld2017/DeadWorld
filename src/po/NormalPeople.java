@@ -84,6 +84,11 @@ public class NormalPeople extends People {
 		this.pregnancyFlag = pregnancyFlag;
 	}
 
+	@Override
+	public String toString() {
+		return "NormalPeople [pid=" + pid + ", ppos=" + ppos + ", ptype=" + ptype + "]";
+	}
+
 	 
 
 }

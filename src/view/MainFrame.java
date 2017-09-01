@@ -1,15 +1,14 @@
 package view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 import po.Cell;
 import po.People;
@@ -32,7 +31,6 @@ public class MainFrame extends JFrame implements MouseMotionListener {
 		mp = new MapPanel(row, col, plist, tlist, clist);
 		mp.setBackground(Color.white);// 设置面板背景颜色
 		add(mp);// 将面板添加到窗体中
-
 	}
 
 	public static void main(String[] args) {
@@ -54,7 +52,24 @@ public class MainFrame extends JFrame implements MouseMotionListener {
 		menu.add(options);
 
 		JMenuItem start = options.add("Start");// 添加“开始”菜单项
+		start.addActionListener(mf.new StartActionListener());
+		JMenuItem next = options.add("Next");// 添加“下一步”菜单项
+		next.addActionListener(mf.new NextActionListener());
 
+	}
+
+	class StartActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			mp.startWorld();
+			repaint();
+		}
+	}
+
+	class NextActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			mp.nextWorld();
+			repaint();
+		}
 	}
 
 	public void mouseDragged(MouseEvent e) {

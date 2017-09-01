@@ -47,6 +47,11 @@ public class DeadPeople extends People {
 	public void setKillNumber(int killNumber) {
 		this.killNumber = killNumber;
 	}
+
+	@Override
+	public String toString() {
+		return "DeadPeople [pid=" + pid + ", ppos=" + ppos + ", ptype=" + ptype + "]";
+	}
  
 
 }
