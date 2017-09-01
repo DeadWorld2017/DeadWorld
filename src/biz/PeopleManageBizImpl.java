@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import po.Cell;
 import po.DeadPeople;
 import po.NormalPeople;
 import po.People;
@@ -18,10 +19,21 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 
 	// 随机初始化正常人类方法，传入row,col作为随机数的最大范围，传入plist作为导入
 	// col为长，即x轴方向，row为高,即y轴方向
-	public void initNormalPeopleRandom(int row, int col, List<People> plist) {
+	public void initNormalPeopleRandom(int row, int col, List<People> plist,List<Cell> clist) {
+		Position ppos;
+		int index;
+		Cell c;
 		for (int i = 0; i < countNormalPeople; i++) {
 			int pid = i;
-			Position ppos = initPositionRandom(row, col);
+			do{
+				ppos = initPositionRandom(row, col);
+				index=ppos.getY()*col+ppos.getX();//Y乘以高+X，得到坐标
+				c = clist.get(index);
+			}while(c.getPid()!=-1);//格子上不存在人，重新生成	
+			
+			c.setPid(pid);
+			c.setPtype(1);//格子加入人物
+			
 			boolean gender = initGenderRandom();
 			int age = initAgeRandom();
 			double survivability = initSurvivabilityRandom();
@@ -30,11 +42,13 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 
 			NormalPeople np = new NormalPeople(pid, ppos, gender, age, survivability, antibody, pregnancyFlag);
 			plist.add(np); // 加入list集合
+			
+			
 		}
 	}
 
 	// 随机初始化丧尸
-	public void initDeadPeopleRandom(List<People> plist) {
+	public void initDeadPeopleRandom(int col,List<People> plist,List<Cell> clist) {
 		for (int i = 0; i < countDeadPeople; i++) {
 			NormalPeople np;
 			do {
@@ -42,7 +56,9 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 				int pid = rd.nextInt(countNormalPeople);
 				np = (NormalPeople) plist.get(pid);
 			} while (np.getPtype() == 0 || np.getPtype() == 2);// 若已经是丧尸或者状态不对，就重新随机一个数
-			turnToDead(np.getPid(), plist);// 转化为丧尸
+			turnToDead(col,np.getPid(), plist,clist);// 转化为丧尸
+			
+			
 		}
 
 	}
@@ -96,7 +112,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 	}
 
 	// 将正常人转化为丧尸
-	public void turnToDead(int id, List<People> plist) {
+	public void turnToDead(int col, int id, List<People> plist,List<Cell> clist) {
 		NormalPeople np = (NormalPeople) plist.get(id);
 		if (np.isAntibody()) // 如果存在抗体，则跳过
 			return;
@@ -107,9 +123,16 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 			Position ppos = np.getPpos();
 			DeadPeople dp = new DeadPeople(pid, ppos);
 			plist.add(dp); // 加入list集合
+			
+			Cell c = clist.get(ppos.getY()*col+ppos.getX());//Y乘以高+X，得到坐标
+			c.setPtype(0);//id不变，type变丧尸
+			
 			np.setPpos(null);//将坐标取消
 		}
-
+		
+		Position nppos = np.getPpos();
+		
+		
 	}
 
 	public void turnToNormal(List<People> plist) {

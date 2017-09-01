@@ -1,7 +1,7 @@
 package po;
 
 /*格子类
- * 
+ * -1为不存在
  */
 public class Cell {
 	private Position cpos;// 格子的位置
@@ -11,18 +11,24 @@ public class Cell {
 	private int ttype;// 道具类型
 	private int ltype;// 地形类型
 
-	public Cell() {
+	public Cell(Position cpos) {
 		super();
+		this.cpos = cpos;
+		this.pid = -1;
+		this.tid = -1;
+		this.ttype = -1;
+		this.ltype = -1;
+		this.ptype = -1;
 
 	}
 
 	public Cell(Position cpos, int ttype, int ltype, int pid, int tid, int ptype) {
 		super();
 		this.cpos = cpos;
-		this.ttype = ttype;
-		this.ltype = ltype;
 		this.pid = pid;
 		this.tid = tid;
+		this.ttype = ttype;
+		this.ltype = ltype;
 		this.ptype = ptype;
 	}
 

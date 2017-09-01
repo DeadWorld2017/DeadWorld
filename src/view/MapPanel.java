@@ -8,6 +8,8 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import biz.MapManageBiz;
+import biz.MapManageBizImpl;
 import biz.PeopleManageBiz;
 import biz.PeopleManageBizImpl;
 import po.Cell;
@@ -22,7 +24,8 @@ public class MapPanel extends JPanel {
 	List<Tool> tlist;// 武器集合
 	List<Cell> clist;// 地图格子集合
 
-	PeopleManageBiz mb = new PeopleManageBizImpl();
+	PeopleManageBiz pmb = new PeopleManageBizImpl();
+	MapManageBiz mmb = new MapManageBizImpl();
 
 	public MapPanel(int row, int col, List<People> tempplist, List<Tool> temptlist, List<Cell> tempclist) {
 		super();
@@ -31,22 +34,20 @@ public class MapPanel extends JPanel {
 		this.plist = tempplist;
 		this.tlist = temptlist;
 		this.clist = tempclist;
+		mmb.initMapList(row,col,clist);
+		pmb.initNormalPeopleRandom(row, col, plist,clist);// 初始化生成正常人类
+		
 
-		mb.initNormalPeopleRandom(row, col, plist);// 初始化生成正常人类
-		/*
-		 * 验证成功数据 Iterator<People> it = plist.iterator(); while (it.hasNext()) {
-		 * NormalPeople np = (NormalPeople)plist.get(it.next().pid);
-		 * System.out.println(np.toString()); }
-		 */
-		mb.initDeadPeopleRandom(plist);// 部分人类转化为丧尸
+		pmb.initDeadPeopleRandom(col,plist,clist);// 部分人类转化为丧尸
 		showNumber();// 调用显示数量的Label
+		
 	}
 
 	// 调用显示数量的Label
 	private void showNumber() {
-		int numberPeople = mb.countPeople(plist);// 所有人数量
-		int numberNormalPeople = mb.countNormalPeople(plist);// 正常人数量
-		int numberDeadPeople = mb.countDeadPeople(plist);// 丧尸数量
+		int numberPeople = pmb.countPeople(plist);// 所有人数量
+		int numberNormalPeople = pmb.countNormalPeople(plist);// 正常人数量
+		int numberDeadPeople = pmb.countDeadPeople(plist);// 丧尸数量
 
 		JLabel numberPeoplelbl = new JLabel("物种数量：" + numberPeople);
 		JLabel numberNormalPeoplelbl = new JLabel("正常人数量：" + numberNormalPeople);
