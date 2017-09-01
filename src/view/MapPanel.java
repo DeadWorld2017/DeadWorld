@@ -83,11 +83,11 @@ public class MapPanel extends JPanel {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();// 存储it.next()的值，防止跳跃
-			if (p.isPtype()) // 若是正常人，显示绿色
+			if (p.getPtype()==1) // 若是正常人，显示绿色
 			{
 				g.setColor(Color.green);
 				g.fillRect(p.getPpos().getX() * 10, p.getPpos().getY() * 10, 10, 10);
-			} else// 若是丧尸，显示红色
+			} else if(p.getPtype()==0)// 若是丧尸，显示红色
 			{
 				g.setColor(Color.red);
 				g.fillRect(p.getPpos().getX() * 10, p.getPpos().getY() * 10, 10, 10);

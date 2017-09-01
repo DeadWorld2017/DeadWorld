@@ -4,9 +4,8 @@ import java.util.List;
 
 /*正常人类
  * 继承People类
- * 类型编号为1
- * state 为true为还能行动的人
- * 		 为false为已经被转化为丧尸的人
+ * 类型编号为1，正常存在的人
+ * 类型编号为2，被转化为丧尸被保存下来的人
  */
 public class NormalPeople extends People {
 
@@ -22,19 +21,19 @@ public class NormalPeople extends People {
 
 	}
 
-	public NormalPeople(int pid, Position ppos, boolean gender, int age, double survivability, boolean antibody,
+	public NormalPeople(int pid, Position ppos, boolean gender,
+			int age, double survivability, boolean antibody,
 			boolean pregnancyFlag) {
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
-		this.ptype = true;// 正常人类型为1
+		this.ptype = 1;// 正常人类型为1
 		this.gender = gender;
 		this.age = age;
 		this.survivability = survivability;
 		this.antibody = antibody;
 		this.tlist = null;
 		this.pregnancyFlag = pregnancyFlag;
-		this.state = true;
 	}
 
 	public boolean isGender() {
@@ -85,10 +84,6 @@ public class NormalPeople extends People {
 		this.pregnancyFlag = pregnancyFlag;
 	}
 
-	@Override
-	public String toString() {
-		return "NormalPeople [gender=" + gender + ", age=" + age + ", antibody=" + antibody + ", pid=" + pid + ", ppos="
-				+ ppos + ", ptype=" + ptype + ", state=" + state + "]";
-	}
+	 
 
 }

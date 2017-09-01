@@ -52,7 +52,7 @@ public class WorldEventBizImpl implements WorldEventBiz {
 	@Override
 	// 每次战斗结束后调用进行判断，传入胜利方的类实例
 	public void finishBattle(People p) {
-		if (p.isPtype() == true) // 丧尸胜利
+		if (p.getPtype() == 0) // 丧尸胜利
 			victoryOfDeadPeopleNumber++;
 		else// 正常人胜利
 			victoryOfNormalPeopleNumber++;

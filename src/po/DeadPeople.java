@@ -2,7 +2,7 @@ package po;
 
 /*丧尸类
  * 继承People类
- * 类型编号为0
+ * ptype=0是丧尸
  */
 public class DeadPeople extends People {
 	private int level;// 等级1、2、3
@@ -18,11 +18,10 @@ public class DeadPeople extends People {
 		super();
 		this.pid = pid;
 		this.ppos = ppos;
-		this.ptype = false;// 丧尸类型为0
+		this.ptype = 0;// 丧尸类型为0
 		this.level = 1;
 		this.baseDamage = 10;// 暂时默认为10
 		this.killNumber = 0;
-		this.state = true;
 	}
 
 	public int getLevel() {
@@ -48,11 +47,6 @@ public class DeadPeople extends People {
 	public void setKillNumber(int killNumber) {
 		this.killNumber = killNumber;
 	}
-
-	@Override
-	public String toString() {
-		return "DeadPeople [level=" + level + ", killNumber=" + killNumber + ", pid=" + pid + ", ppos=" + ppos
-				+ ", ptype=" + ptype + ", state=" + state + "]";
-	}
+ 
 
 }
