@@ -3,6 +3,7 @@ package biz;
 import java.util.List;
 
 import po.Cell;
+import po.NormalPeople;
 import po.People;
 
 
@@ -14,19 +15,24 @@ public interface NormalEventBiz {
 	public void PregnantManage(List<People> plist, List<Cell> clist, int row, int col);
 	
 	//判断周围满足条件者，返回匹配的对象
-	public People PregnantMatch(People p, List<People> plist, List<Cell> clist, int row, int col);
+	public NormalPeople PregnantMatch(People p, List<People> plist, List<Cell> clist, int row, int col);
+	
+	//判断周围格子，满足条件加入list
+	public void JudgeCell(int x, int y, List<People> markPList, List<People> plist);
 	
 	//将匹配好的对象实现交配，返回新产生的孩子实例
-	public People CreateChild(People p1, People p2);
+	public People CreateChild(NormalPeople p1, NormalPeople p2);
 	
 	//死亡事件
 	//战斗死亡或者年老死亡都是调用这个函数
 	public void DeadEvent(People p, List<People> plist);
 	
 	//是否存在抗体
-	public int isAntibody(People p);
+	public int isAntibody(NormalPeople p);
 	
 	//年龄增长
 	//针对所有正常人类的年龄增长
 	public void AgeEvent(List<People> p);
+	
+
 }
