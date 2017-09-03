@@ -8,7 +8,7 @@ import po.Position;
 
 public class MapManageBizImpl implements MapManageBiz{
 
-	@Override
+
 	//³õÊ¼»¯¿ÕµØÍ¼
 	public void initMapList(int row, int col, List<Cell> clist) {
 		for(int i = 0;i<row;i++)

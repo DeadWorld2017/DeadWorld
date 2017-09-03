@@ -10,7 +10,7 @@ import po.Position;
 
 public class ManageBizImpl implements ManageBiz {
 
-	@Override
+
 	public void randomMove(int row, int col, List<People> plist, List<Cell> clist) {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
@@ -23,7 +23,7 @@ public class ManageBizImpl implements ManageBiz {
 		}
 	}
 
-	@Override
+
 	// 判断方向，1-8共8个方向，以0为正方向顺时针旋转，0为固定不动
 	public int direction() {
 		Random rd = new Random();
@@ -31,7 +31,7 @@ public class ManageBizImpl implements ManageBiz {
 		return direction;
 	}
 
-	@Override
+	
 	//
 	public Position moveByDirection(int row, int col, int direction, People p, List<Cell> clist) {
 		Position pposNew = new Position(p.getPpos().getX(),p.getPpos().getY());// 记录新的位置
@@ -96,7 +96,7 @@ public class ManageBizImpl implements ManageBiz {
 		}
 	}
 
-	@Override
+
 	public boolean hasPeople(int col, Position pos, List<Cell> clist) {
 		int index = pos.getY() * col + pos.getX();// Y乘以高+X，得到坐标
 		Cell c = clist.get(index);// 要移动的格子

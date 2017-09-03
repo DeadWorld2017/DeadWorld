@@ -59,7 +59,7 @@ public class ToolManageBizImpl implements ToolManageBiz {
 
 	}
 
-	@Override
+
 	public boolean isWeopon(int ttype) {
 		// TODO Auto-generated method stub
 		return false;
