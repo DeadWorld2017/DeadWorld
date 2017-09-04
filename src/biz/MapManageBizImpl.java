@@ -27,7 +27,7 @@ public class MapManageBizImpl implements MapManageBiz {
 			}
 	}
 
-	@Override
+
 	public void initLand(int row, int col, List<Land> llist,List<Cell> clist) {
 		Position lpos = new Position();
 		int index;// ÏÂ±ê
@@ -55,7 +55,7 @@ public class MapManageBizImpl implements MapManageBiz {
 		return pos;
 	}
 
-	@Override
+
 	public int initLtypeRandom() {
 		Random rd = new Random();
 		int ltype = rd.nextInt(6) + 1;// ´Ó1~6

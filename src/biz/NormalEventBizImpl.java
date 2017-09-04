@@ -206,8 +206,8 @@ public class NormalEventBizImpl implements NormalEventBiz{
 		else return 0;
 	}
 
-	public void AgeEvent(List<People> plist) {
-		//每次刷新的时候，将每个正常人的年龄增长一岁
+	/*public void AgeEvent(List<People> plist) {
+		//每次刷新的时候，将每个正常人的年龄增长一岁(不需要可以删除)
 		Iterator<People> it = plist.iterator();
 		while(it.hasNext()){
 			People p = it.next();
@@ -217,7 +217,7 @@ public class NormalEventBizImpl implements NormalEventBiz{
 				np.setAge(age);
 			}
 		}
-	}
+	}*/
 	
 	
 

@@ -32,7 +32,7 @@ public interface NormalEventBiz {
 	
 	//年龄增长
 	//针对所有正常人类的年龄增长
-	public void AgeEvent(List<People> p);
+	/*public void AgeEvent(List<People> p);*/
 	
 
 }

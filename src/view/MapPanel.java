@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import biz.PeopleManageBiz;
 import biz.PeopleManageBizImpl;
 import po.Cell;
 import po.Land;
+import po.NormalPeople;
 import po.People;
 import po.Position;
 import po.Tool;
@@ -68,6 +70,8 @@ public class MapPanel extends JPanel {
 
 	public void nextWorld() {
 		mb.randomMove(row, col, plist, clist);//随机移动
+		AdjustPregnancy(plist);
+		AdjustAge(plist);
 		neb.PregnantManage(plist, clist, row, col);//判断怀孕
 		updatePeople(numberPeoplelbl,numberNormalPeoplelbl,numberDeadPeoplelbl);
 		
@@ -251,6 +255,51 @@ public class MapPanel extends JPanel {
 			}
 
 		}
+	}
+	
+	public void AdjustPregnancy(List<People> plist){
+		//每年刷新地图时候调整正常人类怀孕标签
+		People p;
+		NormalPeople np;
+		Iterator<People> it = plist.iterator();
+		while(it.hasNext()){
+			p = it.next();
+			if( p.getPtype() == 1 ){
+				np = (NormalPeople)p;
+				np.setPregnancyFlag(true);
+			}
+		}
+		
+	}
+	
+	public void AdjustAge(List<People> plist){
+		//每年刷新地图时候调整正常人类年龄
+		People p;
+		NormalPeople np;
+		List<People> deadPList = new ArrayList<People>();
+		int age;
+		Iterator<People> it = plist.iterator();
+		while(it.hasNext()){
+			p = it.next();
+			if( p.getPtype() == 1 ){
+				np = (NormalPeople)p;
+				age = np.getAge();
+				age++;
+				if(age > 99){
+					deadPList.add(np);  //将年龄达到死亡要求的正常人类加入死亡list中处理
+				}
+				else{
+					np.setAge(age);
+				}
+			}
+		}
+		//将满足死亡条件的人类从plist中删除
+		Iterator<People> it2 = deadPList.iterator();
+		while(it2.hasNext()){
+			p = it2.next();
+			plist.remove(p);  //将对象从list中删除
+		}
+		
 	}
 
 }
