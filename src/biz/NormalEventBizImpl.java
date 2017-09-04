@@ -159,15 +159,25 @@ public class NormalEventBizImpl implements NormalEventBiz{
 			ppos = pmb.initPositionRandom(row, col);
 			index=ppos.getY()*col+ppos.getX();//Y乘以高+X，得到clist位置
 			c = clist.get(index);
-		}while(c.getPid()!=-1);//格子上不存在人，重新生成	
+		}while( c.getPid()!= -1 );//格子上不存在人，重新生成	
 		
 		c.setPid(pid);
 		c.setPtype(1);//格子加入正常人类
 		
 		gender = pmb.initGenderRandom();
-		age = pmb.initAgeRandom();
-		survivability = pmb.initSurvivabilityRandom();
-		antibody = pmb.initAntibodyRandom();
+		age = 0;
+		//新生婴儿会根据父母的存活能力值来改变
+		survivability = pmb.initSurvivabilityRandom() 
+				+ p1.getSurvivability() * 0.1+ p2.getSurvivability() * 0.1;
+		//新生婴儿携带抗体的情况和父母有关
+		if( p1.isAntibody() && p2.isAntibody() ) antibody = true;
+		else if( p1.isAntibody() || p2.isAntibody() ){
+			Random rd = new Random();
+			int mark = rd.nextInt(2);
+			if( mark == 0) antibody = false;
+			else antibody = true;
+		}
+		else antibody = false;
 		pregnancyFlag = true;
 
 		NormalPeople np = new NormalPeople(pid, ppos, gender, age, survivability, antibody, pregnancyFlag);
