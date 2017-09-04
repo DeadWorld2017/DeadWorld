@@ -21,7 +21,7 @@ public interface NormalEventBiz {
 	public void JudgeCell(int x, int y, List<People> markPList, List<People> plist);
 	
 	//将匹配好的对象实现交配，返回新产生的孩子实例
-	public People CreateChild(NormalPeople p1, NormalPeople p2);
+	public People CreateChild(NormalPeople p1, NormalPeople p2, int num, List<Cell> clist, int row, int col);
 	
 	//死亡事件
 	//战斗死亡或者年老死亡都是调用这个函数

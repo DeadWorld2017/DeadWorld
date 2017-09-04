@@ -14,6 +14,8 @@ import po.Position;
 //正常事件接口实现
 public class NormalEventBizImpl implements NormalEventBiz{
 
+	PeopleManageBiz pmb = new PeopleManageBizImpl(); //接口类
+	
 	public void PregnantManage(List<People> plist, List<Cell> clist, int row,
 			int col) {
 		// 统筹怀孕事件
@@ -25,7 +27,8 @@ public class NormalEventBizImpl implements NormalEventBiz{
 				if(np1.getPregnancyFlag()){
 					NormalPeople np2 = PregnantMatch(np1, plist, clist, row, col);
 					if(np2 !=null){
-						People newp = CreateChild(np1, np2);
+						int num = pmb.countPeople(plist);                  //获取数组元素个数
+						People newp = CreateChild(np1, np2, num, clist, row, col);
 						plist.add(newp);					
 					}
 				}
@@ -137,7 +140,7 @@ public class NormalEventBizImpl implements NormalEventBiz{
 		}
 		
 	}
-	public People CreateChild(NormalPeople p1, NormalPeople p2) {
+	public People CreateChild(NormalPeople p1, NormalPeople p2, int num, List<Cell> clist, int row, int col) {
 		int pid;
 		Position ppos;
 		boolean gender;
@@ -145,13 +148,31 @@ public class NormalEventBizImpl implements NormalEventBiz{
 		double survivability;
 		boolean antibody;
 		boolean pregnancyFlag;
+		int index;
+		Cell c;
 		//将相匹配的两个人做处理
 		p1.setPregnancyFlag(false);
 		p2.setPregnancyFlag(false);
 		//综合一下
-		//NormalPeople newNP = new NormalPeople(pid, ppos, gender, age, survivability, antibody, pregnancyFlag);
+		pid = num+1;
+		do{
+			ppos = pmb.initPositionRandom(row, col);
+			index=ppos.getY()*col+ppos.getX();//Y乘以高+X，得到clist位置
+			c = clist.get(index);
+		}while(c.getPid()!=-1);//格子上不存在人，重新生成	
 		
-		return null;
+		c.setPid(pid);
+		c.setPtype(1);//格子加入正常人类
+		
+		gender = pmb.initGenderRandom();
+		age = pmb.initAgeRandom();
+		survivability = pmb.initSurvivabilityRandom();
+		antibody = pmb.initAntibodyRandom();
+		pregnancyFlag = true;
+
+		NormalPeople np = new NormalPeople(pid, ppos, gender, age, survivability, antibody, pregnancyFlag);
+		
+		return np;
 	}
 
 	public void DeadEvent(People p, List<People> plist) {
@@ -177,5 +198,7 @@ public class NormalEventBizImpl implements NormalEventBiz{
 			}
 		}
 	}
+	
+	
 
 }
