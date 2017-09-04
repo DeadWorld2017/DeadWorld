@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import po.Cell;
+import po.Land;
 import po.NormalPeople;
 import po.People;
 import po.Position;
@@ -19,6 +20,7 @@ public class NormalEventBizImpl implements NormalEventBiz{
 	public void PregnantManage(List<People> plist, List<Cell> clist, int row,
 			int col) {
 		// 统筹怀孕事件
+		List<People> newchildlist = new ArrayList<People>();
 		Iterator<People> it = plist.iterator();
 		while(it.hasNext()){
 			People p = it.next();
@@ -26,14 +28,18 @@ public class NormalEventBizImpl implements NormalEventBiz{
 				NormalPeople np1 = (NormalPeople)p;
 				if(np1.getPregnancyFlag()){
 					NormalPeople np2 = PregnantMatch(np1, plist, clist, row, col);
+					System.out.println(plist.size()+"a");
 					if(np2 !=null){
 						int num = pmb.countPeople(plist);                  //获取数组元素个数
 						People newp = CreateChild(np1, np2, num, clist, row, col);
-						plist.add(newp);					
+						newchildlist.add(newp);
 					}
 				}
-				
 			}
+		}
+		if(newchildlist.size()!=0){
+			for(int i=0;i<newchildlist.size();i++)
+				plist.add(newchildlist.get(i));
 		}
 		
 		
@@ -118,6 +124,9 @@ public class NormalEventBizImpl implements NormalEventBiz{
 		}
 		
 		//判断完之后，其实markPList里面有所有满足条件的People对象
+		if(markPList.size()==0) {
+			System.out.println("hello");
+			return null;}
 		int ram = markPList.size();     //多少个满足条件的数量
 		Random rd = new Random();
 		int target = rd.nextInt(ram);   //根据有多少个满足的条件来从之中选择 0-ram
@@ -130,11 +139,12 @@ public class NormalEventBizImpl implements NormalEventBiz{
 		//将坐标传进来判断是够达成怀孕条件
 		Iterator<People> it = plist.iterator();
 		while(it.hasNext()){
-			People people = it.next();
-			if( people.getPpos().getX() == x && people.getPpos().getY() == y && people.getPtype() == 1 ){
-				NormalPeople np = (NormalPeople)people;
-				if(np.getPregnancyFlag()){
-					markPList.add(np);
+			People p = it.next();
+			if(p.getPtype() == 1)
+				if(p.getPpos().getX() == x && p.getPpos().getY() == y){
+					NormalPeople np = (NormalPeople)p;
+					if(np.getPregnancyFlag()){
+						markPList.add(np);
 				}
 			}
 		}

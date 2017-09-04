@@ -12,6 +12,8 @@ import biz.ManageBiz;
 import biz.ManageBizImpl;
 import biz.MapManageBiz;
 import biz.MapManageBizImpl;
+import biz.NormalEventBiz;
+import biz.NormalEventBizImpl;
 import biz.PeopleManageBiz;
 import biz.PeopleManageBizImpl;
 import po.Cell;
@@ -30,10 +32,16 @@ public class MapPanel extends JPanel {
 	List<Land> llist;// 地形
 	int px[] = new int[200];
 	int py[] = new int[200];
+	
+	JLabel numberPeoplelbl = new JLabel();
+	JLabel numberNormalPeoplelbl = new JLabel();
+	JLabel numberDeadPeoplelbl = new JLabel();
+	
 
 	PeopleManageBiz pmb = new PeopleManageBizImpl();
 	MapManageBiz mmb = new MapManageBizImpl();
 	ManageBiz mb = new ManageBizImpl();
+	NormalEventBiz neb = new NormalEventBizImpl();
 
 	public MapPanel(int row, int col, List<People> tempplist, List<Tool> temptlist, List<Cell> tempclist,
 			List<Land> templlist) {
@@ -44,6 +52,7 @@ public class MapPanel extends JPanel {
 		this.tlist = temptlist;
 		this.clist = tempclist;
 		this.llist = templlist;
+		setPeopleLabel();// 调用显示人类数量的Label
 	}
 
 	public void startWorld() {
@@ -51,22 +60,20 @@ public class MapPanel extends JPanel {
 		mmb.initLand(row, col, llist, clist);
 		pmb.initNormalPeopleRandom(row, col, plist, clist);// 初始化生成正常人类
 		pmb.initDeadPeopleRandom(col, plist, clist);// 部分人类转化为丧尸
-
-		updatePeople();// 调用显示人类数量的Label
+		updatePeople(numberPeoplelbl,numberNormalPeoplelbl,numberDeadPeoplelbl);
 		updateLand();//	调用显示地形数量的Label
 		Iterator<People> it = plist.iterator();
-
+		
 	}
 
 	public void nextWorld() {
-		mb.randomMove(row, col, plist, clist);
-		updatePeople();// 调用显示数量的Label
+		mb.randomMove(row, col, plist, clist);//随机移动
+		neb.PregnantManage(plist, clist, row, col);//判断怀孕
+		updatePeople(numberPeoplelbl,numberNormalPeoplelbl,numberDeadPeoplelbl);
+		
 
 		Iterator<People> it = plist.iterator();
-		/*
-		 * while (it.hasNext()) { People p = it.next();// 存储it.next()的值，防止跳跃
-		 * System.out.println(p.toString()); }
-		 */
+		
 
 		for (int i = 0; i < plist.size() - 1; i++) {
 			People n1 = plist.get(i);
@@ -84,15 +91,11 @@ public class MapPanel extends JPanel {
 	}
 
 	// 调用显示数量的Label
-	public void updatePeople() {
+	public void setPeopleLabel() {
 		int numberPeople = pmb.countPeople(plist);// 所有人数量
 		int numberNormalPeople = pmb.countNormalPeople(plist);// 正常人数量
 		int numberDeadPeople = pmb.countDeadPeople(plist);// 丧尸数量
 
-		JLabel numberPeoplelbl = new JLabel("物种数量：" + numberPeople);
-		JLabel numberNormalPeoplelbl = new JLabel("正常人数量：" + numberNormalPeople);
-		JLabel numberDeadPeoplelbl = new JLabel("丧尸数量：" + numberDeadPeople);
-		
 		add(numberPeoplelbl);
 		add(numberNormalPeoplelbl);
 		add(numberDeadPeoplelbl);
@@ -101,9 +104,21 @@ public class MapPanel extends JPanel {
 		numberPeoplelbl.setBounds(1020, 20, 300, 20);
 		numberNormalPeoplelbl.setBounds(1020, 40, 300, 20);
 		numberDeadPeoplelbl.setBounds(1020, 60, 300, 20);
-
+		
+		updatePeople(numberPeoplelbl,numberNormalPeoplelbl,numberDeadPeoplelbl);
+		
 	}
 
+	public void updatePeople(JLabel p,JLabel np,JLabel dp){
+		int numberPeople = pmb.countPeople(plist);// 所有人数量
+		int numberNormalPeople = pmb.countNormalPeople(plist);// 正常人数量
+		int numberDeadPeople = pmb.countDeadPeople(plist);// 丧尸数量
+		
+		p.setText("物种数量：" + numberPeople);
+		np.setText("正常人数量：" + numberNormalPeople);
+		dp.setText("丧尸数量：" + numberDeadPeople);
+		
+	}
 	public void updateLand(){
 		int countShelter = 0;// 1,庇护所
 		int countRadient = 0;// 2,辐射地
