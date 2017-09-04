@@ -41,4 +41,9 @@ public class Land {
 		this.lpos = lpos;
 	}
 
+	@Override
+	public String toString() {
+		return "Land [ltype=" + ltype + ", lpos=" + lpos + "]";
+	}
+
 }

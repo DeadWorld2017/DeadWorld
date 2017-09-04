@@ -28,25 +28,25 @@ public class LandEventBizImpl implements LandEventBiz {
 	}
 
 	public int isShelter(People p) {
-		// 当所处位置为庇护所的时候
+		// 当所处位置为庇护所的时候，类型1
 		double survivability;
 		if (p.getPtype() == 1) {
 			// 当判断为可操作正常人的时候(存疑)
 			NormalPeople np = (NormalPeople) p;
 			survivability = np.getSurvivability();
-			survivability += 3; // 先设定统一增加3的存活值
+			survivability += 0.2; // 先设定统一增加0.2的存活值
 			np.setSurvivability(survivability);
 		}
 		return 0;
 	}
 
 	public int isDeathtrap() {
-		// 当所处位置为死亡陷阱的时候
+		// 当所处位置为死亡陷阱的时候，类型5
 		return 1;
 	}
-
+	
 	public int isRadient(People p) {
-		// 当所处位置为辐射地的时候
+		// 当所处位置为辐射地的时候，类型2
 		// 正常人类攻击力减弱
 		if (p.getPtype() == 1) {
 			return 2;
@@ -61,7 +61,7 @@ public class LandEventBizImpl implements LandEventBiz {
 	}
 
 	public int isSwampland(People p) {
-		// 当所处位置为沼泽地的时候
+		// 当所处位置为沼泽地的时候，类型3
 		// 当为丧尸的时候
 		if (p.getPtype() == 0) {
 			return 2;
@@ -72,7 +72,7 @@ public class LandEventBizImpl implements LandEventBiz {
 	}
 
 	public int isDMRiver(People p) {
-		// 当所处位置为子母河的时候
+		// 当所处位置为子母河的时候,类型4
 		// 若为可操作可生孩子的正常人类
 		if (p.getPtype() == 1) {
 			return 50; // 百分之50怀孕几率
@@ -81,7 +81,7 @@ public class LandEventBizImpl implements LandEventBiz {
 	}
 
 	public int isTrappedLand(People p) {
-		// 当所处位置为困阵的时候
+		// 当所处位置为困阵的时候，类型6
 		//将物种的停留时间改为3
 		if(p.getPtype() == 0 || p.getPtype() == 1){
 			p.setTrapYear(3);
