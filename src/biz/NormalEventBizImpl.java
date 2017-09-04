@@ -138,11 +138,18 @@ public class NormalEventBizImpl implements NormalEventBiz{
 		
 	}
 	public People CreateChild(NormalPeople p1, NormalPeople p2) {
+		int pid;
+		Position ppos;
+		boolean gender;
+		int age;
+		double survivability;
+		boolean antibody;
+		boolean pregnancyFlag;
 		//将相匹配的两个人做处理
 		p1.setPregnancyFlag(false);
 		p2.setPregnancyFlag(false);
 		//综合一下
-		//NormalPeople newNP = new NormalPeople()
+		//NormalPeople newNP = new NormalPeople(pid, ppos, gender, age, survivability, antibody, pregnancyFlag);
 		
 		return null;
 	}
@@ -153,14 +160,22 @@ public class NormalEventBizImpl implements NormalEventBiz{
 	}
 
 	public int isAntibody(NormalPeople np) {
-		//判断正常人类是否有个体
+		//判断正常人类是否有抗体
 		if(np.isAntibody()) return 1;
 		else return 0;
 	}
 
-	public void AgeEvent(List<People> p) {
-		//
-		
+	public void AgeEvent(List<People> plist) {
+		//每次刷新的时候，将每个正常人的年龄增长一岁
+		Iterator<People> it = plist.iterator();
+		while(it.hasNext()){
+			People p = it.next();
+			if( p.getPtype() == 1 ){
+				NormalPeople np = (NormalPeople)p;
+				int age = np.getAge();
+				np.setAge(age);
+			}
+		}
 	}
 
 }
