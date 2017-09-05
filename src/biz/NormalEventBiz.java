@@ -25,14 +25,29 @@ public interface NormalEventBiz {
 	
 	//死亡事件
 	//战斗死亡或者年老死亡都是调用这个函数
-	public void DeadEvent(People p, List<People> plist);
+	public void DeadEvent(People p, List<People> plist,List<People> deadlist);
 	
 	//存在抗体前提下，触发抗体随机事件
 	public int AntibodyRandomEvent();
 	
-	//年龄增长
-	//针对所有正常人类的年龄增长
-	/*public void AgeEvent(List<People> p);*/
+	
+	public void DestroyCell(int col, List<Cell> clist, People p);
+	
+	/*
+	//调整全部人的停留时间
+	public void AdjustTrapYear(List<People> plist);
+	
+	//调整全部人的怀孕标签
+	public void AdjustPregnancy(List<People> plist);
+	
+	//调整全部人的年龄
+	public void AdjustAge(List<People> plist);
+	*/
+	
+	//调整全部人的停留时间、怀孕标签、年龄，在一个方法里面可以节省三倍的循环
+	public void AdjustNormalPeopleAttr(List<People> plist);
+	
+	
 	
 
 }

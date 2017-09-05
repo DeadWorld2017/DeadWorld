@@ -10,6 +10,9 @@ package po;
  * 类型6：困阵	
  * 
  */
+
+//子母河4  暂时无法实现，先搁置
+
 public class Land {
 	private int ltype;// 地形类型
 	private Position lpos;// 地形坐标

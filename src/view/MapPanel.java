@@ -76,21 +76,22 @@ public class MapPanel extends JPanel {
 	
 
 	public void nextWorld() {
-		AdjustAge(plist);
+		neb.AdjustNormalPeopleAttr(plist);//调整年龄，停留时间，怀孕标记
 		mb.randomMove(row, col, plist, clist);//随机移动
-		leb.beforeAttackEvent(plist, clist);
+		leb.beforeAttackEvent(col,plist, clist);//攻击前地形事件，庇护所和死亡陷阱
 		
-		AdjustPregnancy(plist);
+		//攻击
+		
+	
 		neb.PregnantManage(plist, clist, row, col);//判断怀孕
 		updatePeople(numberPeoplelbl,numberNormalPeoplelbl,numberDeadPeoplelbl);
-		
+		leb.afterAttackEvent(col, plist, clist);//攻击后地形事件，困阵
 	}
+
+	
 
 	// 调用显示数量的Label
 	public void setPeopleLabel() {
-		int numberPeople = pmb.countPeople(plist);// 所有人数量
-		int numberNormalPeople = pmb.countNormalPeople(plist);// 正常人数量
-		int numberDeadPeople = pmb.countDeadPeople(plist);// 丧尸数量
 
 		add(numberPeoplelbl);
 		add(numberNormalPeoplelbl);
@@ -224,16 +225,14 @@ public class MapPanel extends JPanel {
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		// paintMap(g);//画地图格子的线条和填充，暂时不需要
 		paintLand(g);// 画地形分布
 		paintTool(g);//画道具分布
 		paintPeople(g);// 画人类分布
-		
-
 	}
 
 	/*
+	 * 画地图格子的线
 	 * private void paintMap(Graphics g) { for (int i = 0; i < row; i++) { for
 	 * (int j = 0; j < col; j++) { // g.setColor(Color.GRAY); //
 	 * g.setColor(Color.black); g.fillRect(j * 10, i * 10, 10, 10);
@@ -271,6 +270,7 @@ public class MapPanel extends JPanel {
 		}
 	}
 
+	//画地形分布（不变）
 	public void paintLand(Graphics g) {
 		Iterator<Land> it = llist.iterator();
 		Color colorShelter = new Color(252, 230, 201);//蛋壳色
@@ -311,49 +311,10 @@ public class MapPanel extends JPanel {
 		}
 	}
 	
-	public void AdjustPregnancy(List<People> plist){
-		//每年刷新地图时候调整正常人类怀孕标签
-		People p;
-		NormalPeople np;
-		Iterator<People> it = plist.iterator();
-		while(it.hasNext()){
-			p = it.next();
-			if( p.getPtype() == 1 ){
-				np = (NormalPeople)p;
-				np.setPregnancyFlag(true);
-			}
-		}
-		
-	}
 	
-	public void AdjustAge(List<People> plist){
-		//每年刷新地图时候调整正常人类年龄
-		People p;
-		NormalPeople np;
-		List<People> deadPList = new ArrayList<People>();
-		int age;
-		Iterator<People> it = plist.iterator();
-		while(it.hasNext()){
-			p = it.next();
-			if( p.getPtype() == 1 ){
-				np = (NormalPeople)p;
-				age = np.getAge();
-				age++;
-				if(age > 99){
-					deadPList.add(np);  //将年龄达到死亡要求的正常人类加入死亡list中处理
-				}
-				else{
-					np.setAge(age);
-				}
-			}
-		}
-		//将满足死亡条件的人类从plist中删除
-		Iterator<People> it2 = deadPList.iterator();
-		while(it2.hasNext()){
-			p = it2.next();
-			plist.remove(p);  //将对象从list中删除
-		}
-		
-	}
+	
+	
+	
+	
 
 }

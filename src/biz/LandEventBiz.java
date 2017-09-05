@@ -46,6 +46,9 @@ public interface LandEventBiz {
 	public int ManageLandEvent(List<People> plist, List<Cell> clist);
 	
 	//战斗前调用
-	public void beforeAttackEvent(List<People> plist,List<Cell> clist);
+	public void beforeAttackEvent(int col, List<People> plist,List<Cell> clist);
+	
+	//战斗后调用
+	public void afterAttackEvent(int col, List<People> plist,List<Cell> clist);
 
 }

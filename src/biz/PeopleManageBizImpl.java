@@ -16,7 +16,7 @@ import po.Position;
 public class PeopleManageBizImpl implements PeopleManageBiz {
 
 	int countNormalPeople = 200;// 首先生成正常人的数量200
-	int countDeadPeople = 30;// 其中丧尸的数量30
+	int countDeadPeople = 150;// 其中丧尸的数量30
 
 	// 随机初始化正常人类方法，传入row,col作为随机数的最大范围，传入plist作为导入
 	// col为长，即x轴方向，row为高,即y轴方向

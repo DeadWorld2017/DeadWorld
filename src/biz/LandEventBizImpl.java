@@ -8,6 +8,10 @@ import po.Cell;
 import po.NormalPeople;
 import po.People;
 
+
+//子母河4  暂时无法实现，先搁置
+
+
 //土地事件接口实现
 public class LandEventBizImpl implements LandEventBiz {
 
@@ -36,11 +40,11 @@ public class LandEventBizImpl implements LandEventBiz {
 		if (p.getPtype() == 1) {
 			// 当判断为可操作正常人的时候(存疑)
 			NormalPeople np = (NormalPeople) p;
-			System.out.println(np.getSurvivability() + "原来的");
+			//System.out.println(np.getSurvivability() + "原来的");
 			survivability = np.getSurvivability();
 			survivability += 0.2; // 先设定统一增加0.2的存活值
 			np.setSurvivability(survivability);
-			System.out.println(np.getSurvivability() + "改变的");
+			//System.out.println(np.getSurvivability() + "改变的");
 		}
 		return 0;
 	}
@@ -93,49 +97,6 @@ public class LandEventBizImpl implements LandEventBiz {
 		}
 		return 0;
 	}
-
-	public void beforeAttackEvent(List<People> plist, List<Cell> clist) {
-		List<People> DeadList = new ArrayList<People>();
-		int pid;
-		Iterator<People> it = plist.iterator();
-		while (it.hasNext()) {
-			People p = it.next();
-			People tempp = null;
-			if (p.getPtype() != 2) {
-				int ltype = findLandByPeople(p, clist);
-				switch (ltype) {
-				case 1:
-					isShelter(p);
-					break;
-				case 5:
-					if (p.getPtype() == 1)
-						DeadList.add(p);// 删除正常人
-					else if (p.getPtype() == 2) {
-						pid = plist.get(plist.indexOf(p)).getPid();// 找到丧尸的pid
-						Iterator<People> pit = plist.iterator();
-						while (pit.hasNext()) {
-							tempp = pit.next();
-							if (tempp.getPid() == pid) // 找到pid相同的
-							{
-								DeadList.add(tempp);//删除丧尸所对应的正常人
-								break;
-							}
-						}
-						DeadList.add(p);//删除丧尸
-					}
-					break;
-				default:
-					break;
-				}
-			}
-		}
-		for(int i = 0;i<DeadList.size();i++){
-			System.out.println(DeadList.get(i).getPid()+"死了");
-			plist.remove(DeadList.get(i));//循环删除所有标记的
-			
-			}
-	}
-
 	public int ManageLandEvent(List<People> plist, List<Cell> clist) {
 		// 通过获取的land类型来调用相应的事件函数
 		// 返回标签
@@ -169,6 +130,55 @@ public class LandEventBizImpl implements LandEventBiz {
 			}
 		}
 		return tag;
+	}
+
+	public void beforeAttackEvent(int col, List<People> plist, List<Cell> clist) {
+		List<People> deadlist = new ArrayList<People>();
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if (p.getPtype() != 2) {
+				int ltype = findLandByPeople(p, clist);
+				switch (ltype) {
+				case 1:
+					isShelter(p);
+					break;
+				case 5:
+					neb.DeadEvent(p, plist, deadlist);	
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		//完全删除
+		for (int i = 0; i < deadlist.size(); i++) {
+			//System.out.println("索引"+plist.indexOf(deadlist.get(i)));
+			People dead = deadlist.get(i);
+			plist.remove(dead);// 循环删除所有标记的
+			neb.DestroyCell(col,clist,dead);//消除格子上的坐标
+		}
+		deadlist.clear();
+	}
+
+	
+	@Override
+	public void afterAttackEvent(int col, List<People> plist,List<Cell> clist) {
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if (p.getPtype() != 2) {
+				int ltype = findLandByPeople(p, clist);
+				switch (ltype) {
+				case 6://困阵
+					isTrappedLand(p);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		
 	}
 
 }
