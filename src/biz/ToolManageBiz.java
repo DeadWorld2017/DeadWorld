@@ -10,29 +10,29 @@ import po.Tool;
 //道具管理接口
 public interface ToolManageBiz {
 
+	public void destoryTool(List<Tool> tlist, int tid);
+	// 传入道具的tid并在全局tlist中销毁
 	
-	public boolean isWeopon(int ttype);
-	// 判断是否有武器，若有武器则返回true,若没有武器则返回false
-
-	public int addWeoponDamage(int attackValue);
-	// 计算武器的伤害,返回值为int型
-
-	public boolean isBomb(NormalPeople np);
-	// 在正常人战败的时候，循环判断是否有炸弹 ，若有则返回true
+	//是否有武器
+	public boolean isTool();
 	
+	public int isWeopon(NormalPeople np);
+	// 判断是否有武器，若有武器则返回tid
+	
+	public int isBomb(NormalPeople np);
+	// 在正常人战败的时候，循环判断是否有炸弹 ，若没有返回-1，若有则返回tid
 
-	public void bombFunction(List<People> plist, NormalPeople np, DeadPeople dp);
+	public void bombFunction(List<People> plist, NormalPeople np, DeadPeople dp,List<Tool> tlist);
 	// 传入发生战斗的双方的实例,销毁实例，并从list中删除
 
-	public void destoryBomb(NormalPeople np, List<Tool> tlist, int tid);
-	// 传入该武器的tid并在全局tlist和人物携带tlist中销毁
+	
+	public int isEscapeShoes(NormalPeople np);
+	// 判断是否有逃跑鞋子,有则不变返回tid，没有则返回-1
 
-	public boolean isShoes(int ttype);
-	// 判断是否有鞋子,有则不变返回true，没有则返回false
+	public boolean escapeShoeFunction(List<People> plist, NormalPeople np,List<Tool> tlist,int tid);
+	// 逃跑鞋方法，随机判断是否逃跑，如果返回true则什么都不发生，如果返回false则继续执行操作
 
-	public boolean escapeShoes();
-	// 逃跑鞋方法
-
+ 
 	
 	/*未完成的兴奋剂
 	 public int isDoping(NormalPeople np);
