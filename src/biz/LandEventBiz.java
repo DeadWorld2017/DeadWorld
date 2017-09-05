@@ -43,7 +43,9 @@ public interface LandEventBiz {
 	public int isTrappedLand(People p);
 		
 	//用来管理Land事件的方法
-	public int ManageLandEvent(People p, List<Cell> clist);
-
+	public int ManageLandEvent(List<People> plist, List<Cell> clist);
+	
+	//战斗前调用
+	public void beforeAttackEvent(List<People> plist,List<Cell> clist);
 
 }

@@ -10,6 +10,8 @@ import po.Tool;
 //道具管理接口
 public interface ToolManageBiz {
 
+	
+	
 	public void destoryTool(List<Tool> tlist, int tid);
 	// 传入道具的tid并在全局tlist中销毁
 	

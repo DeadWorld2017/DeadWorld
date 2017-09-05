@@ -38,7 +38,7 @@ public class MainFrame extends JFrame implements MouseMotionListener {
 	public static void main(String[] args) {
 		MainFrame mf = new MainFrame(MapRow, MapCol);// 实例化窗体对象
 		mf.setSize(FrameCol, FrameRow);// 设置窗体大小
-		mf.setBackground(Color.WHITE);// 设置窗体的背景颜色
+		mf.setBackground(Color.white);// 设置窗体的背景颜色
 		mf.setLocationRelativeTo(null);// 显示在正中央
 		mf.setTitle("Dead World");// 设置标题
 		mf.setVisible(true);// 使其可见

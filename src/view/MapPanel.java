@@ -9,6 +9,8 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import biz.LandEventBiz;
+import biz.LandEventBizImpl;
 import biz.ManageBiz;
 import biz.ManageBizImpl;
 import biz.MapManageBiz;
@@ -44,6 +46,7 @@ public class MapPanel extends JPanel {
 	MapManageBiz mmb = new MapManageBizImpl();
 	ManageBiz mb = new ManageBizImpl();
 	NormalEventBiz neb = new NormalEventBizImpl();
+	LandEventBiz leb = new LandEventBizImpl();
 
 	public MapPanel(int row, int col, List<People> tempplist, List<Tool> temptlist, List<Cell> tempclist,
 			List<Land> templlist) {
@@ -60,38 +63,27 @@ public class MapPanel extends JPanel {
 	public void startWorld() {
 		mmb.initMapList(row, col, clist);
 		mmb.initLand(row, col, llist, clist);
+		mmb.initTool(row, col, tlist, clist);
 		pmb.initNormalPeopleRandom(row, col, plist, clist);// 初始化生成正常人类
 		pmb.initDeadPeopleRandom(col, plist, clist);// 部分人类转化为丧尸
 		updatePeople(numberPeoplelbl,numberNormalPeoplelbl,numberDeadPeoplelbl);
 		updateLand();//	调用显示地形数量的Label
+		updateTool();//	调用显示地形数量的Label
 		Iterator<People> it = plist.iterator();
 		
 	}
 
+	
+
 	public void nextWorld() {
-		mb.randomMove(row, col, plist, clist);//随机移动
-		AdjustPregnancy(plist);
 		AdjustAge(plist);
+		mb.randomMove(row, col, plist, clist);//随机移动
+		leb.beforeAttackEvent(plist, clist);
+		
+		AdjustPregnancy(plist);
 		neb.PregnantManage(plist, clist, row, col);//判断怀孕
 		updatePeople(numberPeoplelbl,numberNormalPeoplelbl,numberDeadPeoplelbl);
 		
-
-		Iterator<People> it = plist.iterator();
-		
-
-		for (int i = 0; i < plist.size() - 1; i++) {
-			People n1 = plist.get(i);
-			for (int j = i + 1; j < plist.size(); j++) {
-				People n2 = plist.get(j);
-				if (n1.getPpos() != null && n2.getPpos() != null) {
-					if (n1.getPpos().getX() == n2.getPpos().getX() && n1.getPpos().getY() == n2.getPpos().getY()) {
-						System.out.println(
-								"第" + (i) + "个跟第" + (j) + "个重复，值是：" + n2.getPpos().getX() + "," + n2.getPpos().getY());
-					}
-				}
-			}
-		}
-
 	}
 
 	// 调用显示数量的Label
@@ -180,11 +172,62 @@ public class MapPanel extends JPanel {
 		numberTrappedLandlbl.setBounds(1020, 200, 300, 20);
 	}
 	
+	private void updateTool() {
+		int countKnife = 0;// 1,刀
+		int countGun = 0;// 2,枪
+		int coutBazooka = 0;// 3,火箭筒
+		int coutBomb = 0;// 4,自杀弹
+		int coutEscapeShoes = 0;// 5，逃跑鞋
+		
+		Iterator<Tool> it = tlist.iterator();
+		while(it.hasNext()){
+			switch (it.next().getTtype()){
+			case 1:
+				countKnife++;
+				break;
+			case 2:
+				countGun++;
+				break;
+			case 3:
+				coutBazooka++;
+				break;
+			case 4:
+				coutBomb++;
+				break;
+			case 5:
+				coutEscapeShoes++;
+				break;
+			}
+		}
+		
+		JLabel numberKnifelbl = new JLabel("刀数量：" + countKnife);
+		JLabel numberGunlbl = new JLabel("枪数量：" + countGun);
+		JLabel numberBazookalbl = new JLabel("火箭筒数量：" + coutBazooka);
+		JLabel numberBomblbl = new JLabel("自杀弹数量：" + coutBomb);
+		JLabel numberEscapeShoeslbl = new JLabel("逃跑鞋数量：" + coutEscapeShoes);
+		
+		
+		add(numberKnifelbl);
+		add(numberGunlbl);
+		add(numberBazookalbl);
+		add(numberBomblbl);
+		add(numberEscapeShoeslbl);
+
+
+		setLayout(null);
+		numberKnifelbl.setBounds(1020, 260, 300, 20);
+		numberGunlbl.setBounds(1020, 280, 300, 20);
+		numberBazookalbl.setBounds(1020, 300, 300, 20);
+		numberBomblbl.setBounds(1020, 320, 300, 20);
+		numberEscapeShoeslbl.setBounds(1020, 340, 300, 20);
+		
+	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		// paintMap(g);//画地图格子的线条和填充，暂时不需要
 		paintLand(g);// 画地形分布
+		paintTool(g);//画道具分布
 		paintPeople(g);// 画人类分布
 		
 
@@ -196,6 +239,17 @@ public class MapPanel extends JPanel {
 	 * g.setColor(Color.black); g.fillRect(j * 10, i * 10, 10, 10);
 	 * g.setColor(Color.red); g.drawRect(j * 10, i * 10, 10, 10); } } }
 	 */
+
+	private void paintTool(Graphics g) {
+		Iterator<Tool> it = tlist.iterator();
+		while (it.hasNext()) {
+			Tool t = it.next();// 存储it.next()的值，防止跳跃
+				g.setColor(Color.yellow);
+				g.fillRect(t.getTpos().getX() * 10, t.getTpos().getY() * 10, 5, 5);
+			
+		}
+		
+	}
 
 	// 画人类分布方法
 	public void paintPeople(Graphics g) {

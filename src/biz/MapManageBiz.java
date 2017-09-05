@@ -6,6 +6,7 @@ import po.Cell;
 import po.Land;
 import po.People;
 import po.Position;
+import po.Tool;
 
 public interface MapManageBiz {
 	public void initMapList(int row, int col, List<Cell> clist);
@@ -17,4 +18,10 @@ public interface MapManageBiz {
 	
 	public int initLtypeRandom();
 	
+	//生成道具
+	public boolean initTool(int row,int col,List<Tool> tlist,List<Cell> clist);
+
+	public int initTtypeRandom();
+	
+
 }

@@ -98,10 +98,15 @@ public class ToolManageBizImpl implements ToolManageBiz {
 		return 0;
 	}
 
-	@Override
+
 	public boolean isTool() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+
+	public void initTool(List<Tool> tlist) {
+		
 	}
 
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import po.Cell;
 import po.People;
 import po.Position;
+import po.Tool;
 
 public interface ManageBiz {
 	
@@ -18,4 +19,6 @@ public interface ManageBiz {
 	
 	public boolean hasPeople(int row, Position pos, List<Cell> clist) ;
 	//判断原来位置是否已经有人了
+	
+	
 }
