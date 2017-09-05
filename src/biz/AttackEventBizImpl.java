@@ -127,6 +127,40 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		
 		
 	}
+
+	public void ManageAttackEvent(List<People> plist, List<Cell> clist,
+			int row, int col) {
+		//统筹攻击事件
+		People p;
+		NormalPeople np;
+		DeadPeople dp;
+		
+		Iterator<People> it = plist.iterator();
+		while(it.hasNext()){
+			p = it.next();
+			if(p.getPtype() == 0){   //若为丧尸
+				dp = (DeadPeople)p;
+			}
+		}
+		
+	}
+
+	public List<People> JudgeAttackEvent(DeadPeople dp, List<Cell> clist, List<People> plist, 
+			int row, int col) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void AttckEvent(NormalPeople np, DeadPeople dp, List<Cell> clist,
+			List<People> deadList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void JudgeNormalCell(int x, int y, People p) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
