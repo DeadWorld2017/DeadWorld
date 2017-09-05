@@ -27,8 +27,8 @@ public interface NormalEventBiz {
 	//战斗死亡或者年老死亡都是调用这个函数
 	public void DeadEvent(People p, List<People> plist);
 	
-	//是否存在抗体
-	public int isAntibody(NormalPeople p);
+	//存在抗体前提下，触发抗体随机事件
+	public int AntibodyRandomEvent();
 	
 	//年龄增长
 	//针对所有正常人类的年龄增长

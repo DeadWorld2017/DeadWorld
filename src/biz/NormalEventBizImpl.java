@@ -28,7 +28,6 @@ public class NormalEventBizImpl implements NormalEventBiz{
 				NormalPeople np1 = (NormalPeople)p;
 				if(np1.getPregnancyFlag()){
 					NormalPeople np2 = PregnantMatch(np1, plist, clist, row, col);
-					System.out.println(plist.size()+"a");
 					if(np2 !=null){
 						int num = pmb.countPeople(plist);                  //获取数组元素个数
 						People newp = CreateChild(np1, np2, num, clist, row, col);
@@ -54,7 +53,7 @@ public class NormalEventBizImpl implements NormalEventBiz{
 		//Iterator<People> it = plist.iterator();
 		List<People> markPList = new ArrayList<People>();	//用来记录满足条件的人
 		
-		//计算长度，
+	
 		//左 --1
 		x = ppos.getX();
 		y = ppos.getY();
@@ -125,7 +124,6 @@ public class NormalEventBizImpl implements NormalEventBiz{
 		
 		//判断完之后，其实markPList里面有所有满足条件的People对象
 		if(markPList.size()==0) {
-			System.out.println("hello");
 			return null;}
 		int ram = markPList.size();     //多少个满足条件的数量
 		Random rd = new Random();
@@ -140,7 +138,7 @@ public class NormalEventBizImpl implements NormalEventBiz{
 		Iterator<People> it = plist.iterator();
 		while(it.hasNext()){
 			People p = it.next();
-			if(p.getPtype() == 1)
+			if(p.getPtype() == 1)  //一定要分开判断，因为如果这个地方不存在人，position判断为null，但这样效率下降
 				if(p.getPpos().getX() == x && p.getPpos().getY() == y){
 					NormalPeople np = (NormalPeople)p;
 					if(np.getPregnancyFlag()){
@@ -200,10 +198,11 @@ public class NormalEventBizImpl implements NormalEventBiz{
 		plist.remove(p);
 	}
 
-	public int isAntibody(NormalPeople np) {
+	public int AntibodyRandomEvent() {
 		//判断正常人类是否有抗体
-		if(np.isAntibody()) return 1;
-		else return 0;
+		Random rd = new Random();
+		int ram = rd.nextInt(2);
+		return ram;
 	}
 
 	/*public void AgeEvent(List<People> plist) {

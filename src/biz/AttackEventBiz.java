@@ -20,9 +20,10 @@ public interface AttackEventBiz {
 	public List<People> JudgeAttackEvent(DeadPeople dp, List<Cell> clist, List<People> plist, int row, int col);
 	
 	//攻击事件
-	public void AttckEvent(NormalPeople np, DeadPeople dp, List<Cell> clist, List<People> deadList);
+	public void AttackEvent(NormalPeople np, DeadPeople dp, List<People> plist, List<Cell> clist, List<People> deadList, 
+			int row, int col);
 	
 	//判断格子类是否为正常人类(感觉可以和怀孕的合并)
-	public void JudgeNormalCell(int x, int y, People p);
+	public void JudgeNormalCell(int x, int y, List<People> plist, List<People> fitPList );
 	
 }

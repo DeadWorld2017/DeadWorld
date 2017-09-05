@@ -3,6 +3,7 @@ package biz;
 import java.util.List;
 
 import po.Cell;
+import po.DeadPeople;
 import po.People;
 import po.Position;
 
@@ -35,7 +36,8 @@ public interface PeopleManageBiz {
 	public void turnToDead(int col, int pid, List<People> plist,List<Cell> clist);
 	// 将正常人转化为丧尸
 
-	public void turnToNormal(List<People> plist);
+	public void turnToNormal(List<People> plist, DeadPeople dp);
+	//将丧尸转换成正常人
 
 	public int countNormalPeople(List<People> plist);
 	// 计算正常人数量

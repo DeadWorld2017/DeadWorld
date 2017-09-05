@@ -1,6 +1,7 @@
 package biz;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -135,8 +136,20 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		
 	}
 
-	public void turnToNormal(List<People> plist) {
-
+	public void turnToNormal(List<People> plist, DeadPeople dp) {
+		//丧尸转化为正常人类
+		People p;
+		int pid = dp.getPid();
+		Iterator<People> it = plist.iterator();
+		while(it.hasNext()){
+			p = it.next();
+			if( pid == p.getPid() ){
+				//恢复正常人类
+				p.setPtype(1);
+				break;
+			}
+		}
+		
 	}
 
 	// 计算正常人数量
