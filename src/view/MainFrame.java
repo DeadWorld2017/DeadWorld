@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 import javax.swing.*;
 
@@ -57,6 +58,8 @@ public class MainFrame extends JFrame implements MouseMotionListener {
 		start.addActionListener(mf.new StartActionListener());
 		JMenuItem next = options.add("Next");// 添加“下一步”菜单项
 		next.addActionListener(mf.new NextActionListener());
+		JMenuItem stop = options.add("Stop");//添加“停止按钮”
+		next.addActionListener(mf.new StopActionListener());
 
 	}
 
@@ -71,6 +74,12 @@ public class MainFrame extends JFrame implements MouseMotionListener {
 		public void actionPerformed(ActionEvent e) {
 			mp.nextWorld();
 			repaint();
+		}
+	}
+	
+	class StopActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
 		}
 	}
 
