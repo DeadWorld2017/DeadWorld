@@ -73,7 +73,7 @@ public class MapManageBizImpl implements MapManageBiz {
 	}
 
 	//生成道具
-	@Override
+	
 	public boolean initTool(int row, int col, List<Tool> tlist, List<Cell> clist) {
 		Position tpos = new Position();
 		int index;// 下标
@@ -97,7 +97,7 @@ public class MapManageBizImpl implements MapManageBiz {
 		return false;
 	}
 
-	@Override
+	
 	public int initTtypeRandom() {
 		Random rd = new Random();
 		int ttype = rd.nextInt(400);

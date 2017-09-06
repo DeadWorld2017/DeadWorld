@@ -162,7 +162,7 @@ public class LandEventBizImpl implements LandEventBiz {
 	}
 
 	
-	@Override
+	
 	public void afterAttackEvent(int col, List<People> plist,List<Cell> clist) {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {

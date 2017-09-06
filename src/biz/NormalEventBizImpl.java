@@ -68,7 +68,7 @@ public class NormalEventBizImpl implements NormalEventBiz {
 		// 右 --3
 		x = ppos.getX();
 		y = ppos.getY();
-		if ((y + 1) < col) {
+		if ((y + 1) < row) {
 			y += 1;
 			JudgeCell(x, y, markPList, plist);
 		}
@@ -76,7 +76,7 @@ public class NormalEventBizImpl implements NormalEventBiz {
 		// 下 --4
 		x = ppos.getX();
 		y = ppos.getY();
-		if ((x + 1) < row) {
+		if ((x + 1) < col) {
 			y += 1;
 			JudgeCell(x, y, markPList, plist);
 		}
@@ -93,7 +93,7 @@ public class NormalEventBizImpl implements NormalEventBiz {
 		// 右上 --6
 		x = ppos.getX();
 		y = ppos.getY();
-		if (((y + 1) < col) && ((x - 1) > -1)) {
+		if (((y + 1) < row) && ((x - 1) > -1)) {
 			y += 1;
 			x -= 1;
 			JudgeCell(x, y, markPList, plist);
@@ -102,7 +102,7 @@ public class NormalEventBizImpl implements NormalEventBiz {
 		// 右下 --7
 		x = ppos.getX();
 		y = ppos.getY();
-		if (((y + 1) < col) && ((x + 1) < row)) {
+		if (((y + 1) < row) && ((x + 1) < col)) {
 			y += 1;
 			x += 1;
 			JudgeCell(x, y, markPList, plist);
@@ -111,7 +111,7 @@ public class NormalEventBizImpl implements NormalEventBiz {
 		// 左下 --8
 		x = ppos.getX();
 		y = ppos.getY();
-		if (((y - 1) > -1) && ((x + 1) < row)) {
+		if (((y - 1) > -1) && ((x + 1) < col)) {
 			y -= 1;
 			x += 1;
 			JudgeCell(x, y, markPList, plist);
@@ -192,12 +192,13 @@ public class NormalEventBizImpl implements NormalEventBiz {
 		return np;
 	}
 
-	public void DeadEvent(People p, List<People> plist, List<People> deadlist) {
+	public void DeadEvent(People p, List<People> plist, List<People> deadList) {
 		// 死亡事件
+		//通过判断传进来的People类来判断是删去一个对象还是两个对象
 		int pid;// 暂存pid
 		People tempp;// 暂存丧尸对应的正常人
 		if (p.getPtype() == 1)
-			{deadlist.add(p);// 删除正常人
+			{deadList.add(p);// 删除正常人
 			//System.out.println("正常人"+p.getPid());
 			}
 		else if (p.getPtype() == 0) {
@@ -207,11 +208,11 @@ public class NormalEventBizImpl implements NormalEventBiz {
 				tempp = pit.next();
 				
 				if (tempp.getPid() == pid && tempp != p) // 找到pid相同的
-					{deadlist.add(tempp);// 删除丧尸所对应的正常人
+					{deadList.add(tempp);// 删除丧尸所对应的正常人
 					//System.out.println("丧尸"+p.getPid());
 					}
 			}
-			deadlist.add(p);// 删除丧尸
+			deadList.add(p);// 删除丧尸
 		}
 		
 
@@ -226,7 +227,7 @@ public class NormalEventBizImpl implements NormalEventBiz {
 
 	 
 	public void DestroyCell(int col, List<Cell> clist, People p) {
-		if(p.getPtype()!=2){
+		if(p.getPtype()!= 2){   //因为被转化的人位置已经置为null了不需要改变
 			int index = p.getPpos().getY() * col + p.getPpos().getX();
 			Cell c = clist.get(index);
 			c.setPid(-1);// 人死了，就没了
@@ -318,6 +319,12 @@ public class NormalEventBizImpl implements NormalEventBiz {
 					deadlist.add(np);
 				else
 					np.setAge(age);
+				//提高正常人的存活能力值
+				double survivability;
+				np = (NormalPeople)p;
+				survivability = np.getSurvivability();
+				survivability += 0.1;
+				np.setSurvivability(survivability);
 			}	
 		}
 		//将满足死亡条件的人类从plist中删除
@@ -327,6 +334,8 @@ public class NormalEventBizImpl implements NormalEventBiz {
 			plist.remove(p);  //将对象从list中删除
 		}
 	}
+	
+	
 	
 	/*
 	 * public void AgeEvent(List<People> plist) {

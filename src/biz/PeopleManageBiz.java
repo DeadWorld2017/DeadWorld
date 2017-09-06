@@ -33,10 +33,10 @@ public interface PeopleManageBiz {
 	public int initBaseDamageRandom();
 	// 初始生成丧尸基本攻击力，狂暴值，暂时不设随机数，默认为10
 
-	public void turnToDead(int col, int pid, List<People> plist,List<Cell> clist);
+	public DeadPeople turnToDead(int col, int pid, List<People> plist,List<Cell> clist);
 	// 将正常人转化为丧尸
 
-	public void turnToNormal(List<People> plist, DeadPeople dp);
+	public void turnToNormal(List<People> plist, DeadPeople dp, List<Cell> clist, int col);
 	//将丧尸转换成正常人
 
 	public int countNormalPeople(List<People> plist);

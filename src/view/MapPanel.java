@@ -9,6 +9,8 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import biz.AttackEventBiz;
+import biz.AttackEventBizImpl;
 import biz.LandEventBiz;
 import biz.LandEventBizImpl;
 import biz.ManageBiz;
@@ -47,6 +49,7 @@ public class MapPanel extends JPanel {
 	ManageBiz mb = new ManageBizImpl();
 	NormalEventBiz neb = new NormalEventBizImpl();
 	LandEventBiz leb = new LandEventBizImpl();
+	AttackEventBiz aeb  = new AttackEventBizImpl();
 
 	public MapPanel(int row, int col, List<People> tempplist, List<Tool> temptlist, List<Cell> tempclist,
 			List<Land> templlist) {
@@ -80,8 +83,8 @@ public class MapPanel extends JPanel {
 		mb.randomMove(row, col, plist, clist);//随机移动
 		leb.beforeAttackEvent(col,plist, clist);//攻击前地形事件，庇护所和死亡陷阱
 		
-		//攻击
-		
+		//攻击事件
+		aeb.ManageAttackEvent(plist, clist, row, col);
 	
 		neb.PregnantManage(plist, clist, row, col);//判断怀孕
 		updatePeople(numberPeoplelbl,numberNormalPeoplelbl,numberDeadPeoplelbl);

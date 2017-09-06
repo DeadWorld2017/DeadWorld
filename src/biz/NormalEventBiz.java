@@ -25,7 +25,7 @@ public interface NormalEventBiz {
 	
 	//死亡事件
 	//战斗死亡或者年老死亡都是调用这个函数
-	public void DeadEvent(People p, List<People> plist,List<People> deadlist);
+	public void DeadEvent(People p, List<People> plist,List<People> deadList);
 	
 	//存在抗体前提下，触发抗体随机事件
 	public int AntibodyRandomEvent();
@@ -47,7 +47,8 @@ public interface NormalEventBiz {
 	//调整全部人的停留时间、怀孕标签、年龄，在一个方法里面可以节省三倍的循环
 	public void AdjustNormalPeopleAttr(List<People> plist);
 	
-	
+	//死亡事件，将People对象从list中移除同时更改clist中对应的值
+	//public void DeadEvent(People p, List<People> plist, List<Cell> clist);
 	
 
 }

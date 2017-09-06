@@ -141,6 +141,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		DeadPeople dp;
 		List<People> deadList = new ArrayList<People>();   //存放满足死亡条件者
 		List<People> fitPList;								//存放满足与对应丧尸相邻正常人类
+		List<People> newList = new ArrayList<People>();    //存放满足增长的丧尸
 		
 		Iterator<People> it = plist.iterator();
 		while(it.hasNext()){
@@ -153,7 +154,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 					Iterator<People> it2 = fitPList.iterator();
 					while(it2.hasNext()){
 						np = (NormalPeople)it2.next();
-						AttackEvent(np, dp, plist, clist, deadList, row, col);
+						AttackEvent(np, dp, plist, clist, deadList, newList, row, col);
 					}
 				}
 			}
@@ -163,6 +164,14 @@ public class AttackEventBizImpl implements AttackEventBiz{
 			while(it3.hasNext()){
 				p = it3.next();
 				plist.remove(p);
+				neb.DestroyCell(col, clist, p);
+			}
+		}
+		if(newList != null){
+			Iterator<People> it4 = newList.iterator(); 
+			while(it4.hasNext()){
+				p = it4.next();
+				plist.add(p);
 			}
 		}
 		
@@ -177,9 +186,6 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		int x = ppos.getX();
 		int y = ppos.getY();
 		
-		//获取丧尸的位置
-		x = ppos.getX();
-		y = ppos.getY();
 		
 		//判断与丧尸位置相邻是否存在人类
 		//左 --1
@@ -199,7 +205,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		//右  --3
 		x = ppos.getX();
 		y = ppos.getY();
-		if( (y + 1) < col ){
+		if( (y + 1) < row ){
 			y += 1;
 			JudgeNormalCell(x, y, plist, fitPList);
 		}
@@ -207,7 +213,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		//下 --4
 		x = ppos.getX();
 		y = ppos.getY();
-		if( (x + 1) < row ){
+		if( (x + 1) < col ){
 			y += 1;
 			JudgeNormalCell(x, y, plist, fitPList);
 		}
@@ -224,7 +230,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		//右上  --6
 		x = ppos.getX();
 		y = ppos.getY();
-		if( ((y + 1) < col) && ((x - 1) > -1) ){
+		if( ((y + 1) < row) && ((x - 1) > -1) ){
 			y += 1;
 			x -= 1;
 			JudgeNormalCell(x, y, plist, fitPList);
@@ -233,7 +239,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		//右下  --7
 		x = ppos.getX();
 		y = ppos.getY();
-		if( ((y + 1) < col) && ((x + 1) < row ) ){
+		if( ((y + 1) < row) && ((x + 1) < col ) ){
 			y += 1;
 			x += 1;
 			JudgeNormalCell(x, y, plist, fitPList);
@@ -242,7 +248,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		//左下  --8
 		x = ppos.getX();
 		y = ppos.getY();
-		if( ((y - 1) > -1) && ((x + 1) < row) ){
+		if( ((y - 1) > -1) && ((x + 1) < col) ){
 			y -= 1;
 			x += 1;
 			JudgeNormalCell(x, y, plist, fitPList);
@@ -252,7 +258,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 	}
 
 	public void AttackEvent(NormalPeople np, DeadPeople dp, List<People> plist, List<Cell> clist,
-			List<People> deadList, int row, int col) {
+			List<People> deadList, List<People> newList, int row, int col) {
 		//一对一实现攻击事件
 		
 		//计算正常人类基础攻击力
@@ -270,32 +276,37 @@ public class AttackEventBizImpl implements AttackEventBiz{
 				int ram = neb.AntibodyRandomEvent();
 				if( ram == 1 ){
 					//表明可以被转化回人类
-					pmb.turnToNormal(plist, dp);
+					pmb.turnToNormal(plist, dp, clist, col);
 					//被转化为正常人类的丧尸加入deadList中
 					deadList.add(dp);
 				}
 				if( ram == 0){
 					//表明不可以被转化为人类
 					//丧尸死亡
-					deadList.add(dp);
+					neb.DeadEvent(dp, plist, deadList);
 				}
 			}
 			else{
 				//若人类不携带抗体，则丧尸直接死亡
-				deadList.add(dp);
+				neb.DeadEvent(dp, plist, deadList);
 			}
 		}
 		//若丧尸胜利
 		if( NPAttackValue < DPAttackValue ){
 			if( np.isAntibody() == true ){
 				//若此人携带抗体则直接死亡
-				deadList.add(np);
+				neb.DeadEvent(dp, plist, deadList);
 			}
 			else{
 				//若此人没有携带抗体则转化为丧尸
-				pmb.turnToDead(col, np.getPid(), plist, clist);	
+				//*************************************若不可以就遍历获得
+				int id = plist.get(plist.indexOf(np)).getPid();
+				DeadPeople newdp = pmb.turnToDead(col, id, plist, clist);
+				if(newdp != null)
+					newList.add(newdp);
 			}
 		}
+		
 	}
 
 	public void JudgeNormalCell(int x, int y, List<People> plist, List<People> fitPList) {
