@@ -33,6 +33,7 @@ public class MainFrame extends JFrame implements MouseMotionListener {
 	public MainFrame(int row, int col) {
 		mp = new MapPanel(row, col, plist, tlist, clist,llist);
 		mp.setBackground(Color.white);// 设置面板背景颜色
+		new Thread(mp).start();
 		add(mp);// 将面板添加到窗体中
 	}
 
@@ -79,7 +80,8 @@ public class MainFrame extends JFrame implements MouseMotionListener {
 	
 	class StopActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
+			mp.stopWorld();
+			repaint();
 		}
 	}
 

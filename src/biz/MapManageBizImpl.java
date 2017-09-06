@@ -69,7 +69,9 @@ public class MapManageBizImpl implements MapManageBiz {
 	public int initLtypeRandom() {
 		Random rd = new Random();
 		int ltype = rd.nextInt(6) + 1;// 从1~6
-		return ltype;
+		//if (ltype==5)
+		//		return 1;
+		return 0;
 	}
 
 	//生成道具
