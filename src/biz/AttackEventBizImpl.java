@@ -300,7 +300,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 			else{
 				//若此人没有携带抗体则转化为丧尸
 				//*************************************若不可以就遍历获得
-				int id = plist.get(plist.indexOf(np)).getPid();
+				int id = plist.indexOf(np);//这里获得的是索引
 				DeadPeople newdp = pmb.turnToDead(col, id, plist, clist);
 				if(newdp != null)
 					newList.add(newdp);

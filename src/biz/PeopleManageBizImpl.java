@@ -115,7 +115,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 
 	// 将正常人转化为丧尸
 	public DeadPeople turnToDead(int col, int id, List<People> plist,List<Cell> clist) {
-		NormalPeople np = (NormalPeople) plist.get(id);
+		NormalPeople np = (NormalPeople) plist.get(id);  //这里其实是索引
 		if (np.isAntibody()) // 如果存在抗体，则跳过
 			return null;
 		else// 如果没有抗体则转化
@@ -126,11 +126,17 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 			DeadPeople dp = new DeadPeople(pid, ppos);
 			//plist.add(dp); // 加入list集合
 			
-			Cell c = clist.get(ppos.getY()*col+ppos.getX());//Y乘以高+X，得到坐标
-			c.setPtype(0);//id不变，type变丧尸
+			if(ppos != null)
+			{
+				Cell c = clist.get(ppos.getY()*col+ppos.getX());//Y乘以高+X，得到坐标
+				c.setPtype(0);//id不变，type变丧尸
+				np.setPpos(null);//将坐标取消
+				return dp;
+			}
 			
-			np.setPpos(null);//将坐标取消
-			return dp;
+			return null;	
+			
+			
 		}
 		
 		//Position nppos = np.getPpos();
