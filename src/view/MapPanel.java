@@ -320,7 +320,7 @@ public class MapPanel extends JPanel implements Runnable {
 		}
 	}
 	
-	@Override
+
 	public void run() {
 		{
 			while(isChanging)

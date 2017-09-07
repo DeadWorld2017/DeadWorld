@@ -26,7 +26,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 	
 	public double CalculateAttack(People p, List<Cell> clist) {
 		// 计算传入对象攻击力，返回攻击力值
-		
+		aggressivity = 0;
 		int ttype;
 		int ltype;
 		Tool tool;
@@ -272,6 +272,9 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		//决出胜负
 		//若人类胜利
 		if(NPAttackValue > DPAttackValue){
+			
+			System.out.println("impossible");
+			
 			if( np.isAntibody() == true && dp.getLevel() == 1 ){
 				int ram = neb.AntibodyRandomEvent();
 				if( ram == 1 ){
@@ -293,15 +296,22 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		}
 		//若丧尸胜利
 		if( NPAttackValue < DPAttackValue ){
+			System.out.println("possible");
+			System.out.println(DPAttackValue);
 			if( np.isAntibody() == true ){
 				//若此人携带抗体则直接死亡
-				neb.DeadEvent(dp, plist, deadList);
+				System.out.println("dead");
+				neb.DeadEvent(np, plist, deadList);
 			}
 			else{
 				//若此人没有携带抗体则转化为丧尸
 				//*************************************若不可以就遍历获得
 				int id = plist.indexOf(np);//这里获得的是索引
 				DeadPeople newdp = pmb.turnToDead(col, id, plist, clist);
+				/*if(newdp != null )
+					System.out.println(newdp.getPtype());
+				else
+					System.out.println("null");*/
 				if(newdp != null)
 					newList.add(newdp);
 			}

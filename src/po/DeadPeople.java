@@ -20,7 +20,7 @@ public class DeadPeople extends People {
 		this.ppos = ppos;
 		this.ptype = 0;// 丧尸类型为0
 		this.level = 1;
-		this.baseDamage = 100;// 暂时默认为10
+		this.baseDamage = 18;// 暂时默认为10
 		this.killNumber = 0;
 	}
 
