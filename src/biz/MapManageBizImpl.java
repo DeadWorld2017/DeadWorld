@@ -24,7 +24,7 @@ public class MapManageBizImpl implements MapManageBiz {
 	int countBazooka = 60;
 	int countBomb = 20;
 	int countEscapeShoes = 20;
-	int countTool= 400;
+	int countTool= 1000;
 	
 
 	// ³õÊ¼»¯¿ÕµØÍ¼
@@ -100,16 +100,16 @@ public class MapManageBizImpl implements MapManageBiz {
 	
 	public int initTtypeRandom() {
 		Random rd = new Random();
-		int ttype = rd.nextInt(400);
-		if(ttype<200)
+		int ttype = rd.nextInt(1500);
+		if(ttype<300)
 			return 1;//µ¶
-		else if(ttype<300)
+		else if(ttype<500)
 			return 2;//Ç¹
-		else if(ttype<360)
+		else if(ttype<600)
 			return 3;//»ð¼ýÍ²
-		else if(ttype<380)
+		else if(ttype<800)
 			return 4;//×ÔÉ±µ¯
-		else if(ttype<400)
+		else if(ttype<1000)
 			return 5;//ÌÓÅÜÐ¬
 		else 
 			return -1;//³ö´í

@@ -5,6 +5,7 @@ import java.util.List;
 import po.Cell;
 import po.NormalPeople;
 import po.People;
+import po.Tool;
 
 
 //正常事件接口上
@@ -32,6 +33,8 @@ public interface NormalEventBiz {
 	
 	
 	public void DestroyCell(int col, List<Cell> clist, People p);
+	
+	public void DestroyTool(List<Tool> tlist, People p);
 	
 	/*
 	//调整全部人的停留时间

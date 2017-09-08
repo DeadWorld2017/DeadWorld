@@ -3,6 +3,7 @@ package biz;
 import java.util.List;
 import po.Land;
 import po.People;
+import po.Tool;
 import po.Cell;
 
 /*地形类,存放对应得地图坐标和地形类型
@@ -46,7 +47,7 @@ public interface LandEventBiz {
 	public int ManageLandEvent(List<People> plist, List<Cell> clist);
 	
 	//战斗前调用
-	public void beforeAttackEvent(int col, List<People> plist,List<Cell> clist);
+	public void beforeAttackEvent(int col, List<People> plist, List<Cell> clist,List<Tool> tlist);
 	
 	//战斗后调用
 	public void afterAttackEvent(int col, List<People> plist,List<Cell> clist);

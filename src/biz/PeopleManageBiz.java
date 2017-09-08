@@ -47,5 +47,24 @@ public interface PeopleManageBiz {
 
 	public int countPeople(List<People> plist);
 	// 计算人类总数
+	
+	public double countAntibody(List<People> plist);
+	//计算抗体百分比
+	
+	public double countMan(List<People> plist);
+	//计算男人比例
+	
+	public double countWomen(List<People> plist);
+	//计算女人比例
+	
+	public double count0to19(List<People> plist);
+	
+	public double count20to39(List<People> plist);
+	
+	public double count40to59(List<People> plist);
+	
+	public double count60to79(List<People> plist);
+	
+	public double count80to99(List<People> plist);
 
 }

@@ -194,5 +194,162 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		int numberPeople = countDeadPeople(plist) + countNormalPeople(plist);
 		return numberPeople;
 	}
+ 
+ 
+	public double countAntibody(List<People> plist) {
+		int numberAntibody = 0;
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if(p.getPtype()==1){
+				NormalPeople np = new NormalPeople();
+				np = (NormalPeople) p;
+				if(np.isAntibody())
+					numberAntibody++;
+			}
+		}
+		double rate=0;
+		int numberPeople = countNormalPeople(plist);
+		if(numberPeople!=0){
+			rate = (double)numberAntibody/(double)numberPeople;
+		}
+			
+		return rate;
+	}
+
+ 
+	public double countMan(List<People> plist) {
+		int numberMan = 0;
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if(p.getPtype()==1){
+				NormalPeople np = (NormalPeople)p;
+				if(np.isGender())
+					numberMan++;
+			}
+		}
+		double rate=0;
+		int numberPeople = countNormalPeople(plist);
+		if(numberPeople!=0)
+			rate = (double)numberMan/(double)numberPeople;
+		return rate;
+	}
+
+ 
+	public double countWomen(List<People> plist) {
+		int numberWomen = 0;
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if(p.getPtype()==1){
+				NormalPeople np = (NormalPeople)p;
+				if(!np.isGender())
+					numberWomen++;
+			}
+		}
+		double rate=0;
+		int numberPeople = countNormalPeople(plist);
+		if(numberPeople!=0)
+			rate = (double)numberWomen/(double)numberPeople;
+		return rate;
+	}
+
+ 
+	public double count0to19(List<People> plist) {
+		int numberAge = 0;
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if(p.getPtype()==1){
+				NormalPeople np = (NormalPeople)p;
+				if(np.getAge()>=0&&np.getAge()<20)
+					numberAge++;
+			}
+		}
+		double rate=0;
+		int numberPeople = countNormalPeople(plist);
+		if(numberPeople!=0)
+			rate = (double)numberAge/(double)numberPeople;
+		return rate;
+	}
+
+ 
+	public double count20to39(List<People> plist) {
+		int numberAge = 0;
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if(p.getPtype()==1){
+				NormalPeople np = (NormalPeople)p;
+				if(np.getAge()>=20&&np.getAge()<40)
+					numberAge++;
+			}
+		}
+		double rate=0;
+		int numberPeople = countNormalPeople(plist);
+		if(numberPeople!=0)
+			rate = (double)numberAge/(double)numberPeople;
+		return rate;
+	}
+
+ 
+	public double count40to59(List<People> plist) {
+		int numberAge = 0;
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if(p.getPtype()==1){
+				NormalPeople np = (NormalPeople)p;
+				if(np.getAge()>=40&&np.getAge()<60)
+					numberAge++;
+			}
+		}
+		double rate=0;
+		int numberPeople = countNormalPeople(plist);
+		if(numberPeople!=0)
+			rate = (double)numberAge/(double)numberPeople;
+		return rate;
+	}
+
+ 
+	public double count60to79(List<People> plist) {
+		int numberAge = 0;
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if(p.getPtype()==1){
+				NormalPeople np = (NormalPeople)p;
+				if(np.getAge()>=60&&np.getAge()<80)
+					numberAge++;
+			}
+		}
+		double rate=0;
+		int numberPeople = countNormalPeople(plist);
+		if(numberPeople!=0)
+			rate = (double)numberAge/(double)numberPeople;
+		return rate;
+	}
+
+ 
+	public double count80to99(List<People> plist) {
+		int numberAge = 0;
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if(p.getPtype()==1){
+				NormalPeople np = (NormalPeople)p;
+				if(np.getAge()>=80&&np.getAge()<100)
+					numberAge++;
+			}
+		}
+		double rate=0;
+		int numberPeople = countNormalPeople(plist);
+		if(numberPeople!=0)
+			rate = (double)numberAge/(double)numberPeople;
+		return rate;
+	}
+	
+	
 
 }

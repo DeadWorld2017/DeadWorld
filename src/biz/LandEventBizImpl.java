@@ -7,6 +7,7 @@ import java.util.List;
 import po.Cell;
 import po.NormalPeople;
 import po.People;
+import po.Tool;
 
 
 //子母河4  暂时无法实现，先搁置
@@ -132,7 +133,27 @@ public class LandEventBizImpl implements LandEventBiz {
 		return tag;
 	}
 
-	public void beforeAttackEvent(int col, List<People> plist, List<Cell> clist) {
+	 
+	public void afterAttackEvent(int col, List<People> plist,List<Cell> clist) {
+		Iterator<People> it = plist.iterator();
+		while (it.hasNext()) {
+			People p = it.next();
+			if (p.getPtype() != 2) {
+				int ltype = findLandByPeople(p, clist);
+				switch (ltype) {
+				case 6://困阵
+					isTrappedLand(p);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public void beforeAttackEvent(int col, List<People> plist, List<Cell> clist, List<Tool> tlist) {
 		List<People> deadlist = new ArrayList<People>();
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
@@ -152,32 +173,16 @@ public class LandEventBizImpl implements LandEventBiz {
 			}
 		}
 		//完全删除
-		for (int i = 0; i < deadlist.size(); i++) {
-			//System.out.println("索引"+plist.indexOf(deadlist.get(i)));
-			People dead = deadlist.get(i);
+		Iterator<People> deadit = deadlist.iterator();
+		while(deadit.hasNext()){
+			People dead = deadit.next();
 			plist.remove(dead);// 循环删除所有标记的
 			neb.DestroyCell(col,clist,dead);//消除格子上的坐标
+			if(dead.getPtype()==1){
+				neb.DestroyTool(tlist, dead);
+				}
 		}
 		deadlist.clear();
-	}
-
-	
-	
-	public void afterAttackEvent(int col, List<People> plist,List<Cell> clist) {
-		Iterator<People> it = plist.iterator();
-		while (it.hasNext()) {
-			People p = it.next();
-			if (p.getPtype() != 2) {
-				int ltype = findLandByPeople(p, clist);
-				switch (ltype) {
-				case 6://困阵
-					isTrappedLand(p);
-					break;
-				default:
-					break;
-				}
-			}
-		}
 		
 	}
 

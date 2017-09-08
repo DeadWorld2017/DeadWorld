@@ -10,6 +10,7 @@ import po.Land;
 import po.NormalPeople;
 import po.People;
 import po.Position;
+import po.Tool;
 
 //正常事件接口实现
 public class NormalEventBizImpl implements NormalEventBiz {
@@ -24,6 +25,7 @@ public class NormalEventBizImpl implements NormalEventBiz {
 			People p = it.next();
 			if (p.getPtype() == 1) {
 				NormalPeople np1 = (NormalPeople) p;
+				//System.out.println("怀孕1"+p.getClass()+"    " +p.getPtype()+"   "+p.getPid());
 				if (np1.getPregnancyFlag()) {
 					NormalPeople np2 = PregnantMatch(np1, plist, clist, row, col);
 					if (np2 != null) {
@@ -136,6 +138,7 @@ public class NormalEventBizImpl implements NormalEventBiz {
 			People p = it.next();
 			if (p.getPtype() == 1) // 一定要分开判断，因为如果这个地方不存在人，position判断为null，但这样效率下降
 				if (p.getPpos().getX() == x && p.getPpos().getY() == y) {
+					//System.out.println("怀孕"+p.getClass()+"    " +p.getPtype()+"   "+p.getPid());
 					NormalPeople np = (NormalPeople) p;
 					if (np.getPregnancyFlag()) {
 						markPList.add(np);
@@ -235,6 +238,18 @@ public class NormalEventBizImpl implements NormalEventBiz {
 			//System.out.println();
 		}
 		
+	}
+	
+	public void DestroyTool(List<Tool> tlist, People p){
+		NormalPeople np = (NormalPeople)p;
+		if(np.getTlist()!=null)
+		{
+			Iterator<Tool> it = np.getTlist().iterator();
+			while(it.hasNext()){
+				Tool t = it.next();
+				tlist.remove(t);
+			}
+		}
 	}
 	
 	/*

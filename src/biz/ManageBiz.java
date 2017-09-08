@@ -21,4 +21,5 @@ public interface ManageBiz {
 	//判断原来位置是否已经有人了
 	
 	
+	
 }

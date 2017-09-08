@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import po.Cell;
+import po.NormalPeople;
 import po.People;
 import po.Position;
 import po.Tool;
@@ -106,6 +107,9 @@ public class ManageBizImpl implements ManageBiz {
 		else
 			return true;// ”–»À
 	}
+
+
+	
 
 
 

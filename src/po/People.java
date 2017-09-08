@@ -59,5 +59,10 @@ public class People {
 		return trapYear;
 	}
 
+	@Override
+	public String toString() {
+		return "People [pid=" + pid + ", ppos=" + ppos + ", ptype=" + ptype + ", trapYear=" + trapYear + "]";
+	}
+
 	 
 }

@@ -1,5 +1,6 @@
 package po;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*正常人类
@@ -32,7 +33,7 @@ public class NormalPeople extends People {
 		this.age = age;
 		this.survivability = survivability;
 		this.antibody = antibody;
-		this.tlist = null;
+		this.tlist = new ArrayList<Tool>();
 		this.pregnancyFlag = pregnancyFlag;
 	}
 
@@ -86,9 +87,11 @@ public class NormalPeople extends People {
 
 	@Override
 	public String toString() {
-		return "NormalPeople [pid=" + pid + ", ppos=" + ppos + ", ptype=" + ptype + "]";
+		return "NormalPeople [gender=" + gender + ", age=" + age + ", survivability=" + survivability + ", antibody="
+				+ antibody + ", tlist=" + tlist + ", pregnancyFlag=" + pregnancyFlag + "]";
 	}
 
+	 
 	 
 
 }

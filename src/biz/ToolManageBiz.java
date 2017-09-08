@@ -2,6 +2,7 @@ package biz;
 
 import java.util.List;
 
+import po.Cell;
 import po.DeadPeople;
 import po.NormalPeople;
 import po.People;
@@ -10,11 +11,11 @@ import po.Tool;
 //道具管理接口
 public interface ToolManageBiz {
 
-	
+	public void pickTool(List<People> plist,List<Cell> clist, List<Tool> tlist,int col);
 	
 	public void destoryTool(List<Tool> tlist, int tid);
 	// 传入道具的tid并在全局tlist中销毁
-	
+	public boolean compareTool(NormalPeople np,int ttype);
 	//是否有武器
 	public boolean isTool();
 	

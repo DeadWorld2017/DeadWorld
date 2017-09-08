@@ -23,6 +23,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 	WorldEventBiz web = new WorldEventBizImpl();
 	NormalEventBiz neb = new NormalEventBizImpl();
 	PeopleManageBiz pmb = new PeopleManageBizImpl();
+	ToolManageBiz tmb = new ToolManageBizImpl();
 	
 	public double CalculateAttack(People p, List<Cell> clist) {
 		// 计算传入对象攻击力，返回攻击力值
@@ -134,13 +135,13 @@ public class AttackEventBizImpl implements AttackEventBiz{
 	}
 
 	public void ManageAttackEvent(List<People> plist, List<Cell> clist,
-			int row, int col) {
+			int row, int col,List<Tool> tlist) {
 		//统筹攻击事件
 		People p;
 		NormalPeople np;
 		DeadPeople dp;
 		List<People> deadList = new ArrayList<People>();   //存放满足死亡条件者
-		List<People> fitPList;								//存放满足与对应丧尸相邻正常人类
+		List<People> fitPList = new ArrayList<People>();  //存放满足与对应丧尸相邻正常人类
 		List<People> newList = new ArrayList<People>();    //存放满足增长的丧尸
 		
 		Iterator<People> it = plist.iterator();
@@ -154,7 +155,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 					Iterator<People> it2 = fitPList.iterator();
 					while(it2.hasNext()){
 						np = (NormalPeople)it2.next();
-						AttackEvent(np, dp, plist, clist, deadList, newList, row, col);
+						AttackEvent(np, dp, plist, clist, deadList, newList, row, col,tlist);
 					}
 				}
 			}
@@ -165,6 +166,8 @@ public class AttackEventBizImpl implements AttackEventBiz{
 				p = it3.next();
 				plist.remove(p);
 				neb.DestroyCell(col, clist, p);
+				if(p.getPtype()==1)
+					neb.DestroyTool(tlist, p);
 			}
 		}
 		if(newList != null){
@@ -258,7 +261,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 	}
 
 	public void AttackEvent(NormalPeople np, DeadPeople dp, List<People> plist, List<Cell> clist,
-			List<People> deadList, List<People> newList, int row, int col) {
+			List<People> deadList, List<People> newList, int row, int col,List<Tool> tlist) {
 		//一对一实现攻击事件
 		
 		//计算正常人类基础攻击力
@@ -272,9 +275,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		//决出胜负
 		//若人类胜利
 		if(NPAttackValue > DPAttackValue){
-			
-			System.out.println("impossible");
-			
+				
 			if( np.isAntibody() == true && dp.getLevel() == 1 ){
 				int ram = neb.AntibodyRandomEvent();
 				if( ram == 1 ){
@@ -296,25 +297,54 @@ public class AttackEventBizImpl implements AttackEventBiz{
 		}
 		//若丧尸胜利
 		if( NPAttackValue < DPAttackValue ){
-			System.out.println("possible");
-			System.out.println(DPAttackValue);
-			if( np.isAntibody() == true ){
-				//若此人携带抗体则直接死亡
-				System.out.println("dead");
-				neb.DeadEvent(np, plist, deadList);
+			int tid = tmb.isBomb(np);//判断是否有炸弹
+			Tool to = new Tool();
+			if(tid!=-1){
+				System.out.println("炸弹炸了");
+				deadList.add(np);
+				deadList.add(dp);
+				Iterator<Tool> toit = tlist.iterator();
+				while(toit.hasNext()){
+					to = toit.next();
+					if(to.getTid()==tid)
+						break;
+				}
+				tlist.remove(tlist.indexOf(to));
+			}	
+			else
+			{
+				int esid = tmb.isEscapeShoes(np);
+				if(esid!=-1){
+					System.out.println("用了逃跑鞋");
+					Iterator<Tool> toit = tlist.iterator();
+					while(toit.hasNext()){
+						to = toit.next();
+						if(to.getTid()==esid)
+							break;
+					}
+					tlist.remove(tlist.indexOf(to));
+				}
+				else{
+					if( np.isAntibody() == true ){
+						//若此人携带抗体则直接死亡
+						neb.DeadEvent(np, plist, deadList);
+					}
+					else{
+						//若此人没有携带抗体则转化为丧尸
+						//*************************************若不可以就遍历获得
+						int id = plist.indexOf(np);//这里获得的是索引
+						DeadPeople newdp = pmb.turnToDead(col, id, plist, clist);
+						/*if(newdp != null )
+							System.out.println(newdp.getPtype());
+						else
+							System.out.println("null");*/
+						if(newdp != null)
+							newList.add(newdp);
+					}
+				}
+				
 			}
-			else{
-				//若此人没有携带抗体则转化为丧尸
-				//*************************************若不可以就遍历获得
-				int id = plist.indexOf(np);//这里获得的是索引
-				DeadPeople newdp = pmb.turnToDead(col, id, plist, clist);
-				/*if(newdp != null )
-					System.out.println(newdp.getPtype());
-				else
-					System.out.println("null");*/
-				if(newdp != null)
-					newList.add(newdp);
-			}
+			
 		}
 		
 	}

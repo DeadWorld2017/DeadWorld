@@ -8,7 +8,6 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 import biz.AttackEventBiz;
 import biz.AttackEventBizImpl;
 import biz.LandEventBiz;
@@ -21,6 +20,8 @@ import biz.NormalEventBiz;
 import biz.NormalEventBizImpl;
 import biz.PeopleManageBiz;
 import biz.PeopleManageBizImpl;
+import biz.ToolManageBiz;
+import biz.ToolManageBizImpl;
 import po.Cell;
 import po.Land;
 import po.People;
@@ -36,10 +37,26 @@ public class MapPanel extends JPanel implements Runnable {
 	List<Land> llist;// 地形
 	int px[] = new int[200];
 	int py[] = new int[200];
+	int year = 0;
 
+	JLabel yearlbl = new JLabel();
 	JLabel numberPeoplelbl = new JLabel();
 	JLabel numberNormalPeoplelbl = new JLabel();
 	JLabel numberDeadPeoplelbl = new JLabel();
+	JLabel numberAntibodylbl = new JLabel();
+	JLabel numberManlbl = new JLabel();
+	JLabel numberWomanlbl = new JLabel();
+	JLabel number0to19lbl = new JLabel();
+	JLabel number20to39lbl = new JLabel();
+	JLabel number40to59lbl = new JLabel();
+	JLabel number60to79lbl = new JLabel();
+	JLabel number80to99lbl = new JLabel();
+
+	JLabel numberKnifelbl = new JLabel();
+	JLabel numberGunlbl = new JLabel();
+	JLabel numberBazookalbl = new JLabel();
+	JLabel numberBomblbl = new JLabel();
+	JLabel numberEscapeShoeslbl = new JLabel();
 
 	PeopleManageBiz pmb = new PeopleManageBizImpl();
 	MapManageBiz mmb = new MapManageBizImpl();
@@ -47,8 +64,9 @@ public class MapPanel extends JPanel implements Runnable {
 	NormalEventBiz neb = new NormalEventBizImpl();
 	LandEventBiz leb = new LandEventBizImpl();
 	AttackEventBiz aeb = new AttackEventBizImpl();
-	
-	 public  boolean isChanging = true;
+	ToolManageBiz tmb = new ToolManageBizImpl();
+
+	public boolean isChanging = true;
 
 	public MapPanel(int row, int col, List<People> tempplist, List<Tool> temptlist, List<Cell> tempclist,
 			List<Land> templlist) {
@@ -60,36 +78,52 @@ public class MapPanel extends JPanel implements Runnable {
 		this.clist = tempclist;
 		this.llist = templlist;
 		setPeopleLabel();// 调用显示人类数量的Label
-	}
+		setYearLabel();// 年份
+		setToolLabel();// 道具
 
-	public void startWorld() {
-		isChanging=true;
+		isChanging = true;
 		mmb.initMapList(row, col, clist);
 		mmb.initLand(row, col, llist, clist);
 		mmb.initTool(row, col, tlist, clist);
 		pmb.initNormalPeopleRandom(row, col, plist, clist);// 初始化生成正常人类
 		pmb.initDeadPeopleRandom(col, plist, clist);// 部分人类转化为丧尸
-		updatePeople(numberPeoplelbl, numberNormalPeoplelbl, numberDeadPeoplelbl);
+		updatePeople(numberPeoplelbl, numberNormalPeoplelbl, numberDeadPeoplelbl, numberAntibodylbl, numberManlbl,
+				numberWomanlbl, number0to19lbl, number20to39lbl, number40to59lbl, number60to79lbl, number80to99lbl);
 		updateLand();// 调用显示地形数量的Label
-		updateTool();// 调用显示地形数量的Label
-		/*synchronized(this)
-		{
-			isChanging=true;
-			this.notifyAll();
-		}*/
+		updateTool(numberBazookalbl, numberBazookalbl, numberBazookalbl, numberBazookalbl, numberBazookalbl);// 调用显示地形数量的Label
+		
+	}
+
+	public void startWorld() {
+		isChanging = true;
+		mmb.initMapList(row, col, clist);
+		mmb.initLand(row, col, llist, clist);
+		mmb.initTool(row, col, tlist, clist);
+		pmb.initNormalPeopleRandom(row, col, plist, clist);// 初始化生成正常人类
+		pmb.initDeadPeopleRandom(col, plist, clist);// 部分人类转化为丧尸
+		updatePeople(numberPeoplelbl, numberNormalPeoplelbl, numberDeadPeoplelbl, numberAntibodylbl, numberManlbl,
+				numberWomanlbl, number0to19lbl, number20to39lbl, number40to59lbl, number60to79lbl, number80to99lbl);
+		updateLand();// 调用显示地形数量的Label
+		updateTool(numberBazookalbl, numberBazookalbl, numberBazookalbl, numberBazookalbl, numberBazookalbl);// 调用显示地形数量的Label
+
+		/*
+		 * synchronized(this) { isChanging=true; this.notifyAll(); }
+		 */
 	}
 
 	public void nextWorld() {
 		neb.AdjustNormalPeopleAttr(plist);// 调整年龄，停留时间，怀孕标记
 		mb.randomMove(row, col, plist, clist);// 随机移动
-		leb.beforeAttackEvent(col, plist, clist);// 攻击前地形事件，庇护所和死亡陷阱
+		leb.beforeAttackEvent(col, plist, clist, tlist);// 攻击前地形事件，庇护所和死亡陷阱
 		// 攻击事件
-		aeb.ManageAttackEvent(plist, clist, row, col);
+		aeb.ManageAttackEvent(plist, clist, row, col, tlist);
 		neb.PregnantManage(plist, clist, row, col);// 判断怀孕
-		updatePeople(numberPeoplelbl, numberNormalPeoplelbl, numberDeadPeoplelbl);
+		updatePeople(numberPeoplelbl, numberNormalPeoplelbl, numberDeadPeoplelbl, number0to19lbl, number0to19lbl,
+				number0to19lbl, number0to19lbl, number0to19lbl, number0to19lbl, number0to19lbl, number0to19lbl);
 		leb.afterAttackEvent(col, plist, clist);// 攻击后地形事件，困阵
 	}
-	public void stopWorld(){
+
+	public void stopWorld() {
 		isChanging = false;
 	}
 
@@ -99,24 +133,143 @@ public class MapPanel extends JPanel implements Runnable {
 		add(numberPeoplelbl);
 		add(numberNormalPeoplelbl);
 		add(numberDeadPeoplelbl);
+		add(numberAntibodylbl);
+		add(numberManlbl);
+		add(numberWomanlbl);
+		add(number0to19lbl);
+		add(number20to39lbl);
+		add(number40to59lbl);
+		add(number60to79lbl);
+		add(number80to99lbl);
 
 		setLayout(null);
-		numberPeoplelbl.setBounds(1020, 20, 300, 20);
-		numberNormalPeoplelbl.setBounds(1020, 40, 300, 20);
-		numberDeadPeoplelbl.setBounds(1020, 60, 300, 20);
+		numberPeoplelbl.setBounds(1020, 40, 300, 20);
+		numberNormalPeoplelbl.setBounds(1020, 60, 300, 20);
+		numberDeadPeoplelbl.setBounds(1020, 80, 300, 20);
+		numberAntibodylbl.setBounds(1020, 100, 300, 20);
+		numberManlbl.setBounds(1020, 120, 300, 20);
+		numberWomanlbl.setBounds(1020, 140, 300, 20);
+		number0to19lbl.setBounds(1020, 160, 300, 20);
+		number20to39lbl.setBounds(1020, 180, 300, 20);
+		number40to59lbl.setBounds(1020, 200, 300, 20);
+		number60to79lbl.setBounds(1020, 220, 300, 20);
+		number80to99lbl.setBounds(1020, 240, 300, 20);
 
-		updatePeople(numberPeoplelbl, numberNormalPeoplelbl, numberDeadPeoplelbl);
+		updatePeople(numberPeoplelbl, numberNormalPeoplelbl, numberDeadPeoplelbl, numberAntibodylbl, numberManlbl,
+				numberWomanlbl, number0to19lbl, number20to39lbl, number40to59lbl, number60to79lbl, number80to99lbl);
 
 	}
 
-	public void updatePeople(JLabel p, JLabel np, JLabel dp) {
+	private void updatePeople(JLabel p, JLabel np, JLabel dp, JLabel antibody, JLabel man, JLabel women,
+			JLabel number0to19lbl, JLabel number20to39lbl, JLabel number40to59lbl, JLabel number60to79lbl,
+			JLabel number80to99lbl) {
 		int numberPeople = pmb.countPeople(plist);// 所有人数量
 		int numberNormalPeople = pmb.countNormalPeople(plist);// 正常人数量
 		int numberDeadPeople = pmb.countDeadPeople(plist);// 丧尸数量
+		double numberAntibody = pmb.countAntibody(plist);
+		double numberMan = pmb.countMan(plist);
+		double numberWoman = pmb.countWomen(plist);
+		double number0to20 = pmb.count0to19(plist);
+		double number20to40 = pmb.count20to39(plist);
+		double number40to60 = pmb.count40to59(plist);
+		double number60to80 = pmb.count60to79(plist);
+		double number80to100 = pmb.count80to99(plist);
 
 		p.setText("物种数量：" + numberPeople);
 		np.setText("正常人数量：" + numberNormalPeople);
 		dp.setText("丧尸数量：" + numberDeadPeople);
+		antibody.setText("抗体比例："+ numberAntibody);
+		man.setText("男性比例："+numberMan);
+		women.setText("女性比例："+numberWoman);
+		number0to19lbl.setText("0-19岁比例："+number0to20);
+		number20to39lbl.setText("20-39岁比例："+number20to40);
+		number40to59lbl.setText("40-59岁比例："+number40to60);
+		number60to79lbl.setText("60-79岁比例："+number60to80);
+		number80to99lbl.setText("80-99岁比例："+number80to100);
+
+
+	}
+
+	public void setYearLabel() {
+		yearlbl = new JLabel("年份：" + year);
+		add(yearlbl);
+		yearlbl.setBounds(1020, 0, 300, 20);
+
+	}
+
+	public void updataYear(JLabel yearlbl) {
+		year++;
+		yearlbl.setText("年份：" + year);
+	}
+
+	public void setToolLabel() {
+		add(numberKnifelbl);
+		add(numberGunlbl);
+		add(numberBazookalbl);
+		add(numberBomblbl);
+		add(numberEscapeShoeslbl);
+
+		setLayout(null);
+		numberKnifelbl.setBounds(1020, 280, 300, 20);
+		numberGunlbl.setBounds(1020, 300, 300, 20);
+		numberBazookalbl.setBounds(1020, 320, 300, 20);
+		numberBomblbl.setBounds(1020, 340, 340, 20);
+		numberEscapeShoeslbl.setBounds(1020, 360, 300, 20);
+
+		updateTool(numberKnifelbl, numberGunlbl, numberBazookalbl, numberBomblbl, numberEscapeShoeslbl);
+	}
+
+	private void updateTool(JLabel numberKnifelbl2, JLabel numberGunlbl2, JLabel numberBazookalbl2,
+			JLabel numberBomblbl2, JLabel numberEscapeShoeslbl2) {
+		int countKnife = 0;// 1,刀
+		int countGun = 0;// 2,枪
+		int coutBazooka = 0;// 3,火箭筒
+		int coutBomb = 0;// 4,自杀弹
+		int coutEscapeShoes = 0;// 5，逃跑鞋
+
+		int countKnifeByPeople = 0;// 1,刀
+		int countGunByPeople = 0;// 2,枪
+		int coutBazookaByPeople = 0;// 3,火箭筒
+		int coutBombByPeople = 0;// 4,自杀弹
+		int coutEscapeShoesByPeople = 0;// 5，逃跑鞋
+
+		Iterator<Tool> it = tlist.iterator();
+		while (it.hasNext()) {
+			Tool t = it.next();
+			switch (t.getTtype()) {
+			case 1:
+				countKnife++;
+				if (t.isUsage())
+					countKnifeByPeople++;
+				break;
+			case 2:
+				countGun++;
+				if (t.isUsage())
+					countGunByPeople++;
+				break;
+			case 3:
+				coutBazooka++;
+				if (t.isUsage())
+					coutBazookaByPeople++;
+				break;
+			case 4:
+				coutBomb++;
+				if (t.isUsage())
+					coutBombByPeople++;
+				break;
+			case 5:
+				coutEscapeShoes++;
+				if (t.isUsage())
+					coutEscapeShoesByPeople++;
+				break;
+			}
+		}
+
+		numberKnifelbl.setText("刀数量(人持有/总计)：" + countKnifeByPeople + " / " + countKnife);
+		numberGunlbl.setText("枪数量(人持有/总计)：" + countGunByPeople + " / " + countGun);
+		numberBazookalbl.setText("火箭筒数量(人持有/总计)：" + coutBazookaByPeople + " / " + coutBazooka);
+		numberBomblbl.setText("自杀弹数量(人持有/总计)：" + coutBombByPeople + " / " + coutBomb);
+		numberEscapeShoeslbl.setText("逃跑鞋数量(人持有/总计)：" + coutEscapeShoesByPeople + " / " + coutEscapeShoes);
 
 	}
 
@@ -167,61 +320,12 @@ public class MapPanel extends JPanel implements Runnable {
 		add(numberTrappedLandlbl);
 
 		setLayout(null);
-		numberShelterlbl.setBounds(1020, 100, 300, 20);
-		numberRadientlbl.setBounds(1020, 120, 300, 20);
-		numberSwamplandlbl.setBounds(1020, 140, 300, 20);
-		numberDMRiverlbl.setBounds(1020, 160, 300, 20);
-		numberDeathtraplbl.setBounds(1020, 180, 300, 20);
-		numberTrappedLandlbl.setBounds(1020, 200, 300, 20);
-	}
-
-	private void updateTool() {
-		int countKnife = 0;// 1,刀
-		int countGun = 0;// 2,枪
-		int coutBazooka = 0;// 3,火箭筒
-		int coutBomb = 0;// 4,自杀弹
-		int coutEscapeShoes = 0;// 5，逃跑鞋
-
-		Iterator<Tool> it = tlist.iterator();
-		while (it.hasNext()) {
-			switch (it.next().getTtype()) {
-			case 1:
-				countKnife++;
-				break;
-			case 2:
-				countGun++;
-				break;
-			case 3:
-				coutBazooka++;
-				break;
-			case 4:
-				coutBomb++;
-				break;
-			case 5:
-				coutEscapeShoes++;
-				break;
-			}
-		}
-
-		JLabel numberKnifelbl = new JLabel("刀数量：" + countKnife);
-		JLabel numberGunlbl = new JLabel("枪数量：" + countGun);
-		JLabel numberBazookalbl = new JLabel("火箭筒数量：" + coutBazooka);
-		JLabel numberBomblbl = new JLabel("自杀弹数量：" + coutBomb);
-		JLabel numberEscapeShoeslbl = new JLabel("逃跑鞋数量：" + coutEscapeShoes);
-
-		add(numberKnifelbl);
-		add(numberGunlbl);
-		add(numberBazookalbl);
-		add(numberBomblbl);
-		add(numberEscapeShoeslbl);
-
-		setLayout(null);
-		numberKnifelbl.setBounds(1020, 260, 300, 20);
-		numberGunlbl.setBounds(1020, 280, 300, 20);
-		numberBazookalbl.setBounds(1020, 300, 300, 20);
-		numberBomblbl.setBounds(1020, 320, 300, 20);
-		numberEscapeShoeslbl.setBounds(1020, 340, 300, 20);
-
+		numberShelterlbl.setBounds(1020, 400, 300, 20);
+		numberRadientlbl.setBounds(1020, 420, 300, 20);
+		numberSwamplandlbl.setBounds(1020, 440, 300, 20);
+		numberDMRiverlbl.setBounds(1020, 460, 300, 20);
+		numberDeathtraplbl.setBounds(1020, 480, 300, 20);
+		numberTrappedLandlbl.setBounds(1020, 500, 300, 20);
 	}
 
 	public void paintComponent(Graphics g) {
@@ -243,9 +347,10 @@ public class MapPanel extends JPanel implements Runnable {
 		Iterator<Tool> it = tlist.iterator();
 		while (it.hasNext()) {
 			Tool t = it.next();// 存储it.next()的值，防止跳跃
-			g.setColor(Color.yellow);
-			g.fillRect(t.getTpos().getX() * 10, t.getTpos().getY() * 10, 5, 5);
-
+			if (t.isUsage() == false) {
+				g.setColor(Color.yellow);
+				g.fillRect(t.getTpos().getX() * 10, t.getTpos().getY() * 10, 5, 5);
+			}
 		}
 
 	}
@@ -312,6 +417,7 @@ public class MapPanel extends JPanel implements Runnable {
 
 		}
 	}
+
 	public void sleep(int x) {
 		try {
 			Thread.sleep(80 * x);
@@ -319,38 +425,34 @@ public class MapPanel extends JPanel implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public void run() {
 		{
-			while(isChanging)
-			{
-				//synchronized(this)
-				/*{
-					while(true)
-					{
-						
-						try
-						{
-							this.wait();
-						}catch(InterruptedException e)
-						{
-							e.printStackTrace();
-						}
-					}*/
-					
-					sleep(3);
-					
-					neb.AdjustNormalPeopleAttr(plist);// 调整年龄，停留时间，怀孕标记
-					mb.randomMove(row, col, plist, clist);// 随机移动
-					leb.beforeAttackEvent(col, plist, clist);// 攻击前地形事件，庇护所和死亡陷阱
-					// 攻击事件
-					aeb.ManageAttackEvent(plist, clist, row, col);
-					neb.PregnantManage(plist, clist, row, col);// 判断怀孕
-					updatePeople(numberPeoplelbl, numberNormalPeoplelbl, numberDeadPeoplelbl);
-					leb.afterAttackEvent(col, plist, clist);// 攻击后地形事件，困阵
-					repaint();
-				//}
+			while (isChanging) {
+				// synchronized(this)
+				/*
+				 * { while(true) {
+				 * 
+				 * try { this.wait(); }catch(InterruptedException e) {
+				 * e.printStackTrace(); } }
+				 */
+
+				sleep(1);
+				updataYear(yearlbl);// 更新年份
+				neb.AdjustNormalPeopleAttr(plist);// 调整年龄，停留时间，怀孕标记
+				mb.randomMove(row, col, plist, clist);// 随机移动
+				leb.beforeAttackEvent(col, plist, clist, tlist);// 攻击前地形事件，庇护所和死亡陷阱
+				tmb.pickTool(plist, clist, tlist, col);// 捡武器
+				// 攻击事件
+				aeb.ManageAttackEvent(plist, clist, row, col, tlist);
+				neb.PregnantManage(plist, clist, row, col);// 判断怀孕
+				updatePeople(numberPeoplelbl, numberNormalPeoplelbl, numberDeadPeoplelbl, numberAntibodylbl, numberManlbl,
+						numberWomanlbl, number0to19lbl, number20to39lbl, number40to59lbl, number60to79lbl, number80to99lbl);
+				updateTool(numberBazookalbl, numberBazookalbl, numberBazookalbl, numberBazookalbl, numberBazookalbl);
+				leb.afterAttackEvent(col, plist, clist);// 攻击后地形事件，困阵
+ 
+
+				repaint();
 			}
 		}
 
