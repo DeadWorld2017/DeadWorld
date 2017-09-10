@@ -25,8 +25,8 @@ public class MainFrame extends JFrame implements MouseMotionListener {
 	public static List<Cell> clist = new ArrayList<Cell>();// 存放地图格子的list集合
 	public static List<Land> llist = new ArrayList<Land>();// 存放地形的list集合
 	
-	public final static int MapRow = 70;// 地图的长
-	public final static int MapCol = 100;// 地图的高
+	public final static int MapRow = 100;// 地图的长
+	public final static int MapCol = 70;// 地图的高
 	public final static int FrameRow = 800;// 主窗体的高
 	public final static int FrameCol = 1300;// 主窗体的长
 

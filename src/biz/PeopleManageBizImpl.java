@@ -153,6 +153,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 			p = it.next();
 			if( pid == p.getPid() && p.getClass() != dp.getClass() ){
 				//恢复正常人类,将当前丧尸的位置赋值给恢复的正常人类
+				//感觉可能这里有问题！！！！！
 				p.setPtype(1);
 				Position ppos = dp.getPpos();
 				p.setPpos(ppos);
@@ -202,6 +203,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		while (it.hasNext()) {
 			People p = it.next();
 			if(p.getPtype()==1){
+				//测试
 				if(p.getClass() == NormalPeople.class){
 					NormalPeople np = new NormalPeople();
 					np = (NormalPeople) p;
