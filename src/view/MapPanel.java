@@ -24,6 +24,7 @@ import biz.ToolManageBiz;
 import biz.ToolManageBizImpl;
 import po.Cell;
 import po.Land;
+import po.NormalPeople;
 import po.People;
 import po.Tool;
 
@@ -349,7 +350,7 @@ public class MapPanel extends JPanel implements Runnable {
 			Tool t = it.next();// 存储it.next()的值，防止跳跃
 			if (t.isUsage() == false) {
 				g.setColor(Color.yellow);
-				g.fillRect(t.getTpos().getX() * 10, t.getTpos().getY() * 10, 5, 5);
+				g.fillRect(t.getTpos().getY() * 10, t.getTpos().getX() * 10, 5, 5);
 			}
 		}
 
@@ -366,13 +367,13 @@ public class MapPanel extends JPanel implements Runnable {
 				g.setColor(colorNormalPeople);
 				// g.fillOval(p.getPpos().getX() * 10, p.getPpos().getY() * 10,
 				// 10, 10);
-				g.fillRect(p.getPpos().getX() * 10, p.getPpos().getY() * 10, 10, 10);
+				g.fillRect(p.getPpos().getY() * 10, p.getPpos().getX() * 10, 10, 10);
 			} else if (p.getPtype() == 0) // 若是丧尸，显示红色
 			{
 				g.setColor(Color.red);
 				// g.fillOval(p.getPpos().getX() * 10, p.getPpos().getY() * 10,
 				// 10, 10);
-				g.fillRect(p.getPpos().getX() * 10, p.getPpos().getY() * 10, 10, 10);
+				g.fillRect(p.getPpos().getY() * 10, p.getPpos().getX() * 10, 10, 10);
 			}
 		}
 	}
@@ -391,27 +392,27 @@ public class MapPanel extends JPanel implements Runnable {
 			switch (l.getLtype()) {
 			case 1:// 庇护所绿色
 				g.setColor(colorShelter);
-				g.drawRect(l.getLpos().getX() * 10, l.getLpos().getY() * 10, 10, 10);
+				g.drawRect(l.getLpos().getY() * 10, l.getLpos().getX() * 10, 10, 10);
 				break;
 			case 2:// 辐射地黄色
 				g.setColor(colorRadient);
-				g.drawRect(l.getLpos().getX() * 10, l.getLpos().getY() * 10, 10, 10);
+				g.drawRect(l.getLpos().getY() * 10, l.getLpos().getX() * 10, 10, 10);
 				break;
 			case 3:// 沼泽地黑色
 				g.setColor(colorSwampland);
-				g.drawRect(l.getLpos().getX() * 10, l.getLpos().getY() * 10, 10, 10);
+				g.drawRect(l.getLpos().getY() * 10, l.getLpos().getX() * 10, 10, 10);
 				break;
 			case 4:// 子母河粉色
 				g.setColor(colorDMRiver);
-				g.drawRect(l.getLpos().getX() * 10, l.getLpos().getY() * 10, 10, 10);
+				g.drawRect(l.getLpos().getY() * 10, l.getLpos().getX() * 10, 10, 10);
 				break;
 			case 5:// 死亡陷阱红色
 				g.setColor(colorDeathtrap);
-				g.drawRect(l.getLpos().getX() * 10, l.getLpos().getY() * 10, 10, 10);
+				g.drawRect(l.getLpos().getY() * 10, l.getLpos().getX() * 10, 10, 10);
 				break;
 			case 6:// 困阵灰色
 				g.setColor(colorTrappedLand);
-				g.drawRect(l.getLpos().getX() * 10, l.getLpos().getY() * 10, 10, 10);
+				g.drawRect(l.getLpos().getY() * 10, l.getLpos().getX() * 10, 10, 10);
 				break;
 			}
 
@@ -450,8 +451,7 @@ public class MapPanel extends JPanel implements Runnable {
 						numberWomanlbl, number0to19lbl, number20to39lbl, number40to59lbl, number60to79lbl, number80to99lbl);
 				updateTool(numberBazookalbl, numberBazookalbl, numberBazookalbl, numberBazookalbl, numberBazookalbl);
 				leb.afterAttackEvent(col, plist, clist);// 攻击后地形事件，困阵
- 
-
+  
 				repaint();
 			}
 		}

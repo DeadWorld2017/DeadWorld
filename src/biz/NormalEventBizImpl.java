@@ -37,9 +37,6 @@ public class NormalEventBizImpl implements NormalEventBiz {
 						}
 					}
 				}
-				else{
-					System.out.println("出错类型： " + p.getPtype()+" "+p.getClass());
-				}
 			}
 		}
 		if (newchildlist.size() != 0) {
@@ -145,8 +142,6 @@ public class NormalEventBizImpl implements NormalEventBiz {
 			People p = it.next();
 			if (p.getPtype() == 1) // 一定要分开判断，因为如果这个地方不存在人，position判断为null，但这样效率下降
 				if (p.getPpos().getX() == x && p.getPpos().getY() == y) {
-					//!!!!!!!!!!!!!!!!!!!!!!!!
-					System.out.println("怀孕"+p.getClass()+"    " +p.getPtype()+"   "+p.getPid());
 					if(p.getClass() != DeadPeople.class){
 						NormalPeople np = (NormalPeople) p;
 						if (np.getPregnancyFlag()) {
@@ -159,13 +154,7 @@ public class NormalEventBizImpl implements NormalEventBiz {
 					
 				}
 		}
-		Iterator<People> it2 = plist.iterator();
-		while(it2.hasNext()){
-			People p = it2.next();
-			if(p.getPid() == mark && p.getClass() == NormalPeople.class){
-				System.out.println("存在正常人 : "+p.getPtype());
-			}
-		}
+		
 
 	}
 

@@ -57,7 +57,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 				int pid = rd.nextInt(countNormalPeople);
 				np = (NormalPeople) plist.get(pid);
 			} while (np.getPtype() == 0 || np.getPtype() == 2);// 若已经是丧尸或者状态不对，就重新随机一个数***感觉这里判断只需要判断是不是2就好了，丧尸在这里遍历不到
-			DeadPeople dp = turnToDead(row,np.getPid(), plist,clist);// 转化为丧尸
+			DeadPeople dp = turnToDead(row,np, plist,clist);// 转化为丧尸
 			if( dp != null )
 				plist.add(dp); // 加入list集合
 			
@@ -114,30 +114,28 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 	}
 
 	// 将正常人转化为丧尸
-	public DeadPeople turnToDead(int row, int id, List<People> plist,List<Cell> clist) {
-		NormalPeople np = (NormalPeople) plist.get(id);  //这里其实是索引
-		if (np.isAntibody()) // 如果存在抗体，则跳过
-			return null;
-		else// 如果没有抗体则转化
-		{
-			np.setPtype(2);// 保持人的属性，将状态设为不可操作
-			int pid = np.getPid();
-			Position ppos = np.getPpos();
-			DeadPeople dp = new DeadPeople(pid, ppos);
-			//plist.add(dp); // 加入list集合
-			
-			if(ppos != null)
+	public DeadPeople turnToDead(int row, NormalPeople np, List<People> plist,List<Cell> clist) {
+		if(np.getPtype()==1){
+			if (np.isAntibody()) // 如果存在抗体，则跳过
+				return null;
+			else// 如果没有抗体则转化
 			{
-				Cell c = clist.get(ppos.getX()*row+ppos.getY());//Y乘以高+X，得到坐标
-				c.setPtype(0);//id不变，type变丧尸
-				np.setPpos(null);//将坐标取消
-				return dp;
+				np.setPtype(2);// 保持人的属性，将状态设为不可操作
+				int pid = np.getPid();
+				Position ppos = np.getPpos();
+				DeadPeople dp = new DeadPeople(pid, ppos);
+				//plist.add(dp); // 加入list集合
+				
+				if(ppos != null)
+				{
+					Cell c = clist.get(ppos.getX()*row+ppos.getY());//Y乘以高+X，得到坐标
+					c.setPtype(0);//id不变，type变丧尸
+					np.setPpos(null);//将坐标取消
+					return dp;
+				}
 			}
-			
-			return null;	
-			
-			
 		}
+		return null;
 		
 		//Position nppos = np.getPpos();
 		
@@ -151,7 +149,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		Iterator<People> it = plist.iterator();
 		while(it.hasNext()){
 			p = it.next();
-			if( pid == p.getPid() && p.getClass() != dp.getClass() ){
+			if( /*pid == p.getPid() &&*/ p.getClass() != dp.getClass() ){
 				//恢复正常人类,将当前丧尸的位置赋值给恢复的正常人类
 				//感觉可能这里有问题！！！！！
 				p.setPtype(1);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import po.Cell;
 import po.DeadPeople;
+import po.NormalPeople;
 import po.People;
 import po.Position;
 
@@ -33,7 +34,7 @@ public interface PeopleManageBiz {
 	public int initBaseDamageRandom();
 	// 初始生成丧尸基本攻击力，狂暴值，暂时不设随机数，默认为10
 
-	public DeadPeople turnToDead(int col, int pid, List<People> plist,List<Cell> clist);
+	public DeadPeople turnToDead(int col, NormalPeople np, List<People> plist,List<Cell> clist);
 	// 将正常人转化为丧尸
 
 	public void turnToNormal(List<People> plist, DeadPeople dp, List<Cell> clist, int col);

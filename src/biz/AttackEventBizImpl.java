@@ -300,7 +300,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 			int tid = tmb.isBomb(np);//判断是否有炸弹
 			Tool to = new Tool();
 			if(tid!=-1){
-				System.out.println("炸弹炸了");
+				//System.out.println("炸弹炸了");
 				deadList.add(np);
 				deadList.add(dp);
 				Iterator<Tool> toit = tlist.iterator();
@@ -315,7 +315,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 			{
 				int esid = tmb.isEscapeShoes(np);
 				if(esid!=-1){
-					System.out.println("用了逃跑鞋");
+					//System.out.println("用了逃跑鞋");
 					Iterator<Tool> toit = tlist.iterator();
 					while(toit.hasNext()){
 						to = toit.next();
@@ -333,7 +333,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 						//若此人没有携带抗体则转化为丧尸
 						//*************************************若不可以就遍历获得
 						int id = plist.indexOf(np);//这里获得的是索引
-						DeadPeople newdp = pmb.turnToDead(col, id, plist, clist);
+						DeadPeople newdp = pmb.turnToDead(col, np, plist, clist);
 						/*if(newdp != null )
 							System.out.println(newdp.getPtype());
 						else
