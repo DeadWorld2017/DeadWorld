@@ -280,7 +280,7 @@ public class AttackEventBizImpl implements AttackEventBiz{
 				int ram = neb.AntibodyRandomEvent();
 				if( ram == 1 ){
 					//表明可以被转化回人类
-					pmb.turnToNormal(plist, dp, clist, col);
+					pmb.turnToNormal(plist, dp, clist, row);
 					//被转化为正常人类的丧尸加入deadList中
 					deadList.add(dp);
 				}

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import po.Cell;
+import po.DeadPeople;
 import po.Land;
 import po.NormalPeople;
 import po.People;
@@ -24,15 +25,20 @@ public class NormalEventBizImpl implements NormalEventBiz {
 		while (it.hasNext()) {
 			People p = it.next();
 			if (p.getPtype() == 1) {
-				NormalPeople np1 = (NormalPeople) p;
-				//System.out.println("怀孕1"+p.getClass()+"    " +p.getPtype()+"   "+p.getPid());
-				if (np1.getPregnancyFlag()) {
-					NormalPeople np2 = PregnantMatch(np1, plist, clist, row, col);
-					if (np2 != null) {
-						int num = pmb.countPeople(plist); // 获取数组元素个数
-						People newp = CreateChild(np1, np2, num, clist, row, col);
-						newchildlist.add(newp);
+				if(p.getClass() == NormalPeople.class){
+					NormalPeople np1 = (NormalPeople) p;
+					//System.out.println("怀孕1"+p.getClass()+"    " +p.getPtype()+"   "+p.getPid());
+					if (np1.getPregnancyFlag()) {
+						NormalPeople np2 = PregnantMatch(np1, plist, clist, row, col);
+						if (np2 != null) {
+							int num = pmb.countPeople(plist); // 获取数组元素个数
+							People newp = CreateChild(np1, np2, num, clist, row, col);
+							newchildlist.add(newp);
+						}
 					}
+				}
+				else{
+					System.out.println("出错类型： " + p.getPtype()+" "+p.getClass());
 				}
 			}
 		}
@@ -79,7 +85,7 @@ public class NormalEventBizImpl implements NormalEventBiz {
 		x = ppos.getX();
 		y = ppos.getY();
 		if ((x + 1) < col) {
-			y += 1;
+			x += 1;
 			JudgeCell(x, y, markPList, plist);
 		}
 
@@ -132,18 +138,33 @@ public class NormalEventBizImpl implements NormalEventBiz {
 	}
 
 	public void JudgeCell(int x, int y, List<People> markPList, List<People> plist) {
-		// 将坐标传进来判断是够达成怀孕条件
+		// 将坐标传进来判断是否达成怀孕条件
+		int mark = -1;
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();
 			if (p.getPtype() == 1) // 一定要分开判断，因为如果这个地方不存在人，position判断为null，但这样效率下降
 				if (p.getPpos().getX() == x && p.getPpos().getY() == y) {
-					//System.out.println("怀孕"+p.getClass()+"    " +p.getPtype()+"   "+p.getPid());
-					NormalPeople np = (NormalPeople) p;
-					if (np.getPregnancyFlag()) {
-						markPList.add(np);
+					//!!!!!!!!!!!!!!!!!!!!!!!!
+					System.out.println("怀孕"+p.getClass()+"    " +p.getPtype()+"   "+p.getPid());
+					if(p.getClass() != DeadPeople.class){
+						NormalPeople np = (NormalPeople) p;
+						if (np.getPregnancyFlag()) {
+							markPList.add(np);
+						}
 					}
+					else{
+						mark = p.getPid();
+					}
+					
 				}
+		}
+		Iterator<People> it2 = plist.iterator();
+		while(it2.hasNext()){
+			People p = it2.next();
+			if(p.getPid() == mark && p.getClass() == NormalPeople.class){
+				System.out.println("存在正常人 : "+p.getPtype());
+			}
 		}
 
 	}

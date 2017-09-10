@@ -19,7 +19,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 	int countDeadPeople = 150;// 其中丧尸的数量30
 
 	// 随机初始化正常人类方法，传入row,col作为随机数的最大范围，传入plist作为导入
-	// col为长，即x轴方向，row为高,即y轴方向
+	// col为长，即x轴方向，row为高,即y轴方向********更改
 	public void initNormalPeopleRandom(int row, int col, List<People> plist,List<Cell> clist) {
 		Position ppos;
 		int index;
@@ -28,9 +28,9 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 			int pid = i;
 			do{
 				ppos = initPositionRandom(row, col);
-				index=ppos.getY()*col+ppos.getX();//Y乘以高+X，得到坐标
+				index = ppos.getX()*row+ppos.getY();//同样改了计算index的方式！！！！！
 				c = clist.get(index);
-			}while(c.getPid()!=-1);//格子上不存在人，重新生成	
+			}while(c.getPid() != -1);//格子上存在人，则重新生成	
 			
 			c.setPid(pid);
 			c.setPtype(1);//格子加入人物
@@ -49,15 +49,15 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 	}
 
 	// 随机初始化丧尸
-	public void initDeadPeopleRandom(int col,List<People> plist,List<Cell> clist) {
+	public void initDeadPeopleRandom(int row,List<People> plist,List<Cell> clist) {
 		for (int i = 0; i < countDeadPeople; i++) {
 			NormalPeople np;
 			do {
 				Random rd = new Random();
 				int pid = rd.nextInt(countNormalPeople);
 				np = (NormalPeople) plist.get(pid);
-			} while (np.getPtype() == 0 || np.getPtype() == 2);// 若已经是丧尸或者状态不对，就重新随机一个数
-			DeadPeople dp = turnToDead(col,np.getPid(), plist,clist);// 转化为丧尸
+			} while (np.getPtype() == 0 || np.getPtype() == 2);// 若已经是丧尸或者状态不对，就重新随机一个数***感觉这里判断只需要判断是不是2就好了，丧尸在这里遍历不到
+			DeadPeople dp = turnToDead(row,np.getPid(), plist,clist);// 转化为丧尸
 			if( dp != null )
 				plist.add(dp); // 加入list集合
 			
@@ -114,7 +114,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 	}
 
 	// 将正常人转化为丧尸
-	public DeadPeople turnToDead(int col, int id, List<People> plist,List<Cell> clist) {
+	public DeadPeople turnToDead(int row, int id, List<People> plist,List<Cell> clist) {
 		NormalPeople np = (NormalPeople) plist.get(id);  //这里其实是索引
 		if (np.isAntibody()) // 如果存在抗体，则跳过
 			return null;
@@ -128,7 +128,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 			
 			if(ppos != null)
 			{
-				Cell c = clist.get(ppos.getY()*col+ppos.getX());//Y乘以高+X，得到坐标
+				Cell c = clist.get(ppos.getX()*row+ppos.getY());//Y乘以高+X，得到坐标
 				c.setPtype(0);//id不变，type变丧尸
 				np.setPpos(null);//将坐标取消
 				return dp;
@@ -144,20 +144,20 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		
 	}
 
-	public void turnToNormal(List<People> plist, DeadPeople dp, List<Cell> clist, int col) {
+	public void turnToNormal(List<People> plist, DeadPeople dp, List<Cell> clist, int row) {
 		//丧尸转化为正常人类
 		People p;
 		int pid = dp.getPid();
 		Iterator<People> it = plist.iterator();
 		while(it.hasNext()){
 			p = it.next();
-			if( pid == p.getPid() && p != dp ){
+			if( pid == p.getPid() && p.getClass() != dp.getClass() ){
 				//恢复正常人类,将当前丧尸的位置赋值给恢复的正常人类
 				p.setPtype(1);
 				Position ppos = dp.getPpos();
 				p.setPpos(ppos);
 				//更改Cell中设置
-				Cell c = clist.get(ppos.getY()*col+ppos.getX());//Y乘以高+X，得到坐标
+				Cell c = clist.get(ppos.getX()*row+ppos.getY());//Y乘以高+X，得到坐标*********更改
 				c.setPtype(1);//id不变，type变正常人类
 				
 				break;
@@ -202,10 +202,15 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		while (it.hasNext()) {
 			People p = it.next();
 			if(p.getPtype()==1){
-				NormalPeople np = new NormalPeople();
-				np = (NormalPeople) p;
-				if(np.isAntibody())
-					numberAntibody++;
+				if(p.getClass() == NormalPeople.class){
+					NormalPeople np = new NormalPeople();
+					np = (NormalPeople) p;
+					if(np.isAntibody())
+						numberAntibody++;
+				}
+				else{
+					System.out.println("出错类型： " + p.getPtype() + " " + p.getClass());
+				}
 			}
 		}
 		double rate=0;

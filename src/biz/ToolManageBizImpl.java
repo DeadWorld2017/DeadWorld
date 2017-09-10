@@ -15,7 +15,7 @@ public class ToolManageBizImpl implements ToolManageBiz {
 
 	//private double paramAttackByDoping = 1.5;
 
-	@Override
+	
 	public void pickTool(List<People> plist,List<Cell> clist, List<Tool> tlist, int col) {
 		int index;
 		Cell c;

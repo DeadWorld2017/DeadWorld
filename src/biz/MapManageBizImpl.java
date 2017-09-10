@@ -29,8 +29,9 @@ public class MapManageBizImpl implements MapManageBiz {
 
 	// 初始化空地图
 	public void initMapList(int row, int col, List<Cell> clist) {
-		for (int i = 0; i < row; i++)
-			for (int j = 0; j < col; j++) {
+		//貌似对应关系反了，改了过来
+		for (int i = 0; i < col; i++)
+			for (int j = 0; j < row; j++) {
 				Position p = new Position(i, j);
 				Cell c = new Cell(p);
 				clist.add(c);
@@ -46,9 +47,9 @@ public class MapManageBizImpl implements MapManageBiz {
 			int ltype = initLtypeRandom();// 地形种类
 			do {
 				lpos = initPositionRandom(row, col);
-				index = lpos.getY() * col + lpos.getX();// Y乘以长+X，得到坐标
+				index = lpos.getX() * row + lpos.getY();// 改成row（长 即列数）* x + y
 				c = clist.get(index);
-			} while (c.getltype() != -1);// 格子上不存在地形，重新生成
+			} while (c.getltype() != -1);// 格子上存在地形，则重新生成
 
 			c.setltype(ltype);
 			Land l = new Land(ltype, lpos);

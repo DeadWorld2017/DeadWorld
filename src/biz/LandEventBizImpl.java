@@ -152,7 +152,7 @@ public class LandEventBizImpl implements LandEventBiz {
 		
 	}
 
-	@Override
+	
 	public void beforeAttackEvent(int col, List<People> plist, List<Cell> clist, List<Tool> tlist) {
 		List<People> deadlist = new ArrayList<People>();
 		Iterator<People> it = plist.iterator();

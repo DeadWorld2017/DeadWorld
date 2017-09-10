@@ -28,8 +28,8 @@ import po.People;
 import po.Tool;
 
 public class MapPanel extends JPanel implements Runnable {
-	int row;// 地图的高
-	int col;// 地图的长
+	int row;// 地图的长（由于后面代码所以做出更改）
+	int col;// 地图的高（由于后面代码）
 
 	List<People> plist;// 人类集合
 	List<Tool> tlist;// 武器集合
