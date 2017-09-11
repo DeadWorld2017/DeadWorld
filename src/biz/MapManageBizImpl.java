@@ -16,7 +16,7 @@ public class MapManageBizImpl implements MapManageBiz {
 	int coutDMRiver = 100;// 4,子母河
 	int coutDeathtrap = 100;// 5，死亡陷阱
 	int coutTrappedLand = 100;// 6，困阵
-	int countLand = 600;// 总的数量
+	int countLand = 2000;// 总的数量
 	
 	
 	int countKnife = 200;

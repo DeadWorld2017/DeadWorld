@@ -23,7 +23,9 @@ import biz.PeopleManageBizImpl;
 import biz.ToolManageBiz;
 import biz.ToolManageBizImpl;
 import po.Cell;
+import po.DeadPeople;
 import po.Land;
+import po.NormalPeople;
 import po.People;
 import po.Tool;
 
@@ -143,17 +145,17 @@ public class MapPanel extends JPanel implements Runnable {
 		add(number80to99lbl);
 
 		setLayout(null);
-		numberPeoplelbl.setBounds(1020, 40, 300, 20);
-		numberNormalPeoplelbl.setBounds(1020, 60, 300, 20);
-		numberDeadPeoplelbl.setBounds(1020, 80, 300, 20);
-		numberAntibodylbl.setBounds(1020, 100, 300, 20);
-		numberManlbl.setBounds(1020, 120, 300, 20);
-		numberWomanlbl.setBounds(1020, 140, 300, 20);
-		number0to19lbl.setBounds(1020, 160, 300, 20);
-		number20to39lbl.setBounds(1020, 180, 300, 20);
-		number40to59lbl.setBounds(1020, 200, 300, 20);
-		number60to79lbl.setBounds(1020, 220, 300, 20);
-		number80to99lbl.setBounds(1020, 240, 300, 20);
+		numberPeoplelbl.setBounds(1500, 40, 300, 20);
+		numberNormalPeoplelbl.setBounds(1500, 60, 300, 20);
+		numberDeadPeoplelbl.setBounds(1500, 80, 300, 20);
+		numberAntibodylbl.setBounds(1500, 100, 300, 20);
+		numberManlbl.setBounds(1500, 120, 300, 20);
+		numberWomanlbl.setBounds(1500, 140, 300, 20);
+		number0to19lbl.setBounds(1500, 160, 300, 20);
+		number20to39lbl.setBounds(1500, 180, 300, 20);
+		number40to59lbl.setBounds(1500, 200, 300, 20);
+		number60to79lbl.setBounds(1500, 220, 300, 20);
+		number80to99lbl.setBounds(1500, 240, 300, 20);
 
 		updatePeople(numberPeoplelbl, numberNormalPeoplelbl, numberDeadPeoplelbl, numberAntibodylbl, numberManlbl,
 				numberWomanlbl, number0to19lbl, number20to39lbl, number40to59lbl, number60to79lbl, number80to99lbl);
@@ -193,7 +195,7 @@ public class MapPanel extends JPanel implements Runnable {
 	public void setYearLabel() {
 		yearlbl = new JLabel("年份：" + year);
 		add(yearlbl);
-		yearlbl.setBounds(1020, 0, 300, 20);
+		yearlbl.setBounds(1500, 0, 300, 20);
 
 	}
 
@@ -210,11 +212,11 @@ public class MapPanel extends JPanel implements Runnable {
 		add(numberEscapeShoeslbl);
 
 		setLayout(null);
-		numberKnifelbl.setBounds(1020, 280, 300, 20);
-		numberGunlbl.setBounds(1020, 300, 300, 20);
-		numberBazookalbl.setBounds(1020, 320, 300, 20);
-		numberBomblbl.setBounds(1020, 340, 340, 20);
-		numberEscapeShoeslbl.setBounds(1020, 360, 300, 20);
+		numberKnifelbl.setBounds(1500, 280, 300, 20);
+		numberGunlbl.setBounds(1500, 300, 300, 20);
+		numberBazookalbl.setBounds(1500, 320, 300, 20);
+		numberBomblbl.setBounds(1500, 340, 340, 20);
+		numberEscapeShoeslbl.setBounds(1500, 360, 300, 20);
 
 		updateTool(numberKnifelbl, numberGunlbl, numberBazookalbl, numberBomblbl, numberEscapeShoeslbl);
 	}
@@ -320,12 +322,12 @@ public class MapPanel extends JPanel implements Runnable {
 		add(numberTrappedLandlbl);
 
 		setLayout(null);
-		numberShelterlbl.setBounds(1020, 400, 300, 20);
-		numberRadientlbl.setBounds(1020, 420, 300, 20);
-		numberSwamplandlbl.setBounds(1020, 440, 300, 20);
-		numberDMRiverlbl.setBounds(1020, 460, 300, 20);
-		numberDeathtraplbl.setBounds(1020, 480, 300, 20);
-		numberTrappedLandlbl.setBounds(1020, 500, 300, 20);
+		numberShelterlbl.setBounds(1500, 400, 300, 20);
+		numberRadientlbl.setBounds(1500, 420, 300, 20);
+		numberSwamplandlbl.setBounds(1500, 440, 300, 20);
+		numberDMRiverlbl.setBounds(1500, 460, 300, 20);
+		numberDeathtraplbl.setBounds(1500, 480, 300, 20);
+		numberTrappedLandlbl.setBounds(1500, 500, 300, 20);
 	}
 
 	public void paintComponent(Graphics g) {
@@ -361,13 +363,13 @@ public class MapPanel extends JPanel implements Runnable {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();// 存储it.next()的值，防止跳跃
-			if (p.getPtype() == 1) // 若是正常人，显示绿色
+			if (p.getClass() == NormalPeople.class &&p.getPtype()!=2) // 若是正常人，显示绿色
 			{
 				g.setColor(colorNormalPeople);
 				// g.fillOval(p.getPpos().getX() * 10, p.getPpos().getY() * 10,
 				// 10, 10);
 				g.fillRect(p.getPpos().getY() * 10, p.getPpos().getX() * 10, 10, 10);
-			} else if (p.getPtype() == 0) // 若是丧尸，显示红色
+			} else if (p.getClass() == DeadPeople.class &&p.getPtype()!=2) // 若是丧尸，显示红色
 			{
 				g.setColor(Color.red);
 				// g.fillOval(p.getPpos().getX() * 10, p.getPpos().getY() * 10,
@@ -437,7 +439,7 @@ public class MapPanel extends JPanel implements Runnable {
 				 * e.printStackTrace(); } }
 				 */
 
-				sleep(3);
+				sleep(1);
 				updataYear(yearlbl);// 更新年份
 				neb.AdjustNormalPeopleAttr(plist);// 调整年龄，停留时间，怀孕标记
 				mb.randomMove(row, col, plist, clist);// 随机移动

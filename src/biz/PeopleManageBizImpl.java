@@ -15,8 +15,8 @@ import po.Position;
 //管理接口实现
 public class PeopleManageBizImpl implements PeopleManageBiz {
 
-	int countNormalPeople = 200;// 首先生成正常人的数量200
-	int countDeadPeople = 150;// 其中丧尸的数量30
+	int countNormalPeople = 500;// 首先生成正常人的数量200
+	int countDeadPeople = 300;// 其中丧尸的数量30
 
 	// 随机初始化正常人类方法，传入row,col作为随机数的最大范围，传入plist作为导入
 	// col为长，即x轴方向，row为高,即y轴方向********更改
@@ -171,7 +171,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();
-			if (p.getPtype() == 1) // 正常人ptype=1
+			if (p.getClass() == NormalPeople.class&&p.getPtype()!=2) // 正常人ptype=1
 				numberNormalPeople++;
 		}
 		return numberNormalPeople;
@@ -182,7 +182,8 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		int numberDeadPeople = 0;
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
-			if (it.next().getPtype() == 0) // 丧尸：ptype为0
+			People p = it.next();
+			if (p.getClass() == DeadPeople.class&&p.getPtype()!=2) // 丧尸：ptype为0
 				numberDeadPeople++;
 		}
 		return numberDeadPeople;
@@ -200,17 +201,11 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();
-			if(p.getPtype()==1){
-				//测试
-				if(p.getClass() == NormalPeople.class){
+				if(p.getClass() == NormalPeople.class&&p.getPtype()!=2){
 					NormalPeople np = new NormalPeople();
 					np = (NormalPeople) p;
 					if(np.isAntibody())
 						numberAntibody++;
-				}
-				else{
-					System.out.println("出错类型： " + p.getPtype() + " " + p.getClass());
-				}
 			}
 		}
 		double rate=0;
@@ -228,7 +223,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();
-			if(p.getPtype()==1){
+			if(p.getClass()==NormalPeople.class&&p.getPtype()!=2){
 				NormalPeople np = (NormalPeople)p;
 				if(np.isGender())
 					numberMan++;
@@ -247,7 +242,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();
-			if(p.getPtype()==1){
+			if(p.getClass()==NormalPeople.class&&p.getPtype()!=2){
 				NormalPeople np = (NormalPeople)p;
 				if(!np.isGender())
 					numberWomen++;
@@ -266,7 +261,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();
-			if(p.getPtype()==1){
+			if(p.getClass()==NormalPeople.class&&p.getPtype()!=2){
 				NormalPeople np = (NormalPeople)p;
 				if(np.getAge()>=0&&np.getAge()<20)
 					numberAge++;
@@ -285,7 +280,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();
-			if(p.getPtype()==1){
+			if(p.getClass()==NormalPeople.class&&p.getPtype()!=2){
 				NormalPeople np = (NormalPeople)p;
 				if(np.getAge()>=20&&np.getAge()<40)
 					numberAge++;
@@ -304,7 +299,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();
-			if(p.getPtype()==1){
+			if(p.getClass()==NormalPeople.class&&p.getPtype()!=2){
 				NormalPeople np = (NormalPeople)p;
 				if(np.getAge()>=40&&np.getAge()<60)
 					numberAge++;
@@ -323,7 +318,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();
-			if(p.getPtype()==1){
+			if(p.getClass()==NormalPeople.class&&p.getPtype()!=2){
 				NormalPeople np = (NormalPeople)p;
 				if(np.getAge()>=60&&np.getAge()<80)
 					numberAge++;
@@ -342,7 +337,7 @@ public class PeopleManageBizImpl implements PeopleManageBiz {
 		Iterator<People> it = plist.iterator();
 		while (it.hasNext()) {
 			People p = it.next();
-			if(p.getPtype()==1){
+			if(p.getClass()==NormalPeople.class&&p.getPtype()!=2){
 				NormalPeople np = (NormalPeople)p;
 				if(np.getAge()>=80&&np.getAge()<100)
 					numberAge++;
