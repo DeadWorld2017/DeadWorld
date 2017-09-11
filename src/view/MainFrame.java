@@ -46,8 +46,10 @@ public class MainFrame extends JFrame implements MouseMotionListener {
 		mf.setVisible(true);// 使其可见
 		mf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// 关闭
 		mf.setResizable(false); // 不可改变窗体大小
+	}
 		// mf.setLayout(null); //设置窗体布局为空布局
 
+		/*
 		mf.addMouseMotionListener(mf);// 添加鼠标监听事件
 		JMenuBar menu = new JMenuBar();// 添加菜单栏
 		mf.setJMenuBar(menu);
@@ -83,7 +85,7 @@ public class MainFrame extends JFrame implements MouseMotionListener {
 			mp.stopWorld();
 			repaint();
 		}
-	}
+	}*/
 
 	public void mouseDragged(MouseEvent e) {
 

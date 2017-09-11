@@ -24,7 +24,6 @@ import biz.ToolManageBiz;
 import biz.ToolManageBizImpl;
 import po.Cell;
 import po.Land;
-import po.NormalPeople;
 import po.People;
 import po.Tool;
 
@@ -438,7 +437,7 @@ public class MapPanel extends JPanel implements Runnable {
 				 * e.printStackTrace(); } }
 				 */
 
-				sleep(1);
+				sleep(3);
 				updataYear(yearlbl);// 更新年份
 				neb.AdjustNormalPeopleAttr(plist);// 调整年龄，停留时间，怀孕标记
 				mb.randomMove(row, col, plist, clist);// 随机移动
